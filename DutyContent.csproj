@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{66572F39-C8FD-4F89-BFA1-811C2A27D563}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>DutyContent</RootNamespace>
+    <AssemblyName>DutyContent</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>false</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>false</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>false</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Advanced Combat Tracker">
+      <HintPath>References\ACT\Advanced Combat Tracker.exe</HintPath>
+    </Reference>
+    <Reference Include="FFXIV_ACT_Plugin">
+      <HintPath>References\ACT\FFXIV_ACT_Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="FFXIV_ACT_Plugin.Common">
+      <HintPath>References\ACT\FFXIV_ACT_Plugin.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DcConfig.cs" />
+    <Compile Include="DcControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DcControl.Designer.cs">
+      <DependentUpon>DcControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tab\ConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tab\ConfigForm.Designer.cs">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tab\DutyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tab\DutyForm.Designer.cs">
+      <DependentUpon>DutyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DcContent.cs" />
+    <Compile Include="Interface\IPacketHandler.cs" />
+    <Compile Include="Interface\ISuppActPlugin.cs" />
+    <Compile Include="Interface\ISuppLocale.cs" />
+    <Compile Include="Overlay\DutyOvForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Overlay\DutyOvForm.Designer.cs">
+      <DependentUpon>DutyOvForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThirdParty\Converter.cs" />
+    <Compile Include="ThirdParty\LineDb.cs" />
+    <Compile Include="ThirdParty\NativeMethods.cs" />
+    <Compile Include="WorkerAct.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MesgLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="DcControl.resx">
+      <DependentUpon>DcControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tab\ConfigForm.resx">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tab\DutyForm.resx">
+      <DependentUpon>DutyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlay\DutyOvForm.resx">
+      <DependentUpon>DutyOvForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Data\DcDuty-English.json" />
+    <None Include="Data\DcDuty-Japanese.json" />
+    <None Include="Data\DcDuty-Korean.json" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="Resources\pix_tab_setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_tab_content.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mesg.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_tab_tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_annotation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_magnify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\DcLang-Korean%28Actoz%29.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\DcLang-Japanese.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if exist "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" copy $(TargetPath) "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" /y
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

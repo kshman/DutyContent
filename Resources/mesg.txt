@@ -1,0 +1,87 @@
+﻿# Default English message
+LANG=English
+
+0=FFXIV dc
+1=Duty ready
+2=FFXIV plugin is missing!
+3=FFXIV plugin found!
+4=FFXIV Duty Content starting!
+5=ACT info: {0} ({1})
+6=FFXIV plugin info {0} ({1})
+7=Invalid data: {0}
+8=Parsing error
+9=Unknown roulette: {0}
+10=Unknown instance: {0}
+11=Unknown area: {0}
+12=Unknown FATE: {0}
+13=Data reading failed!
+14=Data file not found! {0}
+20=Duty contents info: {1}({0}) / A:{2} / R:{3} / I:{4} / F:{5} ({6})
+21=Roulette
+22=Instance
+23=FATE
+24=Skirmish
+25=CE
+26=Default
+
+99=DutyContent Plugin {0}
+
+101=Select wave file
+102=Wave (*.wav)|*.wav|All (*.*)|*.*
+103=Notify test!!
+
+200=Config
+201=Display Language
+202=Hide overlays when FFXIV client is in the background
+
+300=Duty
+301=Contents
+302=Setting
+303=Packet
+304=Dataset
+305=Log font
+306=Enable overlay
+307=Transparent
+308=Enable sound
+309=Instance
+310=FATE
+311=Use LINE notify
+312=Token
+313=Use Telegram notify
+314=ID
+315=Token
+316=Packet finder
+317=Description
+318=Bozja Finder
+319=Function
+320=Current
+321=Status
+322=Found
+323=Name
+324=Status
+325=Member
+326=Progress
+
+10001="{0}" spawned!
+10002=Entry: {0}
+10003=Matched: {0}
+10004=Enter: {0}
+10005={0} spawned!
+10006=Duty entries: {0}
+10007=Start
+10008=Cancel
+10009=Apply && Save
+10010=Go to Middle La Noscea. Wait for FATEs appear. Also skirmishes in "The Bozjan Southern Front" can be use.
+10011=Enter tial "The Steps of Faith" with undersize option.
+10012=Match
+10013=Instance
+10014=Go to "The Bozjan Southern Front" and wait Critical Engagements. Candidates will be appear at right side Bozja finder.
+10015=Select item to show description
+10016=Ok
+10017=End
+10018=Register
+10019=Entry
+10020=Progress
+10021=Unknown
+10022=Apply and overwrite packet data?
+10023=Selected
