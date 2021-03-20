@@ -133,6 +133,9 @@
   <data name="pix_tab_content" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\pix_tab_content.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pix_tab_ping" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pix_tab_ping.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pix_tab_setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pix_tab_setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

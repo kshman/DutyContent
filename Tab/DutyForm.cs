@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.IO;
+using System.Threading;
+using System.Net.NetworkInformation;
 
 namespace DutyContent.Tab
 {
@@ -24,8 +26,11 @@ namespace DutyContent.Tab
 		private bool _is_packet_finder;
 		private DcConfig.PacketConfig _new_packet;
 
-		private Timer _save_timer;
 		private Overlay.DutyOvForm _overlay;
+
+		private System.Timers.Timer _ping_timer;
+		private long _ping_last;
+		private Color _ping_color = Color.Transparent;
 
 		public DutyForm()
 		{
@@ -38,8 +43,7 @@ namespace DutyContent.Tab
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (_save_timer != null)
-				_save_timer.Stop();
+
 		}
 
 		public void PluginInitialize()
@@ -68,6 +72,7 @@ namespace DutyContent.Tab
 
 			progbOverlayTransparent.Enabled = DcConfig.Duty.EnableOverlay;
 			btnOverlayDimming.Enabled = DcConfig.Duty.EnableOverlay;
+			chkOverlayClickThru.Checked = DcConfig.Duty.OverlayClickThru;
 
 			//
 			_overlay.SetText(MesgLog.Text(99, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()));
@@ -105,6 +110,13 @@ namespace DutyContent.Tab
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
 			//
+			chkUsePing.Checked = DcConfig.Duty.UsePing;
+			btnPingColor1.BackColor = DcConfig.Duty.PingColors[0];
+			btnPingColor2.BackColor = DcConfig.Duty.PingColors[1];
+			btnPingColor3.BackColor = DcConfig.Duty.PingColors[2];
+			btnPingColor4.BackColor = DcConfig.Duty.PingColors[3];
+
+			//
 			switch (DcConfig.Duty.ActiveFate)
 			{
 				case 0: rdoFatePreset1.Checked = true; break;
@@ -115,25 +127,28 @@ namespace DutyContent.Tab
 			UpdateFates();
 
 			//
-			_save_timer = new Timer() { Interval = 5000 };
-			_save_timer.Tick += (sender, e) =>
-			  {
-				  DcConfig.SaveConfig();
-				  _save_timer.Enabled = false;
-			  };
+			_ping_timer = new System.Timers.Timer() { Interval = 5000 };
+			_ping_timer.Elapsed += (sender, e) => PingOnce();
+
+			if (DcConfig.Duty.UsePing)
+				_ping_timer.Start();
 		}
 
 		public void PluginDeinitialize()
 		{
+			if (_ping_timer != null)
+			{
+				_ping_timer.Stop();
+				_ping_timer = null;
+			}
+
 			_overlay.Hide();
 			_overlay = null;
 		}
 
-		private void RefreshSaveFile(int interval = 5000)
+		private void SaveConfig(int interval = 5000)
 		{
-			_save_timer.Enabled = false;
-			_save_timer.Interval = interval;
-			_save_timer.Start();
+			DcControl.Self.RefreshSaveConfig(interval);
 		}
 
 		public static List<string> MakeDutyLangList()
@@ -158,15 +173,17 @@ namespace DutyContent.Tab
 
 		public void UpdateUiLocale()
 		{
-			tabContent.TabPages[0].Text = MesgLog.Text(301);
-			tabContent.TabPages[1].Text = MesgLog.Text(302);
-			tabContent.TabPages[2].Text = MesgLog.Text(303);
+			tabPageContent.Text = MesgLog.Text(301);
+			tabPageSetting.Text = MesgLog.Text(302);
+			tabPagePacket.Text = MesgLog.Text(303);
+			tabPagePing.Text = MesgLog.Text(327);
 
 			lblDataSet.Text = MesgLog.Text(304);
 			lblLogFont.Text = MesgLog.Text(305);
 
 			chkEnableOverlay.Text = MesgLog.Text(306);
 			lblOverlayTransparent.Text = MesgLog.Text(307);
+			chkOverlayClickThru.Text = MesgLog.Text(104);
 
 			chkEnableSound.Text = MesgLog.Text(308);
 			lblSoundInstance.Text = MesgLog.Text(309);
@@ -195,6 +212,13 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = MesgLog.Text(10007);
 			btnPacketApply.Text = MesgLog.Text(10009);
+
+			chkUsePing.Text = MesgLog.Text(328);
+			lblPingColors.Text = MesgLog.Text(329);
+			lblPingStat1.Text = MesgLog.Text(330);
+			lblPingStat2.Text = MesgLog.Text(331);
+			lblPingStat3.Text = MesgLog.Text(332);
+			lblPingStat4.Text = MesgLog.Text(333);
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -518,7 +542,7 @@ namespace DutyContent.Tab
 
 				lblCurrentDataSet.Text = DcContent.Language;
 
-				RefreshSaveFile();
+				SaveConfig();
 			}
 		}
 
@@ -543,7 +567,7 @@ namespace DutyContent.Tab
 				DcConfig.Duty.LogFontFamily = ret.Name;
 				DcConfig.Duty.LogFontSize = ret.Size;
 
-				RefreshSaveFile();
+				SaveConfig();
 
 				btnLogFont.Font = ret;
 				btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
@@ -579,7 +603,7 @@ namespace DutyContent.Tab
 			}
 
 			MakeFatesSelection(true);
-			RefreshSaveFile();
+			SaveConfig();
 
 			_is_lock_fate = false;
 		}
@@ -595,7 +619,7 @@ namespace DutyContent.Tab
 				DcConfig.Duty.ActiveFate = index;
 				UpdateFates();
 
-				RefreshSaveFile();
+				SaveConfig();
 			}
 		}
 
@@ -634,7 +658,7 @@ namespace DutyContent.Tab
 
 			DcConfig.Duty.EnableOverlay = chkEnableOverlay.Checked;
 
-			RefreshSaveFile();
+			SaveConfig();
 		}
 
 		private void ProgbOverlayTransparent_Click(object sender, EventArgs e)
@@ -645,6 +669,16 @@ namespace DutyContent.Tab
 		private void BtnOverlayDimming_Click(object sender, EventArgs e)
 		{
 			_overlay.StartBlink();
+		}
+
+		private void ChkOverlayClickThru_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.OverlayClickThru = chkOverlayClickThru.Checked;
+
+			SaveConfig();
 		}
 
 		private void ChkEnableSound_CheckedChanged(object sender, EventArgs e)
@@ -661,7 +695,7 @@ namespace DutyContent.Tab
 
 			DcConfig.Duty.EnableSound = chkEnableSound.Checked;
 
-			RefreshSaveFile();
+			SaveConfig();
 		}
 
 		//
@@ -722,7 +756,7 @@ namespace DutyContent.Tab
 			DcConfig.Duty.SoundInstanceFile = string.IsNullOrEmpty(filename) ? string.Empty : filename;
 			txtSoundInstance.Text = DcConfig.Duty.SoundInstanceFile;
 
-			RefreshSaveFile();
+			SaveConfig();
 		}
 
 		private void BtnSoundFindFate_Click(object sender, EventArgs e)
@@ -735,7 +769,7 @@ namespace DutyContent.Tab
 			DcConfig.Duty.SoundFateFile = string.IsNullOrEmpty(filename) ? string.Empty : filename;
 			txtSoundFate.Text = DcConfig.Duty.SoundFateFile;
 
-			RefreshSaveFile();
+			SaveConfig();
 		}
 
 		private async void BtnTestNotify_Click(object sender, EventArgs e)
@@ -792,7 +826,7 @@ namespace DutyContent.Tab
 
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
-			RefreshSaveFile();
+			SaveConfig();
 		}
 
 		private void LblLineNotifyBotLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -811,7 +845,7 @@ namespace DutyContent.Tab
 			if (e.KeyCode == Keys.Enter)
 			{
 				DcConfig.Duty.NotifyLineToken = txtLineToken.Text;
-				RefreshSaveFile();
+				SaveConfig();
 			}
 		}
 
@@ -824,7 +858,7 @@ namespace DutyContent.Tab
 			if (!txtLineToken.Text.Equals(DcConfig.Duty.NotifyLineToken))
 			{
 				DcConfig.Duty.NotifyLineToken = txtLineToken.Text;
-				RefreshSaveFile();
+				SaveConfig();
 			}
 
 			var hc = new HttpClient();
@@ -851,7 +885,7 @@ namespace DutyContent.Tab
 
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
-			RefreshSaveFile();
+			SaveConfig();
 		}
 
 		private void TxtTelegramId_KeyDown(object sender, KeyEventArgs e)
@@ -862,7 +896,7 @@ namespace DutyContent.Tab
 			if (e.KeyCode == Keys.Enter)
 			{
 				DcConfig.Duty.NotifyTelegramId = txtTelegramId.Text;
-				RefreshSaveFile();
+				SaveConfig();
 			}
 		}
 
@@ -874,7 +908,7 @@ namespace DutyContent.Tab
 			if (e.KeyCode == Keys.Enter)
 			{
 				DcConfig.Duty.NotifyTelegramToken = txtTelegramToken.Text;
-				RefreshSaveFile();
+				SaveConfig();
 			}
 		}
 
@@ -899,13 +933,13 @@ namespace DutyContent.Tab
 			if (!txtTelegramId.Text.Equals(DcConfig.Duty.NotifyTelegramId))
 			{
 				DcConfig.Duty.NotifyTelegramId = txtTelegramId.Text;
-				RefreshSaveFile();
+				SaveConfig();
 			}
 
 			if (!txtTelegramToken.Text.Equals(DcConfig.Duty.NotifyTelegramToken))
 			{
 				DcConfig.Duty.NotifyTelegramToken = txtTelegramToken.Text;
-				RefreshSaveFile();
+				SaveConfig();
 			}
 
 			// https://codingman.tistory.com/41
@@ -1123,10 +1157,10 @@ namespace DutyContent.Tab
 			var data = message.Skip(32).ToArray();
 
 			// fate
-			if (data.Length > 4 && data[0] == 0x3E)
+			if (_new_packet.OpFate == 0 && data.Length > 4 && data[0] == 0x3E)
 			{
 				var cc = BitConverter.ToInt16(data, 4);
-				if (_packet_target_fates.Contains(cc))
+				if (_packet_target_fates.Contains(cc) && _new_packet.OpFate != opcode)
 				{
 					_new_packet.OpFate = opcode;
 
@@ -1141,14 +1175,14 @@ namespace DutyContent.Tab
 			}
 
 			// duty
-			if (data.Length > 12)
+			if (_new_packet.OpDuty == 0 && data.Length > 12)
 			{
 				var rcode = data[8];
 				if (rcode == 0)
 				{
 					// The Steps of Fath (83)
 					short m = BitConverter.ToInt16(data, 12);
-					if (m == 83)
+					if (m == 83 && _new_packet.OpDuty != opcode)
 					{
 						_new_packet.OpDuty = opcode;
 
@@ -1164,14 +1198,14 @@ namespace DutyContent.Tab
 			}
 
 			// match
-			if (data.Length > 20)
+			if (_new_packet.OpMatch == 0 && data.Length > 20)
 			{
 				var rcode = data[2];
 				if (rcode == 0)
 				{
 					// The Steps of Fath (83)
 					short m = BitConverter.ToInt16(data, 20);
-					if (m == 83)
+					if (m == 83 && _new_packet.OpMatch != opcode)
 					{
 						_new_packet.OpMatch = opcode;
 
@@ -1187,12 +1221,12 @@ namespace DutyContent.Tab
 			}
 
 			// instance
-			if (data.Length >= 16)
+			if (_new_packet.OpInstance == 0 && data.Length >= 16)
 			{
 				// The Steps of Fath (83)
 				short m = BitConverter.ToInt16(data, 0);
 				short u = BitConverter.ToInt16(data, 2);
-				if (m == 83 && u == 0)
+				if (m == 83 && u == 0 && _new_packet.OpInstance != opcode)
 				{
 					_new_packet.OpInstance = opcode;
 
@@ -1278,6 +1312,157 @@ namespace DutyContent.Tab
 					});
 				}
 			}
+		}
+
+		private void ChkUsePing_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.UsePing = chkUsePing.Checked;
+
+			SaveConfig();
+
+			if (chkUsePing.Checked)
+				_ping_timer.Start();
+			else
+			{
+				_ping_timer.Stop();
+				_overlay.ResetStat();
+			}
+		}
+
+		private Color PingColorSelectDialog(Color current)
+		{
+			Color color = (Color)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
+			  {
+				  var dg = new ColorDialog()
+				  {
+					  AnyColor = true,
+					  Color = current,
+				  };
+
+				  return dg.ShowDialog() == DialogResult.OK ? dg.Color : current;
+			  }));
+
+			return color;
+		}
+
+		private void BtnPingColor1_Click(object sender, EventArgs e)
+		{
+			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[0]);
+			if (DcConfig.Duty.PingColors[0] != ret)
+			{
+				btnPingColor1.BackColor = ret;
+				DcConfig.Duty.PingColors[0] = ret;
+				SaveConfig();
+			}
+		}
+
+		private void BtnPingColor2_Click(object sender, EventArgs e)
+		{
+			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[1]);
+			if (DcConfig.Duty.PingColors[1] != ret)
+			{
+				btnPingColor2.BackColor = ret;
+				DcConfig.Duty.PingColors[1] = ret;
+				SaveConfig();
+			}
+		}
+
+		private void BtnPingColor3_Click(object sender, EventArgs e)
+		{
+			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[2]);
+			if (DcConfig.Duty.PingColors[2] != ret)
+			{
+				btnPingColor3.BackColor = ret;
+				DcConfig.Duty.PingColors[2] = ret;
+				SaveConfig();
+			}
+		}
+
+		private void BtnPingColor4_Click(object sender, EventArgs e)
+		{
+			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[2]);
+			if (DcConfig.Duty.PingColors[2] != ret)
+			{
+				btnPingColor4.BackColor = ret;
+				DcConfig.Duty.PingColors[2] = ret;
+				SaveConfig();
+			}
+		}
+
+		//
+		private void PingOnce()
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			var conns = DcConfig.Connections.CopyConnection();
+			if (conns.Length == 0)
+				return;
+
+			long rtt = 0;
+			double loss = 0.0;
+
+			foreach (var row in conns)
+			{
+				var p = CalcPing(row.RemoteAddress);
+
+				if (rtt < p.Rtt)
+					rtt = p.Rtt;
+
+				if (loss < p.Loss)
+					loss = p.Loss;
+			}
+
+			//MesgLog.L("Ping: {0}, {1}%", rtt, loss);
+
+			Color color;
+			if (loss > 0.0 || rtt > 150)
+				color = DcConfig.Duty.PingColors[3];
+			else if (rtt > 100)
+				color = DcConfig.Duty.PingColors[2];
+			else if (rtt > 50)
+				color = DcConfig.Duty.PingColors[1];
+			else
+				color = DcConfig.Duty.PingColors[0];
+
+			if (_ping_last != rtt || loss > 0.0 || _ping_color != color)
+			{
+				_ping_last = rtt;
+				_ping_color = color;
+
+				_overlay.SetStatPing(color, rtt, loss);
+			}
+		}
+
+		private static PingOptions _ping_options = new PingOptions { DontFragment = true };
+		private static byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
+		private static int _ping_timerout = 120;
+
+		//
+		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 6)
+		{
+			var ps = new Ping();
+
+			int failed = 0;
+			long rtt = 0;
+
+			for (var i = 0; i < amount; i++)
+			{
+				PingReply pr = ps.Send(host, _ping_timerout, _ping_buffers, _ping_options);
+
+				if (pr.Status != IPStatus.Success)
+					failed++;
+
+				if (rtt < pr.RoundtripTime)
+					rtt = pr.RoundtripTime;
+			}
+
+			double loss = (failed / amount) * 100;
+
+			return (rtt, loss);
 		}
 	}
 }

@@ -53,12 +53,12 @@ namespace DutyContent
 
 		public static string Text(int key)
 		{
-			return _lines == null || !_lines.Try(key, out string v) ? ThirdParty.LineDb.InvalidKey : v;
+			return _lines == null || !_lines.Try(key, out string v) ? $"<{key}>" : v;
 		}
 
 		public static string Text(int key, params object[] prms)
 		{
-			return _lines == null || !_lines.Try(key, out string v) ? ThirdParty.LineDb.InvalidKey : string.Format(v, prms);
+			return _lines == null || !_lines.Try(key, out string v) ? $"<{key}>" : string.Format(v, prms);
 		}
 
 		public static void Write(Color color, string format, params object[] prms)

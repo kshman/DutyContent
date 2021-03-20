@@ -57,7 +57,7 @@ namespace DutyContent.Tab
             ""}, -1);
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DutyForm));
 			this.tabContent = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tabPageContent = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.rdoFatePreset4 = new System.Windows.Forms.RadioButton();
 			this.rdoFatePreset3 = new System.Windows.Forms.RadioButton();
@@ -65,7 +65,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset1 = new System.Windows.Forms.RadioButton();
 			this.treeFates = new System.Windows.Forms.TreeView();
 			this.txtContentLog = new System.Windows.Forms.RichTextBox();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPageSetting = new System.Windows.Forms.TabPage();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.lblTelegramToken = new System.Windows.Forms.Label();
 			this.txtTelegramToken = new System.Windows.Forms.TextBox();
@@ -94,11 +94,24 @@ namespace DutyContent.Tab
 			this.chkEnableSound = new System.Windows.Forms.CheckBox();
 			this.lblSoundInstance = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.chkOverlayClickThru = new System.Windows.Forms.CheckBox();
 			this.progbOverlayTransparent = new System.Windows.Forms.ProgressBar();
 			this.btnOverlayDimming = new System.Windows.Forms.Button();
 			this.lblOverlayTransparent = new System.Windows.Forms.Label();
 			this.chkEnableOverlay = new System.Windows.Forms.CheckBox();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPagePing = new System.Windows.Forms.TabPage();
+			this.panel6 = new System.Windows.Forms.Panel();
+			this.btnPingColor2 = new System.Windows.Forms.Button();
+			this.lblPingStat4 = new System.Windows.Forms.Label();
+			this.lblPingStat2 = new System.Windows.Forms.Label();
+			this.lblPingStat3 = new System.Windows.Forms.Label();
+			this.btnPingColor4 = new System.Windows.Forms.Button();
+			this.btnPingColor1 = new System.Windows.Forms.Button();
+			this.btnPingColor3 = new System.Windows.Forms.Button();
+			this.lblPingStat1 = new System.Windows.Forms.Label();
+			this.lblPingColors = new System.Windows.Forms.Label();
+			this.chkUsePing = new System.Windows.Forms.CheckBox();
+			this.tabPagePacket = new System.Windows.Forms.TabPage();
 			this.panel5 = new System.Windows.Forms.Panel();
 			this.txtPacketDescription = new System.Windows.Forms.TextBox();
 			this.lblPacketDesc = new System.Windows.Forms.Label();
@@ -118,26 +131,31 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
+			this.tlpnPingColors = new System.Windows.Forms.TableLayoutPanel();
 			this.tabContent.SuspendLayout();
-			this.tabPage1.SuspendLayout();
+			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.tabPage2.SuspendLayout();
+			this.tabPageSetting.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
-			this.tabPage3.SuspendLayout();
+			this.tabPagePing.SuspendLayout();
+			this.panel6.SuspendLayout();
+			this.tabPagePacket.SuspendLayout();
 			this.panel5.SuspendLayout();
+			this.tlpnPingColors.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabContent
 			// 
-			this.tabContent.Controls.Add(this.tabPage1);
-			this.tabContent.Controls.Add(this.tabPage2);
-			this.tabContent.Controls.Add(this.tabPage3);
+			this.tabContent.Controls.Add(this.tabPageContent);
+			this.tabContent.Controls.Add(this.tabPageSetting);
+			this.tabContent.Controls.Add(this.tabPagePing);
+			this.tabContent.Controls.Add(this.tabPagePacket);
 			this.tabContent.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabContent.ImageList = this.ilTabContent;
 			this.tabContent.Location = new System.Drawing.Point(0, 0);
@@ -146,17 +164,17 @@ namespace DutyContent.Tab
 			this.tabContent.Size = new System.Drawing.Size(800, 502);
 			this.tabContent.TabIndex = 0;
 			// 
-			// tabPage1
+			// tabPageContent
 			// 
-			this.tabPage1.Controls.Add(this.splitContainer1);
-			this.tabPage1.ImageIndex = 0;
-			this.tabPage1.Location = new System.Drawing.Point(4, 39);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(792, 459);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "301";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			this.tabPageContent.Controls.Add(this.splitContainer1);
+			this.tabPageContent.ImageIndex = 0;
+			this.tabPageContent.Location = new System.Drawing.Point(4, 39);
+			this.tabPageContent.Name = "tabPageContent";
+			this.tabPageContent.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageContent.Size = new System.Drawing.Size(792, 459);
+			this.tabPageContent.TabIndex = 0;
+			this.tabPageContent.Text = "301";
+			this.tabPageContent.UseVisualStyleBackColor = true;
 			// 
 			// splitContainer1
 			// 
@@ -257,20 +275,20 @@ namespace DutyContent.Tab
 			this.txtContentLog.TabIndex = 0;
 			this.txtContentLog.Text = "";
 			// 
-			// tabPage2
+			// tabPageSetting
 			// 
-			this.tabPage2.Controls.Add(this.panel4);
-			this.tabPage2.Controls.Add(this.panel3);
-			this.tabPage2.Controls.Add(this.panel2);
-			this.tabPage2.Controls.Add(this.panel1);
-			this.tabPage2.ImageIndex = 1;
-			this.tabPage2.Location = new System.Drawing.Point(4, 39);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(792, 459);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "302";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			this.tabPageSetting.Controls.Add(this.panel4);
+			this.tabPageSetting.Controls.Add(this.panel3);
+			this.tabPageSetting.Controls.Add(this.panel2);
+			this.tabPageSetting.Controls.Add(this.panel1);
+			this.tabPageSetting.ImageIndex = 1;
+			this.tabPageSetting.Location = new System.Drawing.Point(4, 39);
+			this.tabPageSetting.Name = "tabPageSetting";
+			this.tabPageSetting.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageSetting.Size = new System.Drawing.Size(792, 459);
+			this.tabPageSetting.TabIndex = 1;
+			this.tabPageSetting.Text = "302";
+			this.tabPageSetting.UseVisualStyleBackColor = true;
 			// 
 			// panel4
 			// 
@@ -287,7 +305,7 @@ namespace DutyContent.Tab
 			this.panel4.Controls.Add(this.lblLineToken);
 			this.panel4.Controls.Add(this.txtLineToken);
 			this.panel4.Controls.Add(this.chkUseNotifyLine);
-			this.panel4.Location = new System.Drawing.Point(6, 273);
+			this.panel4.Location = new System.Drawing.Point(6, 234);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(778, 143);
 			this.panel4.TabIndex = 3;
@@ -429,7 +447,7 @@ namespace DutyContent.Tab
 			// 
 			this.lblDataSet.AutoSize = true;
 			this.lblDataSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblDataSet.Location = new System.Drawing.Point(22, 4);
+			this.lblDataSet.Location = new System.Drawing.Point(21, 7);
 			this.lblDataSet.Name = "lblDataSet";
 			this.lblDataSet.Size = new System.Drawing.Size(39, 20);
 			this.lblDataSet.TabIndex = 10;
@@ -449,7 +467,7 @@ namespace DutyContent.Tab
 			// 
 			this.lblLogFont.AutoSize = true;
 			this.lblLogFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblLogFont.Location = new System.Drawing.Point(381, 4);
+			this.lblLogFont.Location = new System.Drawing.Point(380, 7);
 			this.lblLogFont.Name = "lblLogFont";
 			this.lblLogFont.Size = new System.Drawing.Size(39, 20);
 			this.lblLogFont.TabIndex = 9;
@@ -469,9 +487,9 @@ namespace DutyContent.Tab
 			this.panel2.Controls.Add(this.txtSoundInstance);
 			this.panel2.Controls.Add(this.chkEnableSound);
 			this.panel2.Controls.Add(this.lblSoundInstance);
-			this.panel2.Location = new System.Drawing.Point(6, 135);
+			this.panel2.Location = new System.Drawing.Point(6, 136);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(778, 132);
+			this.panel2.Size = new System.Drawing.Size(778, 92);
 			this.panel2.TabIndex = 1;
 			// 
 			// btnSoundPlayFate
@@ -579,14 +597,27 @@ namespace DutyContent.Tab
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel1.Controls.Add(this.chkOverlayClickThru);
 			this.panel1.Controls.Add(this.progbOverlayTransparent);
 			this.panel1.Controls.Add(this.btnOverlayDimming);
 			this.panel1.Controls.Add(this.lblOverlayTransparent);
 			this.panel1.Controls.Add(this.chkEnableOverlay);
 			this.panel1.Location = new System.Drawing.Point(6, 68);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(778, 61);
+			this.panel1.Size = new System.Drawing.Size(778, 62);
 			this.panel1.TabIndex = 0;
+			// 
+			// chkOverlayClickThru
+			// 
+			this.chkOverlayClickThru.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkOverlayClickThru.AutoSize = true;
+			this.chkOverlayClickThru.Location = new System.Drawing.Point(672, 8);
+			this.chkOverlayClickThru.Name = "chkOverlayClickThru";
+			this.chkOverlayClickThru.Size = new System.Drawing.Size(44, 17);
+			this.chkOverlayClickThru.TabIndex = 4;
+			this.chkOverlayClickThru.Text = "104";
+			this.chkOverlayClickThru.UseVisualStyleBackColor = true;
+			this.chkOverlayClickThru.CheckedChanged += new System.EventHandler(this.ChkOverlayClickThru_CheckedChanged);
 			// 
 			// progbOverlayTransparent
 			// 
@@ -632,17 +663,150 @@ namespace DutyContent.Tab
 			this.chkEnableOverlay.UseVisualStyleBackColor = true;
 			this.chkEnableOverlay.CheckedChanged += new System.EventHandler(this.ChkEnableOverlay_CheckedChanged);
 			// 
-			// tabPage3
+			// tabPagePing
 			// 
-			this.tabPage3.Controls.Add(this.panel5);
-			this.tabPage3.ImageIndex = 2;
-			this.tabPage3.Location = new System.Drawing.Point(4, 39);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(792, 459);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "303";
-			this.tabPage3.UseVisualStyleBackColor = true;
+			this.tabPagePing.Controls.Add(this.panel6);
+			this.tabPagePing.ImageIndex = 3;
+			this.tabPagePing.Location = new System.Drawing.Point(4, 39);
+			this.tabPagePing.Name = "tabPagePing";
+			this.tabPagePing.Size = new System.Drawing.Size(792, 459);
+			this.tabPagePing.TabIndex = 3;
+			this.tabPagePing.Text = "327";
+			this.tabPagePing.UseVisualStyleBackColor = true;
+			// 
+			// panel6
+			// 
+			this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel6.Controls.Add(this.tlpnPingColors);
+			this.panel6.Controls.Add(this.lblPingColors);
+			this.panel6.Controls.Add(this.chkUsePing);
+			this.panel6.Location = new System.Drawing.Point(6, 8);
+			this.panel6.Name = "panel6";
+			this.panel6.Size = new System.Drawing.Size(778, 353);
+			this.panel6.TabIndex = 1;
+			// 
+			// btnPingColor2
+			// 
+			this.btnPingColor2.BackColor = System.Drawing.Color.Aqua;
+			this.btnPingColor2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnPingColor2.Location = new System.Drawing.Point(97, 28);
+			this.btnPingColor2.Name = "btnPingColor2";
+			this.btnPingColor2.Size = new System.Drawing.Size(85, 28);
+			this.btnPingColor2.TabIndex = 10;
+			this.btnPingColor2.UseVisualStyleBackColor = false;
+			this.btnPingColor2.Click += new System.EventHandler(this.BtnPingColor2_Click);
+			// 
+			// lblPingStat4
+			// 
+			this.lblPingStat4.AutoSize = true;
+			this.lblPingStat4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblPingStat4.Location = new System.Drawing.Point(279, 3);
+			this.lblPingStat4.Name = "lblPingStat4";
+			this.lblPingStat4.Size = new System.Drawing.Size(86, 22);
+			this.lblPingStat4.TabIndex = 3;
+			this.lblPingStat4.Text = "333";
+			this.lblPingStat4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// lblPingStat2
+			// 
+			this.lblPingStat2.AutoSize = true;
+			this.lblPingStat2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblPingStat2.Location = new System.Drawing.Point(97, 3);
+			this.lblPingStat2.Name = "lblPingStat2";
+			this.lblPingStat2.Size = new System.Drawing.Size(85, 22);
+			this.lblPingStat2.TabIndex = 5;
+			this.lblPingStat2.Text = "331";
+			this.lblPingStat2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// lblPingStat3
+			// 
+			this.lblPingStat3.AutoSize = true;
+			this.lblPingStat3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblPingStat3.Location = new System.Drawing.Point(188, 3);
+			this.lblPingStat3.Name = "lblPingStat3";
+			this.lblPingStat3.Size = new System.Drawing.Size(85, 22);
+			this.lblPingStat3.TabIndex = 4;
+			this.lblPingStat3.Text = "332";
+			this.lblPingStat3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// btnPingColor4
+			// 
+			this.btnPingColor4.BackColor = System.Drawing.Color.Plum;
+			this.btnPingColor4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnPingColor4.Location = new System.Drawing.Point(279, 28);
+			this.btnPingColor4.Name = "btnPingColor4";
+			this.btnPingColor4.Size = new System.Drawing.Size(86, 28);
+			this.btnPingColor4.TabIndex = 8;
+			this.btnPingColor4.UseVisualStyleBackColor = false;
+			this.btnPingColor4.Click += new System.EventHandler(this.BtnPingColor4_Click);
+			// 
+			// btnPingColor1
+			// 
+			this.btnPingColor1.BackColor = System.Drawing.Color.RoyalBlue;
+			this.btnPingColor1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnPingColor1.Location = new System.Drawing.Point(6, 28);
+			this.btnPingColor1.Name = "btnPingColor1";
+			this.btnPingColor1.Size = new System.Drawing.Size(85, 28);
+			this.btnPingColor1.TabIndex = 7;
+			this.btnPingColor1.UseVisualStyleBackColor = false;
+			this.btnPingColor1.Click += new System.EventHandler(this.BtnPingColor1_Click);
+			// 
+			// btnPingColor3
+			// 
+			this.btnPingColor3.BackColor = System.Drawing.Color.LawnGreen;
+			this.btnPingColor3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnPingColor3.Location = new System.Drawing.Point(188, 28);
+			this.btnPingColor3.Name = "btnPingColor3";
+			this.btnPingColor3.Size = new System.Drawing.Size(85, 28);
+			this.btnPingColor3.TabIndex = 9;
+			this.btnPingColor3.UseVisualStyleBackColor = false;
+			this.btnPingColor3.Click += new System.EventHandler(this.BtnPingColor3_Click);
+			// 
+			// lblPingStat1
+			// 
+			this.lblPingStat1.AutoSize = true;
+			this.lblPingStat1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblPingStat1.Location = new System.Drawing.Point(6, 3);
+			this.lblPingStat1.Name = "lblPingStat1";
+			this.lblPingStat1.Size = new System.Drawing.Size(85, 22);
+			this.lblPingStat1.TabIndex = 6;
+			this.lblPingStat1.Text = "330";
+			this.lblPingStat1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// lblPingColors
+			// 
+			this.lblPingColors.AutoSize = true;
+			this.lblPingColors.Location = new System.Drawing.Point(23, 35);
+			this.lblPingColors.Name = "lblPingColors";
+			this.lblPingColors.Size = new System.Drawing.Size(25, 13);
+			this.lblPingColors.TabIndex = 2;
+			this.lblPingColors.Text = "329";
+			// 
+			// chkUsePing
+			// 
+			this.chkUsePing.AutoSize = true;
+			this.chkUsePing.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.chkUsePing.Location = new System.Drawing.Point(3, 3);
+			this.chkUsePing.Name = "chkUsePing";
+			this.chkUsePing.Size = new System.Drawing.Size(58, 24);
+			this.chkUsePing.TabIndex = 0;
+			this.chkUsePing.Text = "328";
+			this.chkUsePing.UseVisualStyleBackColor = true;
+			this.chkUsePing.CheckedChanged += new System.EventHandler(this.ChkUsePing_CheckedChanged);
+			// 
+			// tabPagePacket
+			// 
+			this.tabPagePacket.Controls.Add(this.panel5);
+			this.tabPagePacket.ImageIndex = 2;
+			this.tabPagePacket.Location = new System.Drawing.Point(4, 39);
+			this.tabPagePacket.Name = "tabPagePacket";
+			this.tabPagePacket.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPagePacket.Size = new System.Drawing.Size(792, 459);
+			this.tabPagePacket.TabIndex = 2;
+			this.tabPagePacket.Text = "303";
+			this.tabPagePacket.UseVisualStyleBackColor = true;
 			// 
 			// panel5
 			// 
@@ -833,6 +997,31 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(0, "pix_tab_content.png");
 			this.ilTabContent.Images.SetKeyName(1, "pix_tab_setting.png");
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
+			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
+			// 
+			// tlpnPingColors
+			// 
+			this.tlpnPingColors.ColumnCount = 4;
+			this.tlpnPingColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpnPingColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpnPingColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpnPingColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpnPingColors.Controls.Add(this.lblPingStat1, 0, 0);
+			this.tlpnPingColors.Controls.Add(this.btnPingColor4, 3, 1);
+			this.tlpnPingColors.Controls.Add(this.btnPingColor2, 1, 1);
+			this.tlpnPingColors.Controls.Add(this.btnPingColor3, 2, 1);
+			this.tlpnPingColors.Controls.Add(this.lblPingStat2, 1, 0);
+			this.tlpnPingColors.Controls.Add(this.lblPingStat4, 3, 0);
+			this.tlpnPingColors.Controls.Add(this.btnPingColor1, 0, 1);
+			this.tlpnPingColors.Controls.Add(this.lblPingStat3, 2, 0);
+			this.tlpnPingColors.Location = new System.Drawing.Point(36, 51);
+			this.tlpnPingColors.Name = "tlpnPingColors";
+			this.tlpnPingColors.Padding = new System.Windows.Forms.Padding(3);
+			this.tlpnPingColors.RowCount = 2;
+			this.tlpnPingColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+			this.tlpnPingColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+			this.tlpnPingColors.Size = new System.Drawing.Size(371, 62);
+			this.tlpnPingColors.TabIndex = 11;
 			// 
 			// DutyForm
 			// 
@@ -845,13 +1034,13 @@ namespace DutyContent.Tab
 			this.Text = "Duty";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DutyTabForm_FormClosing);
 			this.tabContent.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
+			this.tabPageContent.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.PerformLayout();
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			this.tabPage2.ResumeLayout(false);
+			this.tabPageSetting.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
 			this.panel4.PerformLayout();
 			this.panel3.ResumeLayout(false);
@@ -860,9 +1049,14 @@ namespace DutyContent.Tab
 			this.panel2.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
-			this.tabPage3.ResumeLayout(false);
+			this.tabPagePing.ResumeLayout(false);
+			this.panel6.ResumeLayout(false);
+			this.panel6.PerformLayout();
+			this.tabPagePacket.ResumeLayout(false);
 			this.panel5.ResumeLayout(false);
 			this.panel5.PerformLayout();
+			this.tlpnPingColors.ResumeLayout(false);
+			this.tlpnPingColors.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -870,9 +1064,9 @@ namespace DutyContent.Tab
 		#endregion
 
 		private System.Windows.Forms.TabControl tabContent;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabPage tabPageContent;
+		private System.Windows.Forms.TabPage tabPageSetting;
+		private System.Windows.Forms.TabPage tabPagePacket;
 		private System.Windows.Forms.ImageList ilTabContent;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TreeView treeFates;
@@ -931,5 +1125,19 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.TextBox txtPacketDescription;
 		private System.Windows.Forms.Label lblPacketDesc;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
+		private System.Windows.Forms.CheckBox chkOverlayClickThru;
+		private System.Windows.Forms.TabPage tabPagePing;
+		private System.Windows.Forms.Panel panel6;
+		private System.Windows.Forms.Label lblPingColors;
+		private System.Windows.Forms.CheckBox chkUsePing;
+		private System.Windows.Forms.Button btnPingColor2;
+		private System.Windows.Forms.Label lblPingStat4;
+		private System.Windows.Forms.Label lblPingStat2;
+		private System.Windows.Forms.Label lblPingStat3;
+		private System.Windows.Forms.Button btnPingColor4;
+		private System.Windows.Forms.Button btnPingColor1;
+		private System.Windows.Forms.Button btnPingColor3;
+		private System.Windows.Forms.Label lblPingStat1;
+		private System.Windows.Forms.TableLayoutPanel tlpnPingColors;
 	}
 }

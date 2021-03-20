@@ -79,7 +79,7 @@ namespace DutyContent.Properties {
         ///12=Unknown FATE: {0}
         ///13=Data reading failed!
         ///14=Data file not found! {0}
-        ///20=Duty contents info: {0}({1}) / A:{2} / R:{3} / I:{4} / F:{5} ({6})
+        ///20=Duty contents info: {1}({0}) / A:{2} / R:{3} / I:{4} / F:{5} ({6})
         ///21=Roulette
         ///22=Instance
         ///23=FATE
@@ -128,6 +128,16 @@ namespace DutyContent.Properties {
         internal static System.Drawing.Bitmap pix_tab_content {
             get {
                 object obj = ResourceManager.GetObject("pix_tab_content", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap pix_tab_ping {
+            get {
+                object obj = ResourceManager.GetObject("pix_tab_ping", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

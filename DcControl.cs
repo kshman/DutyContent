@@ -24,8 +24,10 @@ namespace DutyContent
 		private TabPage _act_tab;
 		private Label _act_label;
 
-		private Timer _update_and_check;
+		private System.Timers.Timer _save_timer;
+		private System.Timers.Timer _update_timer;
 		private ThirdParty.NativeMethods.ProcessHandle _game_process;
+		private long _game_connection_tick = DateTime.Now.Ticks;
 		private bool _game_exist;
 		private bool _game_active;
 		private string _game_zone;
@@ -104,22 +106,27 @@ namespace DutyContent
 				MesgLog.I(6, System.Diagnostics.FileVersionInfo.GetVersionInfo(_ffxiv_plugin_data.pluginFile.FullName).FileVersion, _ffxiv_plugin_data.pluginFile.FullName);
 			}
 
-			_update_and_check = new Timer()
-			{
-				Interval = 300,
-			};
-			_update_and_check.Tick += (sender, e) =>
+			_save_timer = new System.Timers.Timer() { Interval = 5000 };
+			_save_timer.Elapsed += (sender, e) =>
+			  {
+				  DcConfig.SaveConfig();
+				  _save_timer.Enabled = false;
+			  };
+
+			_update_timer = new System.Timers.Timer() { Interval = 300 };
+			_update_timer.Elapsed += (sender, e) =>
 			  {
 				  UpdateAndCheckProc();
-				  _update_and_check.Interval = _game_exist ? _game_active ? 50 : 300 : 500;
+				  _update_timer.Interval = _game_exist ? _game_active ? 50 : 300 : 500;
 			  };
-			_update_and_check.Start();
+			_update_timer.Start();
 		}
 
 		//
 		public void DeInitPlugin()
 		{
-			_update_and_check.Stop();
+			_update_timer.Stop();
+			_save_timer.Stop();
 
 			DcConfig.PluginEnable = false;
 
@@ -156,6 +163,8 @@ namespace DutyContent
 			//
 			MesgLog.SetTextBox(txtMesg);
 			MesgLog.Initialize(Properties.Resources.DefaultMessage);
+
+			MesgLog.C(Color.Aquamarine, 4);
 
 			DcConfig.Load();
 			DcConfig.ReadLanguage(true);
@@ -221,6 +230,14 @@ namespace DutyContent
 		}
 
 		//
+		public void RefreshSaveConfig(int interval=5000)
+		{
+			_save_timer.Enabled = false;
+			_save_timer.Interval = interval;
+			_save_timer.Start();
+		}
+
+		//
 		private void UpdateAndCheckProc()
 		{
 			if (_game_process == null || _game_process.Process.HasExited)
@@ -239,21 +256,26 @@ namespace DutyContent
 				{
 					_game_process = p != null ? new ThirdParty.NativeMethods.ProcessHandle(p) : null;
 				}
-
-				if (_game_process != null)
-				{
-					//
-					DcConfig.Connections.GetConnections(_game_process.Process);
-					//MesgLog.L("count: {0}", DcConfig.Connections.Conns.Count);
-				}
 			}
 			else
 			{
 				_game_exist = true;
 
+				//
 				var fgw = ThirdParty.NativeMethods.GetForegroundWindow();
 				ThirdParty.NativeMethods.GetWindowThreadProcessId(fgw, out int id);
 				_game_active = _game_process.Process.Id == id;
+
+				//
+				var now = DateTime.Now.Ticks;
+				var delta = now - _game_connection_tick;
+				var span = new TimeSpan(delta);
+
+				if (span.TotalSeconds > 2)
+				{
+					_game_connection_tick = now;
+					DcConfig.Connections.GetConnections(_game_process.Process);
+				}
 			}
 
 			var zone = ActGlobals.oFormActMain.CurrentZone;
@@ -292,7 +314,7 @@ namespace DutyContent
 			tabPageDuty.Text = MesgLog.Text(300);
 			Tab.DutyForm.Self?.UpdateUiLocale();
 
-			tabPageConfig.Text= MesgLog.Text(200);
+			tabPageConfig.Text = MesgLog.Text(200);
 			Tab.ConfigForm.Self?.UpdateUiLocale();
 		}
 	}

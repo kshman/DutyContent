@@ -29,10 +29,11 @@ LANG=English
 101=Select wave file
 102=Wave (*.wav)|*.wav|All (*.*)|*.*
 103=Notify test!!
+104=Clickthrough
 
 200=Config
 201=Display Language
-202=Hide overlays when FFXIV client is in the background
+202=Automatically hide overlay when client is in the background
 
 300=Duty
 301=Contents
@@ -61,6 +62,13 @@ LANG=English
 324=Status
 325=Member
 326=Progress
+327=Ping
+328=Use ping
+329=Colors
+330=Excellent
+331=Good
+332=Normal
+333=Bad
 
 10001="{0}" spawned!
 10002=Entry: {0}

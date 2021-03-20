@@ -10,8 +10,6 @@ namespace DutyContent.ThirdParty
 		private Dictionary<string, string> _dbstr = new Dictionary<string, string>();
 		private Dictionary<int, string> _dbint = new Dictionary<int, string>();
 
-		public static string InvalidKey = "<invalid>";
-
 		public LineDb(string ctx, bool useintdb)
 		{
 			LoadString(ctx, useintdb, false);
@@ -140,15 +138,25 @@ namespace DutyContent.ThirdParty
 
 		public string Get(string name)
 		{
-			if (!_dbstr.TryGetValue(name, out string value))
-				return name;
-			return value;
+			return Get(name, string.Empty);
 		}
 
 		public string Get(int key)
 		{
+			return Get(key, string.Empty);
+		}
+
+		public string Get(string name, string defvalue)
+		{
+			if (!_dbstr.TryGetValue(name, out string value))
+				return defvalue;
+			return value;
+		}
+
+		public string Get(int key, string defvalue)
+		{
 			if (!_dbint.TryGetValue(key, out string value))
-				return InvalidKey;
+				return defvalue;
 			return value;
 		}
 
@@ -208,7 +216,7 @@ namespace DutyContent.ThirdParty
 		{
 			get
 			{
-				return Try(index, out string v) ? v : "";
+				return Try(index, out string v) ? v : string.Empty;
 			}
 		}
 
@@ -216,7 +224,7 @@ namespace DutyContent.ThirdParty
 		{
 			get
 			{
-				return Try(key, out string v) ? v : "";
+				return Try(key, out string v) ? v : string.Empty;
 			}
 		}
 	}

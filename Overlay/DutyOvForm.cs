@@ -56,6 +56,9 @@ namespace DutyContent.Overlay
 
 		private void DoMoveDown(MouseEventArgs e)
 		{
+			if (DcConfig.Duty.OverlayClickThru)
+				return;
+
 			if (e.Button == MouseButtons.Left)
 			{
 				ThirdParty.NativeMethods.ReleaseCapture();
@@ -65,6 +68,9 @@ namespace DutyContent.Overlay
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			if (DcConfig.Duty.OverlayClickThru)
+				return;
+
 			base.OnMouseDown(e);
 			DoMoveDown(e);
 		}
@@ -131,7 +137,7 @@ namespace DutyContent.Overlay
 			}));
 		}
 
-		public void PlayMatch(string name, bool blink = true)	// PlayEnter
+		public void PlayMatch(string name, bool blink = true)   // PlayEnter
 		{
 			Invoke((MethodInvoker)(() =>
 			{
@@ -139,6 +145,25 @@ namespace DutyContent.Overlay
 				lblText.Text = name;
 				if (blink)
 					StartBlink();
+			}));
+		}
+
+		public void ResetStat()
+		{
+			lblStat.BackColor = Color.Transparent;
+			lblStat.Text = string.Empty;
+		}
+
+		public void SetStatPing(Color color, long rtt, double loss)
+		{
+			Invoke((MethodInvoker)(() =>
+			{
+				if (rtt > 999)
+					rtt = 999;
+
+				lblStat.Text = string.Format("{0}{1}{2:0.#}%", rtt, Environment.NewLine, loss);
+				lblStat.BackColor = color;
+				//lblStat.ForeColor = Color.FromArgb(255 - color.R, 255 - color.G, 255 - color.B);
 			}));
 		}
 	}

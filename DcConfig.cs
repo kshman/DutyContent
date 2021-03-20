@@ -151,24 +151,37 @@ namespace DutyContent
 			public int ActiveFate { get; set; } = 0;
 			public string LogFontFamily { get; set; } = "Microsoft Sans Serif";
 			public float LogFontSize { get; set; } = 12.0f;
+
 			public bool EnableOverlay { get; set; }
+			public Point OverlayLocation { get; set; } = new Point(0, 0);
+			public bool OverlayClickThru { get; set; }
+
 			public bool EnableSound { get; set; }
 			public string SoundInstanceFile { get; set; }
 			public int SoundInstanceVolume { get; set; } = 100;
 			public string SoundFateFile { get; set; }
 			public int SoundFateVolume { get; set; } = 100;
+
 			public bool UseNotifyLine { get; set; }
 			public string NotifyLineToken { get; set; }
 			public bool UseNotifyTelegram { get; set; }
 			public string NotifyTelegramId { get; set; }
 			public string NotifyTelegramToken { get; set; }
-			public Point OverlayLocation { get; set; } = new Point(0, 0);
+
+			public bool UsePing { get; set; }
+			public Color[] PingColors { get; set; } = new Color[4]
+			{
+				Color.FromArgb(0xFF, 0x00, 0x00, 0x40),
+				Color.FromArgb(0xFF, 0x40, 0x00, 0x80),
+				Color.FromArgb(0xFF, 0x80, 0x40, 0x00),
+				Color.FromArgb(0xFF, 0xDD, 0xA0, 0xDD),
+			};
 
 			//
 			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram;
 
 			//
-			public FateSelection[] Fates = new FateSelection[4]
+			public FateSelection[] Fates { get; set; } = new FateSelection[4]
 			{
 				new FateSelection(0),
 				new FateSelection(1),
@@ -186,21 +199,32 @@ namespace DutyContent
 				sw.WriteLine("DutyFate1={0}", Fates[1].Line);
 				sw.WriteLine("DutyFate2={0}", Fates[2].Line);
 				sw.WriteLine("DutyFate3={0}", Fates[3].Line);
+
 				sw.WriteLine("DutyLogFontFamily={0}", LogFontFamily);
 				sw.WriteLine("DutyLogFontSize={0}", LogFontSize);
+
 				sw.WriteLine("DutyEnableOverlay={0}", EnableOverlay);
+				sw.WriteLine("DutyOverlayLocationX={0}", OverlayLocation.X);
+				sw.WriteLine("DutyOverlayLocationY={0}", OverlayLocation.Y);
+				sw.WriteLine("DutyOverlayClickThru={0}", OverlayClickThru);
+
 				sw.WriteLine("DutyEnableSound={0}", EnableSound);
 				sw.WriteLine("DutySoundInstanceFile={0}", SoundInstanceFile);
 				sw.WriteLine("DutySoundInstanceVolume={0}", SoundInstanceVolume);
 				sw.WriteLine("DutySoundFateFile={0}", SoundFateFile);
 				sw.WriteLine("DutySoundFateVolume={0}", SoundFateVolume);
+
 				sw.WriteLine("DutyUseNotifyLine={0}", UseNotifyLine);
 				sw.WriteLine("DutyNotifyLineToken={0}", NotifyLineToken);
 				sw.WriteLine("DutyUseNotifyTelegram={0}", UseNotifyTelegram);
 				sw.WriteLine("DutyNotifyTelegramId={0}", NotifyTelegramId);
 				sw.WriteLine("DutyNotifyTelegramToken={0}", NotifyTelegramToken);
-				sw.WriteLine("DutyOverlayLocationX={0}", OverlayLocation.X);
-				sw.WriteLine("DutyOverlayLocationY={0}", OverlayLocation.Y);
+
+				sw.WriteLine("DutyUsePing={0}", UsePing);
+				sw.WriteLine("DutyPingColor0={0:X}", PingColors[0].ToArgb());
+				sw.WriteLine("DutyPingColor1={0:X}", PingColors[1].ToArgb());
+				sw.WriteLine("DutyPingColor2={0:X}", PingColors[2].ToArgb());
+				sw.WriteLine("DutyPingColor3={0:X}", PingColors[3].ToArgb());
 				sw.WriteLine();
 			}
 
@@ -213,20 +237,33 @@ namespace DutyContent
 				Fates[1].Line = db["DutyFate1"];
 				Fates[2].Line = db["DutyFate2"];
 				Fates[3].Line = db["DutyFate3"];
-				LogFontFamily = db["DutyLogFontFamily"];
+
+				LogFontFamily = db.Get("DutyLogFontFamily", LogFontFamily);
 				LogFontSize = ThirdParty.Converter.ToFloat(db["DutyLogFontSize"], LogFontSize);
+
 				EnableOverlay = ThirdParty.Converter.ToBool(db["DutyEnableOverlay"]);
+				OverlayLocation = new Point(
+					ThirdParty.Converter.ToInt(db["DutyOverlayLocationX"]),
+					ThirdParty.Converter.ToInt(db["DutyOverlayLocationY"]));
+				OverlayClickThru = ThirdParty.Converter.ToBool(db["DutyOverlayClickThru"]);
+
 				EnableSound = ThirdParty.Converter.ToBool(db["DutyEnableSound"]);
 				SoundInstanceFile = db["DutySoundInstanceFile"];
 				SoundFateFile = db["DutySoundFateFile"];
 				SoundInstanceVolume = ThirdParty.Converter.ToInt(db["DutySoundInstanceVolume"], 100);
 				SoundFateVolume = ThirdParty.Converter.ToInt(db["DutySoundFateVolume"], 100);
+
 				UseNotifyLine = ThirdParty.Converter.ToBool(db["DutyUseNotifyLine"]);
 				NotifyLineToken = db["DutyNotifyLineToken"];
 				UseNotifyTelegram = ThirdParty.Converter.ToBool(db["DutyUseNotifyTelegram"]);
 				NotifyTelegramId = db["DutyNotifyTelegramId"];
 				NotifyTelegramToken = db["DutyNotifyTelegramToken"];
-				OverlayLocation = new Point(ThirdParty.Converter.ToInt(db["DutyOverlayLocationX"]), ThirdParty.Converter.ToInt(db["DutyOverlayLocationY"]));
+
+				UsePing = ThirdParty.Converter.ToBool(db["DutyUsePing"]);
+				PingColors[0] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor0"], PingColors[0]);
+				PingColors[1] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor1"], PingColors[1]);
+				PingColors[2] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor2"], PingColors[2]);
+				PingColors[3] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor3"], PingColors[3]);
 			}
 		}
 
@@ -266,21 +303,33 @@ namespace DutyContent
 		{
 			public List<ThirdParty.NativeMethods.TcpRow> Conns = new List<ThirdParty.NativeMethods.TcpRow>();
 
+			public ThirdParty.NativeMethods.TcpRow[] CopyConnection()
+			{
+				ThirdParty.NativeMethods.TcpRow[] ret;
+
+				lock (Conns)
+					ret = Conns.ToArray();
+
+				return ret;
+			}
+
 			public void GetConnections(Process process)
 			{
-				Conns.Clear();
-
 				var size = 0;
-				var ret = ThirdParty.NativeMethods.GetExtendedTcpTable(IntPtr.Zero, ref size, true, AddressFamily.InterNetwork, 4);
+				ThirdParty.NativeMethods.GetExtendedTcpTable(IntPtr.Zero, ref size, true, AddressFamily.InterNetwork, 4);
+
 				var buff = Marshal.AllocHGlobal(size);
 
 				try
 				{
-					ret = ThirdParty.NativeMethods.GetExtendedTcpTable(buff, ref size, true, AddressFamily.InterNetwork, 4);
+					var ret = ThirdParty.NativeMethods.GetExtendedTcpTable(buff, ref size, true, AddressFamily.InterNetwork, 4);
 					if (ret == 0)
 					{
 						var tbl = Marshal.PtrToStructure<ThirdParty.NativeMethods.TcpTable>(buff);
 						var ptr = (IntPtr)((long)buff + Marshal.SizeOf(tbl.entries));
+
+						var rows = new ThirdParty.NativeMethods.TcpRow[tbl.entries];
+						var rcnt = 0;
 
 						for (var i = 0; i < tbl.entries; i++)
 						{
@@ -288,10 +337,22 @@ namespace DutyContent
 
 							if (!IPAddress.IsLoopback(row.RemoteAddress) &&
 								process.Id == row.owningPid)
-								Conns.Add(row);
+								rows[rcnt++] = row;
 
 							ptr = (IntPtr)((long)ptr + Marshal.SizeOf(row));
 						}
+
+						lock (Conns)
+						{
+							Conns.Clear();
+							for (var i = 0; i < rcnt; i++)
+								Conns.Add(rows[i]);
+						}
+					}
+					else
+					{
+						lock (Conns)
+							Conns.Clear();
 					}
 				}
 				finally

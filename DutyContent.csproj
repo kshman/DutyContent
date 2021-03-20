@@ -96,6 +96,7 @@
     <Compile Include="ThirdParty\Converter.cs" />
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
+    <Compile Include="ThirdParty\ThreadWorker.cs" />
     <Compile Include="WorkerAct.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\DcLang-Japanese.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_tab_ping.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
