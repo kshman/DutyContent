@@ -1332,64 +1332,45 @@ namespace DutyContent.Tab
 			}
 		}
 
-		private Color PingColorSelectDialog(Color current)
+		private void PingColorWorker(int index, Button button)
 		{
 			Color color = (Color)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
-			  {
-				  var dg = new ColorDialog()
-				  {
-					  AnyColor = true,
-					  Color = current,
-				  };
+			{
+				var dg = new ColorDialog()
+				{
+					AnyColor = true,
+					Color = DcConfig.Duty.PingColors[index],
+				};
 
-				  return dg.ShowDialog() == DialogResult.OK ? dg.Color : current;
-			  }));
+				return dg.ShowDialog() == DialogResult.OK ? dg.Color : DcConfig.Duty.PingColors[index];
+			}));
 
-			return color;
+			if (DcConfig.Duty.PingColors[index] != color)
+			{
+				button.BackColor = color;
+				DcConfig.Duty.PingColors[index] = color;
+				SaveConfig();
+			}
 		}
 
 		private void BtnPingColor1_Click(object sender, EventArgs e)
 		{
-			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[0]);
-			if (DcConfig.Duty.PingColors[0] != ret)
-			{
-				btnPingColor1.BackColor = ret;
-				DcConfig.Duty.PingColors[0] = ret;
-				SaveConfig();
-			}
+			PingColorWorker(0, btnPingColor1);
 		}
 
 		private void BtnPingColor2_Click(object sender, EventArgs e)
 		{
-			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[1]);
-			if (DcConfig.Duty.PingColors[1] != ret)
-			{
-				btnPingColor2.BackColor = ret;
-				DcConfig.Duty.PingColors[1] = ret;
-				SaveConfig();
-			}
+			PingColorWorker(1, btnPingColor2);
 		}
 
 		private void BtnPingColor3_Click(object sender, EventArgs e)
 		{
-			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[2]);
-			if (DcConfig.Duty.PingColors[2] != ret)
-			{
-				btnPingColor3.BackColor = ret;
-				DcConfig.Duty.PingColors[2] = ret;
-				SaveConfig();
-			}
+			PingColorWorker(2, btnPingColor3);
 		}
 
 		private void BtnPingColor4_Click(object sender, EventArgs e)
 		{
-			var ret = PingColorSelectDialog(DcConfig.Duty.PingColors[2]);
-			if (DcConfig.Duty.PingColors[2] != ret)
-			{
-				btnPingColor4.BackColor = ret;
-				DcConfig.Duty.PingColors[2] = ret;
-				SaveConfig();
-			}
+			PingColorWorker(3, btnPingColor4);
 		}
 
 		//
@@ -1400,20 +1381,23 @@ namespace DutyContent.Tab
 
 			var conns = DcConfig.Connections.CopyConnection();
 			if (conns.Length == 0)
+			{
+				_overlay.ResetStat();
 				return;
+			}
 
 			long rtt = 0;
 			double loss = 0.0;
 
 			foreach (var row in conns)
 			{
-				var p = CalcPing(row.RemoteAddress);
+				var (Rtt, Loss) = CalcPing(row.RemoteAddress);
 
-				if (rtt < p.Rtt)
-					rtt = p.Rtt;
+				if (rtt < Rtt)
+					rtt = Rtt;
 
-				if (loss < p.Loss)
-					loss = p.Loss;
+				if (loss < Loss)
+					loss = Loss;
 			}
 
 			//MesgLog.L("Ping: {0}, {1}%", rtt, loss);
