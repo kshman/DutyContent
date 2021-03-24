@@ -176,6 +176,7 @@ namespace DutyContent
 				Color.FromArgb(0xFF, 0x80, 0x40, 0x00),
 				Color.FromArgb(0xFF, 0xDD, 0xA0, 0xDD),
 			};
+			public bool PingGraph { get; set; }
 
 			//
 			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram;
@@ -225,6 +226,7 @@ namespace DutyContent
 				sw.WriteLine("DutyPingColor1={0:X}", PingColors[1].ToArgb());
 				sw.WriteLine("DutyPingColor2={0:X}", PingColors[2].ToArgb());
 				sw.WriteLine("DutyPingColor3={0:X}", PingColors[3].ToArgb());
+				sw.WriteLine("DutyPingGraph={0}", PingGraph);
 				sw.WriteLine();
 			}
 
@@ -264,6 +266,7 @@ namespace DutyContent
 				PingColors[1] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor1"], PingColors[1]);
 				PingColors[2] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor2"], PingColors[2]);
 				PingColors[3] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor3"], PingColors[3]);
+				PingGraph = ThirdParty.Converter.ToBool(db["DutyPingGraph"]);
 			}
 		}
 

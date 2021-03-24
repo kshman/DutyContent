@@ -69,6 +69,7 @@ LANG=English
 331=Good
 332=Normal
 333=Bad
+334=Show Graph
 
 10001="{0}" spawned!
 10002=Entry: {0}

@@ -31,6 +31,8 @@ namespace DutyContent.Tab
 		private System.Timers.Timer _ping_timer;
 		private long _ping_last;
 		private Color _ping_color = Color.Transparent;
+		private ThirdParty.FastGraphLine _ping_graph;
+		private List<int> _ping_keeps = new List<int>();
 
 		public DutyForm()
 		{
@@ -39,6 +41,7 @@ namespace DutyContent.Tab
 			InitializeComponent();
 
 			_overlay = new Overlay.DutyOvForm();
+			_ping_graph = new ThirdParty.FastGraphLine(pbxPingGraph);
 		}
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -115,6 +118,7 @@ namespace DutyContent.Tab
 			btnPingColor2.BackColor = DcConfig.Duty.PingColors[1];
 			btnPingColor3.BackColor = DcConfig.Duty.PingColors[2];
 			btnPingColor4.BackColor = DcConfig.Duty.PingColors[3];
+			chkPingGraph.Checked = DcConfig.Duty.PingGraph;
 
 			//
 			switch (DcConfig.Duty.ActiveFate)
@@ -219,6 +223,7 @@ namespace DutyContent.Tab
 			lblPingStat2.Text = MesgLog.Text(331);
 			lblPingStat3.Text = MesgLog.Text(332);
 			lblPingStat4.Text = MesgLog.Text(333);
+			chkPingGraph.Text = MesgLog.Text(334);
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -1324,7 +1329,10 @@ namespace DutyContent.Tab
 			SaveConfig();
 
 			if (chkUsePing.Checked)
+			{
+				PingOnce();
 				_ping_timer.Start();
+			}
 			else
 			{
 				_ping_timer.Stop();
@@ -1373,10 +1381,20 @@ namespace DutyContent.Tab
 			PingColorWorker(3, btnPingColor4);
 		}
 
+		private void chkPingGraph_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.PingGraph = chkPingGraph.Checked;
+
+			SaveConfig();
+		}
+
 		//
 		private void PingOnce()
 		{
-			if (!DcConfig.PluginEnable)
+			if (!DcConfig.PluginEnable || !DcConfig.Duty.UsePing)
 				return;
 
 			var conns = DcConfig.Connections.CopyConnection();
@@ -1419,11 +1437,25 @@ namespace DutyContent.Tab
 
 				_overlay.SetStatPing(color, rtt, loss);
 			}
+
+			//
+			if (DcConfig.Duty.PingGraph)
+			{
+				_ping_keeps.Add((int)rtt);
+				if (_ping_keeps.Count > 100)
+					_ping_keeps.Remove(0);
+
+				_ping_graph.Enter();
+				_ping_graph.SetValues(_ping_keeps);
+				WorkerAct.Invoker(() => _ping_graph.Leave());
+			}
 		}
 
-		private static PingOptions _ping_options = new PingOptions { DontFragment = true };
-		private static byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
-		private static int _ping_timerout = 120;
+		// http://forum.codecall.net/topic/37643-c-packet-lossping-program/
+
+		private static readonly PingOptions _ping_options = new PingOptions { DontFragment = true };
+		private static readonly byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
+		private static readonly int _ping_timerout = 120;
 
 		//
 		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 6)
