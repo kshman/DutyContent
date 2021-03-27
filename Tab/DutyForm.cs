@@ -31,7 +31,7 @@ namespace DutyContent.Tab
 		private System.Timers.Timer _ping_timer;
 		private long _ping_last;
 		private Color _ping_color = Color.Transparent;
-		private ThirdParty.FastGraphLine _ping_graph;
+		private Libre.PingGrapher _ping_grpr;
 		private List<int> _ping_keeps = new List<int>();
 
 		public DutyForm()
@@ -41,7 +41,8 @@ namespace DutyContent.Tab
 			InitializeComponent();
 
 			_overlay = new Overlay.DutyOvForm();
-			_ping_graph = new ThirdParty.FastGraphLine(pbxPingGraph);
+			_ping_grpr = new Libre.PingGrapher(pbxPingGraph);
+			_ping_keeps.Add(0);
 		}
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -135,7 +136,10 @@ namespace DutyContent.Tab
 			_ping_timer.Elapsed += (sender, e) => PingOnce();
 
 			if (DcConfig.Duty.UsePing)
+			{
+				PingOnce();
 				_ping_timer.Start();
+			}
 		}
 
 		public void PluginDeinitialize()
@@ -1442,12 +1446,12 @@ namespace DutyContent.Tab
 			if (DcConfig.Duty.PingGraph)
 			{
 				_ping_keeps.Add((int)rtt);
-				if (_ping_keeps.Count > 100)
-					_ping_keeps.Remove(0);
+				if (_ping_keeps.Count > 120)
+					_ping_keeps.RemoveAt(0);
 
-				_ping_graph.Enter();
-				_ping_graph.SetValues(_ping_keeps);
-				WorkerAct.Invoker(() => _ping_graph.Leave());
+				_ping_grpr.Enter();
+				_ping_grpr.DrawValues(_ping_keeps);
+				WorkerAct.Invoker(() => _ping_grpr.Leave());
 			}
 		}
 

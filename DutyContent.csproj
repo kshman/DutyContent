@@ -72,6 +72,7 @@
     <Compile Include="DcControl.Designer.cs">
       <DependentUpon>DcControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Libre\PingGrapher.cs" />
     <Compile Include="Tab\ConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,7 +96,6 @@
       <DependentUpon>DutyOvForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ThirdParty\Converter.cs" />
-    <Compile Include="ThirdParty\FastGraphLine.cs" />
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
     <Compile Include="ThirdParty\ThreadWorker.cs" />

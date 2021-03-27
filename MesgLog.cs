@@ -123,5 +123,12 @@ namespace DutyContent
 			string msg = ExceptionPattern.Replace(ex.Message, "{{$1}}");
 			Write(Color.Red, $"{text}: {msg}");
 		}
+
+		// exception
+		public static void Ex(Exception ex)
+		{
+			string msg = ExceptionPattern.Replace(ex.Message, "{{$1}}");
+			Write(Color.Red, $"EX: {msg}");
+		}
 	}
 }
