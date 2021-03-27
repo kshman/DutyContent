@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Net;
 
 namespace DutyContent.ThirdParty
 {
@@ -128,6 +129,28 @@ namespace DutyContent.ThirdParty
 		public static Color ToColorArgb(string s)
 		{
 			return ToColorArgb(s, Color.Transparent);
+		}
+
+		public static IPAddress ToIPAddressFromIPV4(string ipstr)
+		{
+			try
+			{
+				var sa = ipstr.Trim().Split('.');
+				if (sa.Length == 4)
+				{
+					if (sa[3].Contains(":"))
+						sa[3] = sa[3].Substring(0, sa[3].IndexOf(":"));
+
+					var ivs = new byte[4];
+					for (var i = 0; i < 4; i++)
+						ivs[i] = byte.Parse(sa[i]);
+
+					return new IPAddress(ivs);
+				}
+			}
+			catch { }
+
+			return IPAddress.None;
 		}
 	}
 }

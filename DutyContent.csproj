@@ -172,6 +172,9 @@
   <ItemGroup>
     <None Include="Resources\pix_tab_ping.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\ServerList.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if exist "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" copy $(TargetPath) "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" /y

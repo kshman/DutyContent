@@ -23,6 +23,7 @@ LANG=English
 24=Skirmish
 25=CE
 26=Default
+27=None
 
 99=DutyContent Plugin {0}
 
@@ -70,6 +71,7 @@ LANG=English
 332=Normal
 333=Bad
 334=Show Graph
+335=Addresses when client doesn't have connections
 
 10001="{0}" spawned!
 10002=Entry: {0}

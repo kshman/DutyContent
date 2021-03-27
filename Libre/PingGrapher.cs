@@ -129,11 +129,15 @@ namespace DutyContent.Libre
 				}
 #else
 				// curved
-				u = 10;
-				var pts = new PointF[cd.Count - 1];
-				for (var i = 0; i < cd.Count - 1; i++, u += Step)
-					pts[i] = new PointF(u, height - cd.Values[i] * scale);
-				g.DrawCurve(pen, pts, 0.6f);
+				if (cd.Count > 2)
+				{
+					u = 10;
+					var pts = new PointF[cd.Count - 1];
+					for (var i = 0; i < cd.Count - 1; i++, u += Step)
+						pts[i] = new PointF(u, height - cd.Values[i] * scale);
+
+					g.DrawCurve(pen, pts, 0.6f);
+				}
 #endif
 			}
 		}

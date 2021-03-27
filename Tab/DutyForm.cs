@@ -32,7 +32,7 @@ namespace DutyContent.Tab
 		private long _ping_last;
 		private Color _ping_color = Color.Transparent;
 		private Libre.PingGrapher _ping_grpr;
-		private List<int> _ping_keeps = new List<int>();
+		private List<int> _ping_keeps = new List<int>() { 0, 0, };
 
 		public DutyForm()
 		{
@@ -42,7 +42,6 @@ namespace DutyContent.Tab
 
 			_overlay = new Overlay.DutyOvForm();
 			_ping_grpr = new Libre.PingGrapher(pbxPingGraph);
-			_ping_keeps.Add(0);
 		}
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -132,12 +131,38 @@ namespace DutyContent.Tab
 			UpdateFates();
 
 			//
+			try
+			{
+				var svl = File.ReadAllLines(Path.Combine(DcConfig.DataPath, "ServerList.txt"));
+				int ssv = -1;
+
+				for (var i = 0; i < svl.Length; i++)
+				{
+					cboPingDefAddr.Items.Add(svl[i]);
+
+					if (svl[i].StartsWith(DcConfig.Duty.PingDefAddr))
+						ssv = i;
+				}
+
+				if (string.IsNullOrEmpty(DcConfig.Duty.PingDefAddr))
+					ssv = -1;
+
+				cboPingDefAddr.SelectedIndex = ssv > 0 ? ssv : 0;
+			}
+			catch
+			{
+				cboPingDefAddr.Items.Clear();
+				cboPingDefAddr.Items.Add(MesgLog.Text(27));
+				cboPingDefAddr.SelectedIndex = 0;
+			}
+
+			//
 			_ping_timer = new System.Timers.Timer() { Interval = 5000 };
 			_ping_timer.Elapsed += (sender, e) => PingOnce();
 
 			if (DcConfig.Duty.UsePing)
 			{
-				PingOnce();
+				PingOnce(false);
 				_ping_timer.Start();
 			}
 		}
@@ -228,6 +253,7 @@ namespace DutyContent.Tab
 			lblPingStat3.Text = MesgLog.Text(332);
 			lblPingStat4.Text = MesgLog.Text(333);
 			chkPingGraph.Text = MesgLog.Text(334);
+			lblPingDefAddr.Text = MesgLog.Text(335);
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -1385,7 +1411,7 @@ namespace DutyContent.Tab
 			PingColorWorker(3, btnPingColor4);
 		}
 
-		private void chkPingGraph_CheckedChanged(object sender, EventArgs e)
+		private void ChkPingGraph_CheckedChanged(object sender, EventArgs e)
 		{
 			if (!DcConfig.PluginEnable)
 				return;
@@ -1395,31 +1421,81 @@ namespace DutyContent.Tab
 			SaveConfig();
 		}
 
-		//
-		private void PingOnce()
+		private void CboPingDefAddr_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (!DcConfig.PluginEnable || !DcConfig.Duty.UsePing)
+			if (!DcConfig.PluginEnable)
+				return;
+
+			var val = cboPingDefAddr.SelectedItem as string;
+
+			if (!string.IsNullOrEmpty(val))
+			{
+				var ss = val.Split(' ');
+				if (ss.Length > 0)
+				{
+					DcConfig.Duty.PingDefAddr = ss[0].Trim();
+					MesgLog.L("sel defip: {0}", ss[0]);
+
+					SaveConfig();
+
+					return;
+				}
+			}
+
+			DcConfig.Duty.PingDefAddr = string.Empty;
+
+			SaveConfig();
+		}
+
+		//
+		private void PingOnce(bool check_plugin_enable = true)
+		{
+			if (!DcConfig.Duty.UsePing)
+				return;
+
+			if (check_plugin_enable && !DcConfig.PluginEnable)
 				return;
 
 			var conns = DcConfig.Connections.CopyConnection();
-			if (conns.Length == 0)
-			{
-				_overlay.ResetStat();
-				return;
-			}
-
 			long rtt = 0;
-			double loss = 0.0;
+			double loss = 0;
 
-			foreach (var row in conns)
+			if (conns.Length > 0)
 			{
-				var (Rtt, Loss) = CalcPing(row.RemoteAddress);
+				foreach (var row in conns)
+				{
+					var (r, l) = CalcPing(row.RemoteAddress);
 
-				if (rtt < Rtt)
-					rtt = Rtt;
+					if (rtt < r)
+						rtt = r;
 
-				if (loss < Loss)
-					loss = Loss;
+					if (loss < l)
+						loss = l;
+				}
+			}
+			else
+			{
+				if (string.IsNullOrEmpty(DcConfig.Duty.PingDefAddr))
+				{
+					_overlay.ResetStat();
+					return;
+				}
+
+				var defip = ThirdParty.Converter.ToIPAddressFromIPV4(DcConfig.Duty.PingDefAddr);
+
+				if (defip == IPAddress.None || defip == IPAddress.IPv6None)
+				{
+					_overlay.ResetStat();
+					return;
+				}
+
+				var (r, l) = CalcPing(defip);
+
+				if (rtt < r)
+					rtt = r;
+
+				if (loss < l)
+					loss = l;
 			}
 
 			//MesgLog.L("Ping: {0}, {1}%", rtt, loss);
