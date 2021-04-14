@@ -1434,7 +1434,6 @@ namespace DutyContent.Tab
 				if (ss.Length > 0)
 				{
 					DcConfig.Duty.PingDefAddr = ss[0].Trim();
-					MesgLog.L("sel defip: {0}", ss[0]);
 
 					SaveConfig();
 
