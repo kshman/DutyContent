@@ -4,14 +4,14 @@ Duty Content for FFXIV
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 
-5.5 Packets (Modify DutyPacket.config)
+5.5 HotFix (Apr/27/2021) Packets (Edit your DutyPacket.config)
 <pre><code>
 # DutyPacket configuration
 # packet
-Version=5.5
-OpFate=960
-OpDuty=181
-OpMatch=372
-OpInstance=724
-OpSouthernBozja=743
+Version=5.5 HotFix
+OpFate=574
+OpDuty=509
+OpMatch=399
+OpInstance=316
+OpSouthernBozja=352
 </code></pre>
