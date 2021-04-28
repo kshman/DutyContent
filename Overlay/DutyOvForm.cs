@@ -161,9 +161,10 @@ namespace DutyContent.Overlay
 				if (rtt > 999)
 					rtt = 999;
 
-				lblStat.Text = string.Format("{0}{1}{2:0.#}%", rtt, Environment.NewLine, loss);
+				lblStat.Text = (Math.Abs(loss) < 0.0001)
+					? string.Format("{0}", rtt)
+					: string.Format("{0}{1}{2:0.#}%", rtt, Environment.NewLine, loss);
 				lblStat.BackColor = color;
-				//lblStat.ForeColor = Color.FromArgb(255 - color.R, 255 - color.G, 255 - color.B);
 			}));
 		}
 	}

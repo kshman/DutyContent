@@ -19,6 +19,12 @@ namespace DutyContent.ThirdParty
 			richTextBox.SelectionStart = richTextBox.Text.Length;
 		}
 
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetWindowLong(IntPtr hwnd, int index);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr SetWindowLong(IntPtr hwnd, int index, IntPtr dwNewLong);
+
 		[DllImport("kernel32.dll")]
 		public static extern IntPtr OpenProcess(uint access_flag, bool inherit_handle, int process_id);
 
