@@ -4,6 +4,9 @@ Duty Content for FFXIV
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 
+Works with Zadnor SK & CE. (But, no data yet)
+
+
 5.55 (May/25/2021) Packets (Edit your DutyPacket.config)
 <pre><code>
 # DutyPacket configuration
