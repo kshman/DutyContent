@@ -550,9 +550,10 @@
     "760": "グンヒルド・ディルーブラム",
     "761": "グンヒルド・ディルーブラム零式",
     "777": "黄金平原 パガルザン",
+    "778": "ザトゥノル高原",
+    "779": "希望ノ砲台：「塔」",
     "781": "ダイヤウェポン捕獲作戦",
-    "782": "極ダイヤウェポン捕獲作戦",
-    "799": "希望ノ砲台：「塔」"
+    "782": "極ダイヤウェポン捕獲作戦"
   },
   "areas": {
     "134": {
@@ -1776,6 +1777,40 @@
         "30013": "{鋼鉄の魔獣「ダーインスレイヴ」}",
         "30014": "新たなる鉄巨人「魔導レイバーX型」",
         "30015": "戦慄の角「チルヴニク」"
+      }
+    },
+    "921": {
+      "name": "Zadnor",
+      "fates": {
+        "1717": "▽▼Of Beasts and Braggadocio",
+        "1718": "▽▼Parts and Parcel",
+        "1720": "▽▲Deadly Divination",
+        "1721": "▽▶A Wrench in the Reconnaissance Effort",
+        "1722": "Another Pilot Episode",
+        "1723": "▽▲Breaking the Ice",
+        "1724": "▽▼Meet the Puppertmaster",
+        "1725": "◁◀Challange Accepted",
+        "1726": "◁▼Th'uban the Terrible",
+        "1728": "◁▶A Just Pursuit",
+        "1731": "◁◀Demented Mentor",
+        "1732": "◁▶Sever the Strings",
+        "1735": "◁▲Supersoldier Rising",
+        "30100": "CE: 0",
+        "30101": "CE: On Cerpents' Wings",
+        "30102": "CE: 2",
+        "30103": "CE: The Broken Blade",
+        "30104": "CE: From Beyond the Grave",
+        "30105": "CE: With Diremite and Main",
+        "30106": "CE: 6",
+        "30107": "CE: Head of the Snake",
+        "30108": "CE: 8",
+        "30109": "CE: Neber Cry Wolf",
+        "30110": "CE: Time to Burn",
+        "30111": "CE: 11",
+        "30112": "CE: 12",
+        "30113": "CE: A Familiar Face",
+        "30114": "CE: 14",
+        "30115": "CE: 15"
       }
     }
   }

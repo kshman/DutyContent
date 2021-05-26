@@ -22,8 +22,8 @@ namespace DutyContent.Tab
 
 		//
 		private bool _is_lock_fate;
-		private bool _is_skirmish_area;
 		private bool _is_packet_finder;
+		private DcContent.SaveTheQueenType _stq_type = DcContent.SaveTheQueenType.No;
 		private DcConfig.PacketConfig _new_packet;
 
 		private Overlay.DutyOvForm _overlay;
@@ -275,6 +275,7 @@ namespace DutyContent.Tab
 			// FATE
 			if (opcode == DcConfig.Packet.OpFate)
 			{
+				// 53=begin, 54=end, 62=progress
 				if (data[0] == 53)
 				{
 					var fcode = BitConverter.ToUInt16(data, 4);
@@ -282,7 +283,7 @@ namespace DutyContent.Tab
 					if (fcode > 100)
 					{
 						var fate = DcContent.GetFate(fcode);
-						if (_is_skirmish_area)
+						if (_stq_type != DcContent.SaveTheQueenType.No)
 							LogSkirmish(10001, fate.Name);
 						else
 							LogFate(10001, fate.Name);
@@ -294,6 +295,17 @@ namespace DutyContent.Tab
 							NotifyFate(fate);
 							_overlay.PlayFate(fate);
 						}
+					}
+				}
+				else if (chkShowDebug.Checked && data[0] == 62 && data[8] > 0)  // more than 0%
+				{
+					var fcode = BitConverter.ToUInt16(data, 4);
+
+					if (fcode > 100)
+					{
+						var fate = DcContent.TryFate(fcode);
+						if (fate == null)
+							LogDebug("unknown fate {0}% \"{1}\"", data[8], fcode);
 					}
 				}
 			}
@@ -391,7 +403,12 @@ namespace DutyContent.Tab
 				// 10[1] status 0=end, 1=register, 2=entry, 3=progress
 				// 12[1] progress percentage
 
-				var ce = 30000 + data[8];
+				var stq =
+					_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
+					_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 : 
+					30100;	// temporary
+
+				var ce = stq + data[8];
 				var stat = data[10];
 
 				if (stat == 0 /* || data[10] == 3 */)
@@ -434,8 +451,12 @@ namespace DutyContent.Tab
 		{
 			//_overlay.PlayNone();
 
-			_is_skirmish_area =
-				zone_id == 920; // The Bozjan Southern Front
+			_stq_type =
+				(zone_id == 920) ? DcContent.SaveTheQueenType.Bozja :
+				DcContent.SaveTheQueenType.No;
+
+			if (chkShowDebug.Checked)
+				LogDebug("Zone: {0} \"{1}\"", zone_id, zone_name);
 		}
 
 		//
@@ -465,6 +486,12 @@ namespace DutyContent.Tab
 			string catergory = MesgLog.Text(catkey);
 			string format = MesgLog.Text(fmtkey);
 			WriteLog(color, catergory, format, prms);
+		}
+
+		//
+		private void LogDebug(string msg, params object[] prms)
+		{
+			WriteLog(Color.Red, "Debug", msg, prms);
 		}
 
 		//

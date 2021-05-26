@@ -550,6 +550,7 @@
     "760": "Delubrum Reginae",
     "761": "Delubrum Reginae (Savage)",
     "777": "Paglth'an",
+    "778": "Zadnor",
     "781": "The Cloud Deck",
     "782": "The Cloud Deck (Extreme)",
     "799": "the Tower at Paradigm's Breach"
@@ -1725,7 +1726,7 @@
         "1348": "The Shadow over Anemos"
       }
     },
-    "1001": {
+    "920": {
       "name": "The Bozjan Southern Front",
       "fates": {
         "1597": "Sneak & Spell",
@@ -1776,6 +1777,40 @@
         "30013": "Metal Fox Chaos",
         "30014": "Rise of the Robots",
         "30015": "Where Strode the Behemoth "
+      }
+    },
+    "921": {
+      "name": "Zadnor",
+      "fates": {
+        "1717": "▽▼Of Beasts and Braggadocio",
+        "1718": "▽▼Parts and Parcel",
+        "1720": "▽▲Deadly Divination",
+        "1721": "▽▶A Wrench in the Reconnaissance Effort",
+        "1722": "Another Pilot Episode",
+        "1723": "▽▲Breaking the Ice",
+        "1724": "▽▼Meet the Puppertmaster",
+        "1725": "◁◀Challange Accepted",
+        "1726": "◁▼Th'uban the Terrible",
+        "1728": "◁▶A Just Pursuit",
+        "1731": "◁◀Demented Mentor",
+        "1732": "◁▶Sever the Strings",
+        "1735": "◁▲Supersoldier Rising",
+        "30100": "CE: 0",
+        "30101": "CE: On Cerpents' Wings",
+        "30102": "CE: 2",
+        "30103": "CE: The Broken Blade",
+        "30104": "CE: From Beyond the Grave",
+        "30105": "CE: With Diremite and Main",
+        "30106": "CE: 6",
+        "30107": "CE: Head of the Snake",
+        "30108": "CE: 8",
+        "30109": "CE: Neber Cry Wolf",
+        "30110": "CE: Time to Burn",
+        "30111": "CE: 11",
+        "30112": "CE: 12",
+        "30113": "CE: A Familiar Face",
+        "30114": "CE: 14",
+        "30115": "CE: 15"
       }
     }
   }

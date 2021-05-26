@@ -240,5 +240,14 @@ namespace DutyContent
 				default: return MesgLog.Text(10021);
 			}
 		}
+
+		// save the queen type
+		public enum SaveTheQueenType
+		{
+			No,
+			Bozja,
+			Delubrum,
+			Zadnor,
+		}
 	}
 }

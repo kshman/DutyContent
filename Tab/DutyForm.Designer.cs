@@ -30,27 +30,27 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Duty",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Match",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Instance",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Southern Bozja",
             "",
             "",
@@ -101,6 +101,8 @@ namespace DutyContent.Tab
 			this.chkEnableOverlay = new System.Windows.Forms.CheckBox();
 			this.tabPagePing = new System.Windows.Forms.TabPage();
 			this.panel6 = new System.Windows.Forms.Panel();
+			this.cboPingDefAddr = new System.Windows.Forms.ComboBox();
+			this.lblPingDefAddr = new System.Windows.Forms.Label();
 			this.pbxPingGraph = new System.Windows.Forms.PictureBox();
 			this.chkPingGraph = new System.Windows.Forms.CheckBox();
 			this.tlpnPingColors = new System.Windows.Forms.TableLayoutPanel();
@@ -134,8 +136,7 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
-			this.lblPingDefAddr = new System.Windows.Forms.Label();
-			this.cboPingDefAddr = new System.Windows.Forms.ComboBox();
+			this.chkShowDebug = new System.Windows.Forms.CheckBox();
 			this.tabContent.SuspendLayout();
 			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -189,6 +190,7 @@ namespace DutyContent.Tab
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.chkShowDebug);
 			this.splitContainer1.Panel1.Controls.Add(this.rdoFatePreset4);
 			this.splitContainer1.Panel1.Controls.Add(this.rdoFatePreset3);
 			this.splitContainer1.Panel1.Controls.Add(this.rdoFatePreset2);
@@ -696,6 +698,25 @@ namespace DutyContent.Tab
 			this.panel6.Size = new System.Drawing.Size(778, 353);
 			this.panel6.TabIndex = 1;
 			// 
+			// cboPingDefAddr
+			// 
+			this.cboPingDefAddr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboPingDefAddr.FormattingEnabled = true;
+			this.cboPingDefAddr.Location = new System.Drawing.Point(535, 51);
+			this.cboPingDefAddr.Name = "cboPingDefAddr";
+			this.cboPingDefAddr.Size = new System.Drawing.Size(238, 21);
+			this.cboPingDefAddr.TabIndex = 15;
+			this.cboPingDefAddr.SelectedIndexChanged += new System.EventHandler(this.CboPingDefAddr_SelectedIndexChanged);
+			// 
+			// lblPingDefAddr
+			// 
+			this.lblPingDefAddr.AutoSize = true;
+			this.lblPingDefAddr.Location = new System.Drawing.Point(515, 35);
+			this.lblPingDefAddr.Name = "lblPingDefAddr";
+			this.lblPingDefAddr.Size = new System.Drawing.Size(25, 13);
+			this.lblPingDefAddr.TabIndex = 14;
+			this.lblPingDefAddr.Text = "335";
+			// 
 			// pbxPingGraph
 			// 
 			this.pbxPingGraph.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1001,11 +1022,11 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstPacketInfo.HideSelection = false;
 			this.lstPacketInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
 			this.lstPacketInfo.Location = new System.Drawing.Point(3, 42);
 			this.lstPacketInfo.MultiSelect = false;
 			this.lstPacketInfo.Name = "lstPacketInfo";
@@ -1054,24 +1075,16 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
 			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
 			// 
-			// lblPingDefAddr
+			// chkShowDebug
 			// 
-			this.lblPingDefAddr.AutoSize = true;
-			this.lblPingDefAddr.Location = new System.Drawing.Point(515, 35);
-			this.lblPingDefAddr.Name = "lblPingDefAddr";
-			this.lblPingDefAddr.Size = new System.Drawing.Size(25, 13);
-			this.lblPingDefAddr.TabIndex = 14;
-			this.lblPingDefAddr.Text = "335";
-			// 
-			// cboPingDefAddr
-			// 
-			this.cboPingDefAddr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboPingDefAddr.FormattingEnabled = true;
-			this.cboPingDefAddr.Location = new System.Drawing.Point(535, 51);
-			this.cboPingDefAddr.Name = "cboPingDefAddr";
-			this.cboPingDefAddr.Size = new System.Drawing.Size(238, 21);
-			this.cboPingDefAddr.TabIndex = 15;
-			this.cboPingDefAddr.SelectedIndexChanged += new System.EventHandler(this.CboPingDefAddr_SelectedIndexChanged);
+			this.chkShowDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkShowDebug.AutoSize = true;
+			this.chkShowDebug.Location = new System.Drawing.Point(201, 7);
+			this.chkShowDebug.Name = "chkShowDebug";
+			this.chkShowDebug.Size = new System.Drawing.Size(58, 17);
+			this.chkShowDebug.TabIndex = 5;
+			this.chkShowDebug.Text = "Debug";
+			this.chkShowDebug.UseVisualStyleBackColor = true;
 			// 
 			// DutyForm
 			// 
@@ -1194,5 +1207,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.CheckBox chkPingGraph;
 		private System.Windows.Forms.Label lblPingDefAddr;
 		private System.Windows.Forms.ComboBox cboPingDefAddr;
+		private System.Windows.Forms.CheckBox chkShowDebug;
 	}
 }
