@@ -95,12 +95,12 @@ namespace DutyContent
 		public class PacketConfig
 		{
 			// Packet
-			public string Version { get; set; } = "5.5 HotFix";
-			public ushort OpFate { get; set; } = 574;
-			public ushort OpDuty { get; set; } = 509;
-			public ushort OpMatch { get; set; } = 399;
-			public ushort OpInstance { get; set; } = 316;
-			public ushort OpSouthernBozja { get; set; } = 352;
+			public string Version { get; set; } = "5.55";
+			public ushort OpFate { get; set; } = 512;
+			public ushort OpDuty { get; set; } = 132;
+			public ushort OpMatch { get; set; } = 922;
+			public ushort OpInstance { get; set; } = 834;
+			public ushort OpSouthernBozja { get; set; } = 428;
 
 			// 
 			public void Save(string filename = null)
