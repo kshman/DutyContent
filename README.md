@@ -15,7 +15,3 @@ OpMatch=922
 OpInstance=834
 OpSouthernBozja=428
 </code></pre>
-
-
-
-Works with Zadnor SK & CE. (Some data includes)
