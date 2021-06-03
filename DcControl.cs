@@ -55,6 +55,9 @@ namespace DutyContent
 			Tab.DutyForm dutyform = new Tab.DutyForm();
 			tabPageDuty.Controls.Add(dutyform.Controls[0]);
 
+			Tab.PingForm pingform = new Tab.PingForm();
+			tabPagePing.Controls.Add(pingform.Controls[0]);
+
 			Tab.ConfigForm configform = new Tab.ConfigForm();
 			tabPageConfig.Controls.Add(configform.Controls[0]);
 		}
@@ -130,6 +133,7 @@ namespace DutyContent
 
 			DcConfig.PluginEnable = false;
 
+			Tab.PingForm.Self?.PluginDeinitialize();
 			Tab.DutyForm.Self?.PluginDeinitialize();
 			Tab.ConfigForm.Self?.PluginDeinitialize();
 			DcConfig.SaveConfig();
@@ -184,6 +188,7 @@ namespace DutyContent
 			//
 			Tab.ConfigForm.Self?.PluginInitialize();
 			Tab.DutyForm.Self?.PluginInitialize();
+			Tab.PingForm.Self?.PluginInitialize();
 
 			//
 			DcConfig.PluginEnable = true;
@@ -313,6 +318,9 @@ namespace DutyContent
 		{
 			tabPageDuty.Text = MesgLog.Text(300);
 			Tab.DutyForm.Self?.UpdateUiLocale();
+
+			tabPagePing.Text = MesgLog.Text(327);
+			Tab.PingForm.Self?.UpdateUiLocale();
 
 			tabPageConfig.Text = MesgLog.Text(200);
 			Tab.ConfigForm.Self?.UpdateUiLocale();

@@ -6,6 +6,9 @@ namespace DutyContent.Overlay
 {
 	public partial class DutyOvForm : Form
 	{
+		private static DutyOvForm _self;
+		public static DutyOvForm Self => _self;
+
 		private const int BlinkTime = 300;
 		private const int BlinkCount = 20;
 
@@ -21,6 +24,8 @@ namespace DutyContent.Overlay
 		//
 		public DutyOvForm()
 		{
+			_self = this;
+
 			InitializeComponent();
 
 			Location = DcConfig.Duty.OverlayLocation;

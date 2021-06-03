@@ -95,6 +95,12 @@
     <Compile Include="Overlay\DutyOvForm.Designer.cs">
       <DependentUpon>DutyOvForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tab\PingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tab\PingForm.Designer.cs">
+      <DependentUpon>PingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThirdParty\Converter.cs" />
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
@@ -131,6 +137,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tab\PingForm.resx">
+      <DependentUpon>PingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Data\DcDuty-English.json" />
     <None Include="Data\DcDuty-Japanese.json" />
@@ -174,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\ServerList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\DcLang-Korean.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

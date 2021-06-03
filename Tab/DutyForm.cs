@@ -1,5 +1,4 @@
-﻿using DutyContent.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,8 +9,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.IO;
-using System.Threading;
-using System.Net.NetworkInformation;
 
 namespace DutyContent.Tab
 {
@@ -28,12 +25,6 @@ namespace DutyContent.Tab
 
 		private Overlay.DutyOvForm _overlay;
 
-		private System.Timers.Timer _ping_timer;
-		private long _ping_last;
-		private Color _ping_color = Color.Transparent;
-		private Libre.PingGrapher _ping_grpr;
-		private List<int> _ping_keeps = new List<int>() { 0, 0, };
-
 		public DutyForm()
 		{
 			_self = this;
@@ -41,7 +32,6 @@ namespace DutyContent.Tab
 			InitializeComponent();
 
 			_overlay = new Overlay.DutyOvForm();
-			_ping_grpr = new Libre.PingGrapher(pbxPingGraph);
 		}
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -113,14 +103,6 @@ namespace DutyContent.Tab
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
 			//
-			chkUsePing.Checked = DcConfig.Duty.UsePing;
-			btnPingColor1.BackColor = DcConfig.Duty.PingColors[0];
-			btnPingColor2.BackColor = DcConfig.Duty.PingColors[1];
-			btnPingColor3.BackColor = DcConfig.Duty.PingColors[2];
-			btnPingColor4.BackColor = DcConfig.Duty.PingColors[3];
-			chkPingGraph.Checked = DcConfig.Duty.PingGraph;
-
-			//
 			switch (DcConfig.Duty.ActiveFate)
 			{
 				case 0: rdoFatePreset1.Checked = true; break;
@@ -129,52 +111,10 @@ namespace DutyContent.Tab
 				case 3: rdoFatePreset4.Checked = true; break;
 			}
 			UpdateFates();
-
-			//
-			try
-			{
-				var svl = File.ReadAllLines(Path.Combine(DcConfig.DataPath, "ServerList.txt"));
-				int ssv = -1;
-
-				for (var i = 0; i < svl.Length; i++)
-				{
-					cboPingDefAddr.Items.Add(svl[i]);
-
-					if (svl[i].StartsWith(DcConfig.Duty.PingDefAddr))
-						ssv = i;
-				}
-
-				if (string.IsNullOrEmpty(DcConfig.Duty.PingDefAddr))
-					ssv = -1;
-
-				cboPingDefAddr.SelectedIndex = ssv > 0 ? ssv : 0;
-			}
-			catch
-			{
-				cboPingDefAddr.Items.Clear();
-				cboPingDefAddr.Items.Add(MesgLog.Text(27));
-				cboPingDefAddr.SelectedIndex = 0;
-			}
-
-			//
-			_ping_timer = new System.Timers.Timer() { Interval = 5000 };
-			_ping_timer.Elapsed += (sender, e) => PingOnce();
-
-			if (DcConfig.Duty.UsePing)
-			{
-				PingOnce(false);
-				_ping_timer.Start();
-			}
 		}
 
 		public void PluginDeinitialize()
 		{
-			if (_ping_timer != null)
-			{
-				_ping_timer.Stop();
-				_ping_timer = null;
-			}
-
 			_overlay.Hide();
 			_overlay = null;
 		}
@@ -209,7 +149,6 @@ namespace DutyContent.Tab
 			tabPageContent.Text = MesgLog.Text(301);
 			tabPageSetting.Text = MesgLog.Text(302);
 			tabPagePacket.Text = MesgLog.Text(303);
-			tabPagePing.Text = MesgLog.Text(327);
 
 			lblDataSet.Text = MesgLog.Text(304);
 			lblLogFont.Text = MesgLog.Text(305);
@@ -245,15 +184,6 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = MesgLog.Text(10007);
 			btnPacketApply.Text = MesgLog.Text(10009);
-
-			chkUsePing.Text = MesgLog.Text(328);
-			lblPingColors.Text = MesgLog.Text(329);
-			lblPingStat1.Text = MesgLog.Text(330);
-			lblPingStat2.Text = MesgLog.Text(331);
-			lblPingStat3.Text = MesgLog.Text(332);
-			lblPingStat4.Text = MesgLog.Text(333);
-			chkPingGraph.Text = MesgLog.Text(334);
-			lblPingDefAddr.Text = MesgLog.Text(335);
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -405,8 +335,8 @@ namespace DutyContent.Tab
 
 				var stq =
 					_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
-					_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 : 
-					30100;	// temporary
+					_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 :
+					30100;  // temporary
 
 				var ce = stq + data[8];
 				var stat = data[10];
@@ -1209,7 +1139,12 @@ namespace DutyContent.Tab
 			1597, 1598, 1599,
 			1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609,
 			1610, 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619,
-			1620, 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628
+			1620, 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628,
+
+			// zadnor
+			1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724,
+			1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732,
+			1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742,
 		};
 
 		//
@@ -1303,7 +1238,7 @@ namespace DutyContent.Tab
 			}
 
 			// critical engagement
-			if (data.Length >= 12)
+			if (data.Length >= 12 && _stq_type != DcContent.SaveTheQueenType.No)
 			{
 				//  0[4] timestamp
 				//  4[2] mmss
@@ -1354,7 +1289,11 @@ namespace DutyContent.Tab
 
 				if (ok)
 				{
-					var ce = DcContent.GetFate(code + 30000);
+					var stq =
+						_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
+						_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 :
+						30100;  // temporary
+					var ce = DcContent.GetFate(code + stq);
 
 					var li = new ListViewItem(new string[]
 					{
@@ -1374,217 +1313,6 @@ namespace DutyContent.Tab
 					});
 				}
 			}
-		}
-
-		private void ChkUsePing_CheckedChanged(object sender, EventArgs e)
-		{
-			if (!DcConfig.PluginEnable)
-				return;
-
-			DcConfig.Duty.UsePing = chkUsePing.Checked;
-
-			SaveConfig();
-
-			if (chkUsePing.Checked)
-			{
-				PingOnce();
-				_ping_timer.Start();
-			}
-			else
-			{
-				_ping_timer.Stop();
-				_overlay.ResetStat();
-			}
-		}
-
-		private void PingColorWorker(int index, Button button)
-		{
-			Color color = (Color)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
-			{
-				var dg = new ColorDialog()
-				{
-					AnyColor = true,
-					Color = DcConfig.Duty.PingColors[index],
-				};
-
-				return dg.ShowDialog() == DialogResult.OK ? dg.Color : DcConfig.Duty.PingColors[index];
-			}));
-
-			if (DcConfig.Duty.PingColors[index] != color)
-			{
-				button.BackColor = color;
-				DcConfig.Duty.PingColors[index] = color;
-				SaveConfig();
-			}
-		}
-
-		private void BtnPingColor1_Click(object sender, EventArgs e)
-		{
-			PingColorWorker(0, btnPingColor1);
-		}
-
-		private void BtnPingColor2_Click(object sender, EventArgs e)
-		{
-			PingColorWorker(1, btnPingColor2);
-		}
-
-		private void BtnPingColor3_Click(object sender, EventArgs e)
-		{
-			PingColorWorker(2, btnPingColor3);
-		}
-
-		private void BtnPingColor4_Click(object sender, EventArgs e)
-		{
-			PingColorWorker(3, btnPingColor4);
-		}
-
-		private void ChkPingGraph_CheckedChanged(object sender, EventArgs e)
-		{
-			if (!DcConfig.PluginEnable)
-				return;
-
-			DcConfig.Duty.PingGraph = chkPingGraph.Checked;
-
-			SaveConfig();
-		}
-
-		private void CboPingDefAddr_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (!DcConfig.PluginEnable)
-				return;
-
-			var val = cboPingDefAddr.SelectedItem as string;
-
-			if (!string.IsNullOrEmpty(val))
-			{
-				var ss = val.Split(' ');
-				if (ss.Length > 0)
-				{
-					DcConfig.Duty.PingDefAddr = ss[0].Trim();
-
-					SaveConfig();
-
-					return;
-				}
-			}
-
-			DcConfig.Duty.PingDefAddr = string.Empty;
-
-			SaveConfig();
-		}
-
-		//
-		private void PingOnce(bool check_plugin_enable = true)
-		{
-			if (!DcConfig.Duty.UsePing)
-				return;
-
-			if (check_plugin_enable && !DcConfig.PluginEnable)
-				return;
-
-			var conns = DcConfig.Connections.CopyConnection();
-			long rtt = 0;
-			double loss = 0;
-
-			if (conns.Length > 0)
-			{
-				foreach (var row in conns)
-				{
-					var (r, l) = CalcPing(row.RemoteAddress);
-
-					if (rtt < r)
-						rtt = r;
-
-					if (loss < l)
-						loss = l;
-				}
-			}
-			else
-			{
-				if (string.IsNullOrEmpty(DcConfig.Duty.PingDefAddr))
-				{
-					_overlay.ResetStat();
-					return;
-				}
-
-				var defip = ThirdParty.Converter.ToIPAddressFromIPV4(DcConfig.Duty.PingDefAddr);
-
-				if (defip == IPAddress.None || defip == IPAddress.IPv6None)
-				{
-					_overlay.ResetStat();
-					return;
-				}
-
-				var (r, l) = CalcPing(defip);
-
-				if (rtt < r)
-					rtt = r;
-
-				if (loss < l)
-					loss = l;
-			}
-
-			//MesgLog.L("Ping: {0}, {1}%", rtt, loss);
-
-			Color color;
-			if (loss > 0.0 || rtt > 150)
-				color = DcConfig.Duty.PingColors[3];
-			else if (rtt > 100)
-				color = DcConfig.Duty.PingColors[2];
-			else if (rtt > 50)
-				color = DcConfig.Duty.PingColors[1];
-			else
-				color = DcConfig.Duty.PingColors[0];
-
-			if (_ping_last != rtt || loss > 0.0 || _ping_color != color)
-			{
-				_ping_last = rtt;
-				_ping_color = color;
-
-				_overlay.SetStatPing(color, rtt, loss);
-			}
-
-			//
-			if (DcConfig.Duty.PingGraph)
-			{
-				_ping_keeps.Add((int)rtt);
-				if (_ping_keeps.Count > 120)
-					_ping_keeps.RemoveAt(0);
-
-				_ping_grpr.Enter();
-				_ping_grpr.DrawValues(_ping_keeps);
-				WorkerAct.Invoker(() => _ping_grpr.Leave());
-			}
-		}
-
-		// http://forum.codecall.net/topic/37643-c-packet-lossping-program/
-
-		private static readonly PingOptions _ping_options = new PingOptions { DontFragment = true };
-		private static readonly byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
-		private static readonly int _ping_timerout = 120;
-
-		//
-		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 6)
-		{
-			var ps = new Ping();
-
-			int failed = 0;
-			long rtt = 0;
-
-			for (var i = 0; i < amount; i++)
-			{
-				PingReply pr = ps.Send(host, _ping_timerout, _ping_buffers, _ping_options);
-
-				if (pr.Status != IPStatus.Success)
-					failed++;
-
-				if (rtt < pr.RoundtripTime)
-					rtt = pr.RoundtripTime;
-			}
-
-			double loss = (failed / amount) * 100;
-
-			return (rtt, loss);
 		}
 	}
 }

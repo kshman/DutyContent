@@ -35,6 +35,7 @@ namespace DutyContent
 			this.tabPageConfig = new System.Windows.Forms.TabPage();
 			this.txtMesg = new System.Windows.Forms.RichTextBox();
 			this.btnClearMesg = new System.Windows.Forms.Button();
+			this.tabPagePing = new System.Windows.Forms.TabPage();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -65,6 +66,7 @@ namespace DutyContent
 			// 
 			this.tabMain.Alignment = System.Windows.Forms.TabAlignment.Left;
 			this.tabMain.Controls.Add(this.tabPageDuty);
+			this.tabMain.Controls.Add(this.tabPagePing);
 			this.tabMain.Controls.Add(this.tabPageConfig);
 			this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabMain.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -120,6 +122,15 @@ namespace DutyContent
 			this.btnClearMesg.Text = "Clear Mesg";
 			this.btnClearMesg.UseVisualStyleBackColor = true;
 			// 
+			// tabPagePing
+			// 
+			this.tabPagePing.Location = new System.Drawing.Point(104, 4);
+			this.tabPagePing.Name = "tabPagePing";
+			this.tabPagePing.Size = new System.Drawing.Size(684, 489);
+			this.tabPagePing.TabIndex = 2;
+			this.tabPagePing.Text = "Ping";
+			this.tabPagePing.UseVisualStyleBackColor = true;
+			// 
 			// DcControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,5 +155,6 @@ namespace DutyContent
 		private System.Windows.Forms.TabPage tabPageDuty;
 		private System.Windows.Forms.TabPage tabPageConfig;
 		private System.Windows.Forms.RichTextBox txtMesg;
+		private System.Windows.Forms.TabPage tabPagePing;
 	}
 }
