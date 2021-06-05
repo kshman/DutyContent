@@ -61,9 +61,6 @@ namespace DutyContent.Overlay
 
 		private void DoMoveDown(MouseEventArgs e)
 		{
-			if (DcConfig.Duty.OverlayClickThru)
-				return;
-
 			if (e.Button == MouseButtons.Left)
 			{
 				ThirdParty.NativeMethods.ReleaseCapture();
@@ -73,9 +70,6 @@ namespace DutyContent.Overlay
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (DcConfig.Duty.OverlayClickThru)
-				return;
-
 			base.OnMouseDown(e);
 			DoMoveDown(e);
 		}
