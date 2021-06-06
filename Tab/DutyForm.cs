@@ -386,6 +386,7 @@ namespace DutyContent.Tab
 
 			_stq_type =
 				(zone_id == 920) ? DcContent.SaveTheQueenType.Bozja :
+				(zone_id == 921) ? DcContent.SaveTheQueenType.Zadnor :
 				DcContent.SaveTheQueenType.No;
 
 			if (chkShowDebug.Checked)

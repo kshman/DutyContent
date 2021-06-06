@@ -33,6 +33,11 @@ namespace DutyContent
 		private string _game_zone;
 
 		//
+		private const int IntervalGameActive = 50;
+		private const int IntervalGameExist = 300;
+		private const int IntervalGameNone = 500;
+
+		//
 		public DcControl()
 		{
 			_self = this;
@@ -116,11 +121,12 @@ namespace DutyContent
 				  _save_timer.Enabled = false;
 			  };
 
-			_update_timer = new System.Timers.Timer() { Interval = 300 };
+			_update_timer = new System.Timers.Timer() { Interval = IntervalGameExist };
 			_update_timer.Elapsed += (sender, e) =>
 			  {
 				  UpdateAndCheckProc();
-				  _update_timer.Interval = _game_exist ? _game_active ? 50 : 300 : 500;
+				  _update_timer.Interval = _game_exist ? _game_active ? 
+					IntervalGameActive : IntervalGameExist : IntervalGameNone;
 			  };
 			_update_timer.Start();
 		}
