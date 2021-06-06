@@ -19,7 +19,7 @@ namespace DutyContent.ThirdParty
 			richTextBox.SelectionStart = richTextBox.Text.Length;
 		}
 
-		[DllImport("user32.dll")]
+		[DllImport("user32.dll", SetLastError = true)]
 		public static extern IntPtr GetWindowLong(IntPtr hwnd, int index);
 
 		[DllImport("user32.dll")]

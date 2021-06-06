@@ -35,12 +35,6 @@ namespace DutyContent.Tab
 			_overlay = new Overlay.DutyOvForm();
 		}
 
-		// Used for click-through function
-		[DllImport("user32.dll", SetLastError = true)]
-		static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-		[DllImport("user32.dll")]
-		static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 
@@ -1143,7 +1137,7 @@ namespace DutyContent.Tab
 
 		private static readonly short[] _packet_target_fates =
 		{
-			// moddle la noscea
+			// middle la noscea
 			553, 649, 687, 688, 693, 717,
 			220, 221, 222, 223, 225, 226, 227, 229, 231, 233, 235, 237, 238, 239, 240,
 			1387,
@@ -1330,27 +1324,27 @@ namespace DutyContent.Tab
 
 		void EnableOverlayClickThru()
 		{
-			int initialStyle = GetWindowLong(_overlay.Handle, -20);
+			long initialStyle = (long)ThirdParty.NativeMethods.GetWindowLong(_overlay.Handle, -20);
 			if (DcConfig.Duty.OverlayClickThru)
 			{
-				SetWindowLong(_overlay.Handle, -20, initialStyle | 0x80000 | 0x20);
+				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(initialStyle | 0x80000 | 0x20));
 			}
 			else
 			{
-				SetWindowLong(_overlay.Handle, -20, (0x00000 | 0x80000));
+				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(0x00000 | 0x80000));
 			}
 		}
 
 		void DisableOverlayClickThru()
 		{
-			int initialStyle = GetWindowLong(_overlay.Handle, -20);
+			long initialStyle = (long)ThirdParty.NativeMethods.GetWindowLong(_overlay.Handle, -20);
 			if (DcConfig.Duty.OverlayClickThru)
 			{
-				SetWindowLong(_overlay.Handle, -20, initialStyle | 0x80000 | 0x20);
+				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(initialStyle | 0x80000 | 0x20));
 			}
 			else
 			{
-				SetWindowLong(_overlay.Handle, -20, (0x00000 | 0x80000));
+				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(0x00000 | 0x80000));
 			}
 		}
 	}

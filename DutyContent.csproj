@@ -186,7 +186,7 @@
     <Resource Include="Data\ServerList.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Data\DcLang-Korean.txt" />
+    <Resource Include="Data\DcLang-Korean%28Test%29.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
