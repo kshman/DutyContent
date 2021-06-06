@@ -83,7 +83,7 @@ namespace DutyContent.Tab
 			else
 				_overlay.Hide();
 			if (DcConfig.Duty.OverlayClickThru)
-				enableOverlayClickThru();
+				EnableOverlayClickThru();
 
 			//
 			chkEnableSound.Checked = DcConfig.Duty.EnableSound;
@@ -679,9 +679,9 @@ namespace DutyContent.Tab
 
 			DcConfig.Duty.OverlayClickThru = chkOverlayClickThru.Checked;
 			if (DcConfig.Duty.OverlayClickThru)
-				enableOverlayClickThru();
+				EnableOverlayClickThru();
 			else
-				disableOverlayClickThru();
+				DisableOverlayClickThru();
 
 			SaveConfig();
 		}
@@ -1328,7 +1328,7 @@ namespace DutyContent.Tab
 			}
 		}
 
-		void enableOverlayClickThru()
+		void EnableOverlayClickThru()
 		{
 			int initialStyle = GetWindowLong(_overlay.Handle, -20);
 			if (DcConfig.Duty.OverlayClickThru)
@@ -1341,7 +1341,7 @@ namespace DutyContent.Tab
 			}
 		}
 
-		void disableOverlayClickThru()
+		void DisableOverlayClickThru()
 		{
 			int initialStyle = GetWindowLong(_overlay.Handle, -20);
 			if (DcConfig.Duty.OverlayClickThru)
