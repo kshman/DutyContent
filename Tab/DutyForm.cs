@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace DutyContent.Tab
 {
@@ -33,6 +34,12 @@ namespace DutyContent.Tab
 
 			_overlay = new Overlay.DutyOvForm();
 		}
+
+		// Used for click-through function
+		[DllImport("user32.dll", SetLastError = true)]
+		static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+		[DllImport("user32.dll")]
+		static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -75,6 +82,8 @@ namespace DutyContent.Tab
 				_overlay.Show();
 			else
 				_overlay.Hide();
+			if (DcConfig.Duty.OverlayClickThru)
+				EnableOverlayClickThru();
 
 			//
 			chkEnableSound.Checked = DcConfig.Duty.EnableSound;
@@ -669,6 +678,10 @@ namespace DutyContent.Tab
 				return;
 
 			DcConfig.Duty.OverlayClickThru = chkOverlayClickThru.Checked;
+			if (DcConfig.Duty.OverlayClickThru)
+				EnableOverlayClickThru();
+			else
+				DisableOverlayClickThru();
 
 			SaveConfig();
 		}
@@ -1312,6 +1325,32 @@ namespace DutyContent.Tab
 						lstBozjaInfo.EnsureVisible(lstBozjaInfo.Items.Count - 1);
 					});
 				}
+			}
+		}
+
+		void EnableOverlayClickThru()
+		{
+			int initialStyle = GetWindowLong(_overlay.Handle, -20);
+			if (DcConfig.Duty.OverlayClickThru)
+			{
+				SetWindowLong(_overlay.Handle, -20, initialStyle | 0x80000 | 0x20);
+			}
+			else
+			{
+				SetWindowLong(_overlay.Handle, -20, (0x00000 | 0x80000));
+			}
+		}
+
+		void DisableOverlayClickThru()
+		{
+			int initialStyle = GetWindowLong(_overlay.Handle, -20);
+			if (DcConfig.Duty.OverlayClickThru)
+			{
+				SetWindowLong(_overlay.Handle, -20, initialStyle | 0x80000 | 0x20);
+			}
+			else
+			{
+				SetWindowLong(_overlay.Handle, -20, (0x00000 | 0x80000));
 			}
 		}
 	}
