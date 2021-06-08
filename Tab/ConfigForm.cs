@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -46,6 +47,15 @@ namespace DutyContent.Tab
 
 			if (cboDispLang.SelectedIndex < 0)
 				cboDispLang.SelectedIndex = 0;
+
+			Task.Factory.StartNew(() =>
+			{
+				while (true)
+				{
+					Updater.CheckNewVersion();
+					Thread.Sleep(30 * 60 * 1000);
+				}
+			});
 		}
 
 		public void RefreshLocale()

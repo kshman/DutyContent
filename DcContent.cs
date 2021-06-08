@@ -54,7 +54,7 @@ namespace DutyContent
 		// group
 		public class Group
 		{
-			public string Version { get; set; }
+			public decimal Version { get; set; }
 			public string Language { get; set; }
 			public Dictionary<int, Roulette> Roulettes { get; set; }
 			public Dictionary<int, Instance> Instances { get; set; }
@@ -62,7 +62,7 @@ namespace DutyContent
 		}
 
 		//
-		public static string Version { get; private set; }
+		public static decimal Version { get; private set; } = 0;
 		public static string Language { get; private set; }
 		public static IReadOnlyDictionary<int, Roulette> Roulettes { get; private set; } = new Dictionary<int, Roulette>();
 		public static IReadOnlyDictionary<int, Instance> Instances { get; private set; } = new Dictionary<int, Instance>();
@@ -92,40 +92,45 @@ namespace DutyContent
 
 
 		// parse json 
-		private static bool Fill(string json)
+		public static bool Fill(string json)
 		{
 			Group data = JsonConvert.DeserializeObject<Group>(json);
 
 			Dictionary<int, Fate> fates = new Dictionary<int, Fate>();
 
-			foreach (var area in data.Areas)
+			var version = data.Version;
+
+			if (version > Version || Language != DcConfig.Language)
 			{
-				foreach (var fate in area.Value.Fates)
+				foreach (var area in data.Areas)
 				{
-					try
+					foreach (var fate in area.Value.Fates)
 					{
-						fate.Value.Area = area.Value;
-						fates.Add(fate.Key, fate.Value);
-					}
-					catch (NullReferenceException /*nex*/)
-					{
-						MesgLog.E(7, fate.Key);
-						return false;
-					}
-					catch (Exception ex)
-					{
-						MesgLog.Ex(ex, 8);
-						return false;
+						try
+						{
+							fate.Value.Area = area.Value;
+							fates.Add(fate.Key, fate.Value);
+						}
+						catch (NullReferenceException /*nex*/)
+						{
+							MesgLog.E(7, fate.Key);
+							return false;
+						}
+						catch (Exception ex)
+						{
+							MesgLog.Ex(ex, 8);
+							return false;
+						}
 					}
 				}
-			}
 
-			Version = data.Version;
-			Language = data.Language;
-			Roulettes = data.Roulettes;
-			Instances = data.Instances;
-			Areas = data.Areas;
-			Fates = fates;
+				Version = data.Version;
+				Language = data.Language;
+				Roulettes = data.Roulettes;
+				Instances = data.Instances;
+				Areas = data.Areas;
+				Fates = fates;
+			}
 
 			return true;
 		}
