@@ -21,7 +21,7 @@ namespace DutyContent
                 {
                     var lang = DcConfig.Language;
                     if (lang.Contains("Korean")) lang = "Korean";
-                    var json = WebApi.Request($"https://raw.githubusercontent.com/Jaehyuk-Lee/DutyContent/main/Data/DcDuty-{lang}.json");
+                    var json = WebApi.Request($"https://raw.githubusercontent.com/kshman/DutyContent/main/Data/DcDuty-{lang}.json");
                     DcContent.Fill(json);
                 }
                 catch (Exception ex)
