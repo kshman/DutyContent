@@ -56,6 +56,7 @@ namespace DutyContent
 		{
 			public decimal Version { get; set; }
 			public string Language { get; set; }
+			public string DisplayLanguage { get; set; }
 			public Dictionary<int, Roulette> Roulettes { get; set; }
 			public Dictionary<int, Instance> Instances { get; set; }
 			public Dictionary<int, Area> Areas { get; set; }
@@ -64,6 +65,7 @@ namespace DutyContent
 		//
 		public static decimal Version { get; private set; } = 0;
 		public static string Language { get; private set; }
+		public static string DisplayLanguage { get; private set; }
 		public static IReadOnlyDictionary<int, Roulette> Roulettes { get; private set; } = new Dictionary<int, Roulette>();
 		public static IReadOnlyDictionary<int, Instance> Instances { get; private set; } = new Dictionary<int, Instance>();
 		public static IReadOnlyDictionary<int, Area> Areas { get; private set; } = new Dictionary<int, Area>();
@@ -100,7 +102,7 @@ namespace DutyContent
 
 			var version = data.Version;
 
-			if (version > Version || Language != DcConfig.Language)
+			if (version > Version || data.Language != Language)
 			{
 				foreach (var area in data.Areas)
 				{
@@ -126,6 +128,7 @@ namespace DutyContent
 
 				Version = data.Version;
 				Language = data.Language;
+				DisplayLanguage = data.DisplayLanguage;
 				Roulettes = data.Roulettes;
 				Instances = data.Instances;
 				Areas = data.Areas;
