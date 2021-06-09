@@ -25,6 +25,7 @@ LANG=English
 26=Default
 27=None
 
+30=Error requesting web service
 31=Error while updating duty/FATE Data
 
 99=DutyContent Plugin {0}

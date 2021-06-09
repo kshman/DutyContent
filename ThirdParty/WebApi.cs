@@ -2,10 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Cache;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace DutyContent
 {
@@ -36,7 +33,7 @@ namespace DutyContent
             }
             catch (Exception ex)
             {
-                // Log.Ex(ex, "l-web-request-failed");
+                MesgLog.Ex(ex, 30);
             }
 
             return null;
