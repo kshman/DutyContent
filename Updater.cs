@@ -19,7 +19,7 @@ namespace DutyContent
             {
                 try
                 {
-                    var json = WebApi.Request($"https://raw.githubusercontent.com/kshman/DutyContent/test/Data/DcDuty-{DcContent.Language}.json");
+                    var json = WebApi.Request($"https://raw.githubusercontent.com/kshman/DutyContent/main/Data/DcDuty-{DcContent.Language}.json");
                     DcContent.Fill(json);
                 }
                 catch (Exception ex)

@@ -535,13 +535,13 @@ namespace DutyContent.Tab
 			if (!string.IsNullOrWhiteSpace(l) && !l.Equals(DcConfig.Duty.Language) && DcContent.ReadContent(l))
 			{
 
-				UpdateFates();
-
 				lblCurrentDataSet.Text = DcContent.DisplayLanguage;
 
 				SaveConfig();
 
 				Updater.CheckNewVersion();
+
+				UpdateFates();
 			}
 		}
 

@@ -101,8 +101,9 @@ namespace DutyContent
 			Dictionary<int, Fate> fates = new Dictionary<int, Fate>();
 
 			var version = data.Version;
+			var language = data.Language;
 
-			if (version > Version || data.Language != Language)
+			if (version > Version || language != Language)
 			{
 				foreach (var area in data.Areas)
 				{
