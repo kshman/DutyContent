@@ -1,6 +1,7 @@
 ﻿{
-  "version": "202106051",
-  "language": "한국말",
+  "version": "202106101",
+  "language": "Korean",
+  "displayLanguage": "한국말",
   "roulettes": {
     "1": "레벨링",
     "2": "레벨 50/60/70 던전",

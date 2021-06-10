@@ -1,6 +1,7 @@
 ﻿{
-  "version": "202102171",
-  "language": "日本語",
+  "version": "202106101",
+  "language": "Japanese",
+  "displayLanguage": "日本語",
   "roulettes": {
     "1": "レベリング",
     "2": "レベル50・60・70ダンジョン",
