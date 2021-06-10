@@ -1,6 +1,7 @@
 {
-  "version": "202106061",
-  "language": "Deutsch",
+  "version": "202106101",
+  "language": "German",
+  "displayLanguage": "Deutsch",
   "roulettes": {
     "1": "Stufensteigerung",
     "2": "Stufe 50/60/70 Dungeons",

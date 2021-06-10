@@ -1,6 +1,7 @@
 ﻿{
-  "version": "202102171",
+  "version": "202106101",
   "language": "English",
+  "displayLanguage": "English",
   "roulettes": {
     "1": "Leveling",
     "2": "Level 50/60/70 Dungeons",
