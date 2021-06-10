@@ -105,6 +105,8 @@
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
     <Compile Include="ThirdParty\ThreadWorker.cs" />
+    <Compile Include="ThirdParty\WebApi.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="WorkerAct.cs" />
   </ItemGroup>
   <ItemGroup>

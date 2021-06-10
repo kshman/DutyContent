@@ -43,7 +43,7 @@ namespace DutyContent.Tab
 		public void PluginInitialize()
 		{
 			//
-			lblCurrentDataSet.Text = DcContent.Language;
+			lblCurrentDataSet.Text = DcContent.DisplayLanguage;
 
 			//
 			var lang = MakeDutyLangList();
@@ -534,11 +534,14 @@ namespace DutyContent.Tab
 
 			if (!string.IsNullOrWhiteSpace(l) && !l.Equals(DcConfig.Duty.Language) && DcContent.ReadContent(l))
 			{
-				UpdateFates();
 
-				lblCurrentDataSet.Text = DcContent.Language;
+				lblCurrentDataSet.Text = DcContent.DisplayLanguage;
 
 				SaveConfig();
+
+				Updater.CheckNewVersion();
+
+				UpdateFates();
 			}
 		}
 
