@@ -146,7 +146,7 @@ namespace DutyContent
 		public class PacketConfig
 		{
 			// Packet
-			public string Version { get; set; } = "2005551";
+			public long Version { get; set; } = 2005551;
 			public string Description { get; set; } = "5.55 HotFix";
 			public ushort OpFate { get; set; } = 858;
 			public ushort OpDuty { get; set; } = 271;
@@ -174,8 +174,8 @@ namespace DutyContent
 			public PacketConfig(DateTime dt, PacketConfig right = null)
 			{
 				// for custom
-				Version = $"1{dt:yyMMdd}";
-				Description = $"Created {dt}";
+				Version = ThirdParty.Converter.ToLong($"1{dt:yyMMdd}");
+				Description = $"Custom ({dt:d})";
 
 				if (right != null)
 				{
@@ -220,6 +220,17 @@ namespace DutyContent
 				return true;
 			}
 
+			private void InternalParseString(ThirdParty.LineDb db)
+			{
+				Version = ThirdParty.Converter.ToLong(db["Version"]);
+				Description = db["Description"];
+				OpFate = ThirdParty.Converter.ToUshort(db["OpFate"], OpFate);
+				OpDuty = ThirdParty.Converter.ToUshort(db["OpDuty"], OpDuty);
+				OpMatch = ThirdParty.Converter.ToUshort(db["OpMatch"], OpMatch);
+				OpInstance = ThirdParty.Converter.ToUshort(db["OpInstance"], OpInstance);
+				OpSouthernBozja = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpSouthernBozja);
+			}
+
 			//
 			public void Load(string filename = null)
 			{
@@ -227,14 +238,16 @@ namespace DutyContent
 					Save(filename);
 
 				var db = new ThirdParty.LineDb(filename, Encoding.UTF8, false);
+				InternalParseString(db);
+			}
 
-				Version = db["Version"];
-				Description = db["Description"];
-				OpFate = ThirdParty.Converter.ToUshort(db["OpFate"], OpFate);
-				OpDuty = ThirdParty.Converter.ToUshort(db["OpDuty"], OpDuty);
-				OpMatch = ThirdParty.Converter.ToUshort(db["OpMatch"], OpMatch);
-				OpInstance = ThirdParty.Converter.ToUshort(db["OpInstance"], OpInstance);
-				OpSouthernBozja = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpSouthernBozja);
+			//
+			public static PacketConfig ParseString(string ctx)
+			{
+				var pk = new PacketConfig();
+				var db = new ThirdParty.LineDb(ctx, false);
+				pk.InternalParseString(db);
+				return pk;
 			}
 		}
 
