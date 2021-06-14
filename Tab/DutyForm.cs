@@ -585,7 +585,8 @@ namespace DutyContent.Tab
 
 				SaveConfig();
 
-				Updater.CheckNewVersion();
+				if (DcConfig.DataRemoteUpdate)
+					Updater.CheckNewVersion();
 
 				UpdateFates();
 			}
@@ -1424,6 +1425,9 @@ namespace DutyContent.Tab
 		private void RemotePacketUpdate(string name)
 		{
 			// need to resign using thread -> blocked by network troubles
+			if (!DcConfig.DataRemoteUpdate)
+				return;
+
 			var ns = Updater.CheckNewPacket(name);
 
 			if (!string.IsNullOrWhiteSpace(ns))

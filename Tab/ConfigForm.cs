@@ -1,12 +1,6 @@
-﻿using DutyContent.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -66,6 +60,10 @@ namespace DutyContent.Tab
 		public void UpdateUiLocale()
 		{
 			lblDispLang.Text = MesgLog.Text(201);
+
+			lblDataUpdate.Text = MesgLog.Text(203);
+			rdoDataUpdateLocal.Text = MesgLog.Text(204);
+			rdoDataUpdateRemote.Text = MesgLog.Text(205);
 		}
 
 		public static List<string> MakeConfigLangList()
@@ -111,6 +109,30 @@ namespace DutyContent.Tab
 			DcConfig.SaveConfig();
 
 			lblCurrentLang.Text = MesgLog.Text("LANG");
+		}
+
+		private void InternalDataUpdate(bool value)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (value && DcConfig.DataRemoteUpdate)
+				return;
+			if (!value && !DcConfig.DataRemoteUpdate)
+				return;
+
+			DcConfig.DataRemoteUpdate = value;
+			DcConfig.SaveConfig();
+		}
+
+		private void RdoDataUpdateLocal_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalDataUpdate(false);
+		}
+
+		private void RdoDataUpdateRemote_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalDataUpdate(true);
 		}
 	}
 }

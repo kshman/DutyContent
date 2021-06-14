@@ -28,6 +28,7 @@ namespace DutyContent
 
 		//
 		public static string Language { get; set; } = "";
+		public static bool DataRemoteUpdate { get; set; } = true;   // true = use remote update
 
 		public static string BuildDataFileName(string header, string context, string ext)
 		{
@@ -65,6 +66,7 @@ namespace DutyContent
 
 				sw.WriteLine("# config");
 				sw.WriteLine("Language={0}", Language);
+				sw.WriteLine("DataRemoteUpdate={0}", DataRemoteUpdate);
 				sw.WriteLine();
 
 				Duty.InternalSaveStream(sw);
@@ -83,6 +85,7 @@ namespace DutyContent
 			var db = new ThirdParty.LineDb(filename, Encoding.UTF8, false);
 
 			Language = db["Language"];
+			DataRemoteUpdate = ThirdParty.Converter.ToBool(db["DataRemoteUpdate"], DataRemoteUpdate);
 
 			Duty.InternalReadFromDb(db);
 		}

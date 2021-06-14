@@ -41,6 +41,9 @@ LANG=English
 200=Config
 201=Display Language
 202=Automatically hide overlay when client is in the background
+203=Data update
+204=Use local data only
+205=Check && update using Internet
 
 300=Duty
 301=Contents
