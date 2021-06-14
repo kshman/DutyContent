@@ -79,7 +79,6 @@ namespace DutyContent.Tab
 			this.txtLineToken = new System.Windows.Forms.TextBox();
 			this.chkUseNotifyLine = new System.Windows.Forms.CheckBox();
 			this.panel3 = new System.Windows.Forms.Panel();
-			this.lblCurrentPacketSet = new System.Windows.Forms.Label();
 			this.cboPacketset = new System.Windows.Forms.ComboBox();
 			this.lblPacketSet = new System.Windows.Forms.Label();
 			this.lblCurrentDataSet = new System.Windows.Forms.Label();
@@ -305,7 +304,7 @@ namespace DutyContent.Tab
 			this.panel4.Controls.Add(this.lblLineToken);
 			this.panel4.Controls.Add(this.txtLineToken);
 			this.panel4.Controls.Add(this.chkUseNotifyLine);
-			this.panel4.Location = new System.Drawing.Point(6, 288);
+			this.panel4.Location = new System.Drawing.Point(6, 269);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(778, 143);
 			this.panel4.TabIndex = 3;
@@ -414,7 +413,6 @@ namespace DutyContent.Tab
 			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panel3.Controls.Add(this.lblCurrentPacketSet);
 			this.panel3.Controls.Add(this.cboPacketset);
 			this.panel3.Controls.Add(this.lblPacketSet);
 			this.panel3.Controls.Add(this.lblCurrentDataSet);
@@ -424,17 +422,8 @@ namespace DutyContent.Tab
 			this.panel3.Controls.Add(this.lblLogFont);
 			this.panel3.Location = new System.Drawing.Point(6, 6);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(778, 110);
+			this.panel3.Size = new System.Drawing.Size(778, 91);
 			this.panel3.TabIndex = 2;
-			// 
-			// lblCurrentPacketSet
-			// 
-			this.lblCurrentPacketSet.Location = new System.Drawing.Point(110, 84);
-			this.lblCurrentPacketSet.Name = "lblCurrentPacketSet";
-			this.lblCurrentPacketSet.Size = new System.Drawing.Size(243, 15);
-			this.lblCurrentPacketSet.TabIndex = 14;
-			this.lblCurrentPacketSet.Text = "--";
-			this.lblCurrentPacketSet.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// cboPacketset
 			// 
@@ -519,7 +508,7 @@ namespace DutyContent.Tab
 			this.panel2.Controls.Add(this.txtSoundInstance);
 			this.panel2.Controls.Add(this.chkEnableSound);
 			this.panel2.Controls.Add(this.lblSoundInstance);
-			this.panel2.Location = new System.Drawing.Point(6, 190);
+			this.panel2.Location = new System.Drawing.Point(6, 171);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(778, 92);
 			this.panel2.TabIndex = 1;
@@ -634,7 +623,7 @@ namespace DutyContent.Tab
 			this.panel1.Controls.Add(this.btnOverlayDimming);
 			this.panel1.Controls.Add(this.lblOverlayTransparent);
 			this.panel1.Controls.Add(this.chkEnableOverlay);
-			this.panel1.Location = new System.Drawing.Point(6, 122);
+			this.panel1.Location = new System.Drawing.Point(6, 103);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(778, 62);
 			this.panel1.TabIndex = 0;
@@ -1011,7 +1000,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.CheckBox chkOverlayClickThru;
 		private System.Windows.Forms.CheckBox chkShowDebug;
-		private System.Windows.Forms.Label lblCurrentPacketSet;
 		private System.Windows.Forms.ComboBox cboPacketset;
 		private System.Windows.Forms.Label lblPacketSet;
 		private System.Windows.Forms.Label lblPacketVersion;

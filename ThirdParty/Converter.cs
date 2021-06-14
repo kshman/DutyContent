@@ -107,6 +107,11 @@ namespace DutyContent.ThirdParty
 			return s.ToUpper().Equals("TRUE");
 		}
 
+		public static bool ToBool(string s, bool failret)
+		{
+			return string.IsNullOrEmpty(s) ? failret : s.ToUpper().Equals("TRUE");
+		}
+
 		public static float ToFloat(string s, float failret = 0.0f)
 		{
 			return float.TryParse(s, out float v) ? v : failret;

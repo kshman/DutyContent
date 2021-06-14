@@ -22,7 +22,9 @@ namespace DutyContent.Tab
 		private bool _is_lock_fate;
 		private bool _is_packet_finder;
 		private DcContent.SaveTheQueenType _stq_type = DcContent.SaveTheQueenType.No;
+
 		private DcConfig.PacketConfig _new_packet;
+		private List<string> _packet_names = new List<string>();
 
 		private Overlay.DutyOvForm _overlay;
 
@@ -44,7 +46,6 @@ namespace DutyContent.Tab
 		{
 			//
 			lblCurrentDataSet.Text = DcContent.DisplayLanguage;
-			lblCurrentPacketSet.Text = DcConfig.Packet.Description;
 
 			//
 			var lang = MakeDutyLangList();
@@ -52,18 +53,23 @@ namespace DutyContent.Tab
 			foreach (var i in lang)
 			{
 				var n = cboDataset.Items.Add(i);
+
 				if (i.Equals(DcConfig.Duty.Language))
 					cboDataset.SelectedIndex = n;
 			}
 
 			//
+			_packet_names.Clear();
 			var pks = MakePacketList();
 
-			foreach (var i in pks)
+			for (var i = 0; i < pks.name.Count; i++)
 			{
-				var n = cboPacketset.Items.Add(i);
-				if (i.Equals(DcConfig.Duty.PacketSet))
+				var n = cboPacketset.Items.Add(pks.desc[i]);
+
+				if (pks.name[i].Equals(DcConfig.Duty.PacketSet))
 					cboPacketset.SelectedIndex = n;
+
+				_packet_names.Add(pks.name[i]);
 			}
 
 			//
@@ -125,6 +131,10 @@ namespace DutyContent.Tab
 				case 3: rdoFatePreset4.Checked = true; break;
 			}
 			UpdateFates();
+
+			//
+			if (cboPacketset.SelectedIndex >= 0)
+				RemotePacketUpdate(_packet_names[cboPacketset.SelectedIndex]);
 		}
 
 		public void PluginDeinitialize()
@@ -153,9 +163,10 @@ namespace DutyContent.Tab
 			return lst;
 		}
 
-		public static List<string> MakePacketList()
+		public static (List<string> name, List<string> desc) MakePacketList()
 		{
 			List<string> l = new List<string>();
+			List<string> d = new List<string>();
 
 			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
 
@@ -163,9 +174,17 @@ namespace DutyContent.Tab
 			{
 				var s = fi.Name.Substring(9, fi.Name.Length - 9 - 7);
 				l.Add(s);
+
+				if (!File.Exists(fi.FullName))
+					d.Add(s);
+				else
+				{
+					var db = new ThirdParty.LineDb(fi.FullName, Encoding.UTF8, false);
+					d.Add(db.Get("Description", s));
+				}
 			}
 
-			return l;
+			return (l, d);
 		}
 
 		public void RefreshLocale()
@@ -566,7 +585,8 @@ namespace DutyContent.Tab
 
 				SaveConfig();
 
-				Updater.CheckNewVersion();
+				if (DcConfig.DataRemoteUpdate)
+					Updater.CheckNewVersion();
 
 				UpdateFates();
 			}
@@ -577,17 +597,19 @@ namespace DutyContent.Tab
 			if (!DcConfig.PluginEnable)
 				return;
 
-			var l = (string)cboPacketset.SelectedItem;
+			if (cboPacketset.SelectedIndex >= _packet_names.Count)
+				return;
+
+			var l = _packet_names[cboPacketset.SelectedIndex];
 
 			if (!string.IsNullOrWhiteSpace(l) && !l.Equals(DcConfig.Duty.PacketSet) && DcConfig.ReadPacket(l))
 			{
-				lblCurrentPacketSet.Text = DcConfig.Packet.Description;
-
 				SaveConfig();
 
 				if (!l.Equals(DcConfig.PacketConfig.DefaultSetNameCustom))
 				{
-					// not custom, call Updater?
+					// check update and save
+					RemotePacketUpdate(l);
 				}
 			}
 		}
@@ -1070,7 +1092,7 @@ namespace DutyContent.Tab
 		private void PacketFindClearUi(DcConfig.PacketConfig newpk)
 		{
 			//
-			lblPacketVersion.Text = newpk.Version;
+			lblPacketVersion.Text = newpk.Version.ToString();
 			txtPacketDescription.Text = newpk.Description;
 			lstBozjaInfo.Items.Clear();
 
@@ -1396,6 +1418,38 @@ namespace DutyContent.Tab
 						lstBozjaInfo.Items.Add(li);
 						lstBozjaInfo.EnsureVisible(lstBozjaInfo.Items.Count - 1);
 					});
+				}
+			}
+		}
+
+		private void RemotePacketUpdate(string name)
+		{
+			// need to resign using thread -> blocked by network troubles
+			if (!DcConfig.DataRemoteUpdate)
+				return;
+
+			var ns = Updater.CheckNewPacket(name);
+
+			if (!string.IsNullOrWhiteSpace(ns))
+			{
+				var pk = DcConfig.PacketConfig.ParseString(ns);
+
+				if (pk.Version > DcConfig.Packet.Version)
+				{
+					DcConfig.Packet.Version = pk.Version;
+					DcConfig.Packet.Description = pk.Description;
+					DcConfig.Packet.OpFate = pk.OpFate;
+					DcConfig.Packet.OpDuty = pk.OpDuty;
+					DcConfig.Packet.OpMatch = pk.OpMatch;
+					DcConfig.Packet.OpInstance = pk.OpInstance;
+					DcConfig.Packet.OpSouthernBozja = pk.OpSouthernBozja;
+
+					var nfn = DcConfig.BuildPacketFileName(name);
+					pk.Save(nfn);
+
+					MesgLog.I(33, pk.Version, pk.Description);
+
+					cboDataset.SelectedItem = pk.Description;
 				}
 			}
 		}

@@ -21,5 +21,21 @@ namespace DutyContent
                 }
             });
         }
+
+        public static string CheckNewPacket(string name)
+		{
+            try
+			{
+                var ret = WebApi.Request($"https://raw.githubusercontent.com/kshman/DutyContent/main/Data/DcPacket-{name}.config");
+
+                return ret;
+            }
+            catch (Exception ex)
+			{
+                MesgLog.Ex(ex, 32);
+
+                return null;
+			}
+		}
     }
 }

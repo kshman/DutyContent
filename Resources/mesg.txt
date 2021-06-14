@@ -26,9 +26,10 @@ LANG=English
 27=None
 28=Packet file not found! {0}
 29=Packet info: {0} "{1}"
-
 30=Error requesting web service
 31=Error while updating duty/FATE Data
+32=Error while updating packet info
+33=Packet updated: {0} "{1}"
 
 99=DutyContent Plugin {0}
 
@@ -40,6 +41,9 @@ LANG=English
 200=Config
 201=Display Language
 202=Automatically hide overlay when client is in the background
+203=Data update
+204=Use local data only
+205=Check && update using Internet
 
 300=Duty
 301=Contents

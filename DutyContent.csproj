@@ -147,6 +147,10 @@
     <None Include="Data\DcDuty-German.json" />
     <None Include="Data\DcDuty-Japanese.json" />
     <None Include="Data\DcDuty-Korean.json" />
+    <None Include="Data\DcPacket-Custom.config" />
+    <None Include="Data\DcPacket-Global.config" />
+    <None Include="Data\DcPacket-LocalChina.config" />
+    <None Include="Data\DcPacket-LocalKorea.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
