@@ -17,7 +17,6 @@ namespace DutyContent
 		public static bool PluginEnable { get; set; }
 		public static string PluginPath { get; set; }
 		public static string DataPath { get; set; }
-		public static string PacketPath { get; set; }
 		public static string ConfigPath { get; set; }
 
 		//
@@ -29,6 +28,29 @@ namespace DutyContent
 
 		//
 		public static string Language { get; set; } = "";
+
+		public static string BuildDataFileName(string header, string context, string ext)
+		{
+			return Path.Combine(DataPath, $"{header}-{context}.{ext}");
+		}
+
+		//
+		public static string BuildDutyFileName(string language)
+		{
+			return BuildDataFileName("DcDuty", language, "json");
+		}
+
+		//
+		public static string BuildLangFileName(string language)
+		{
+			return BuildDataFileName("DcLang", language, "txt");
+		}
+
+		//
+		public static string BuildPacketFileName(string set)
+		{
+			return BuildDataFileName("DcPacket", set, "config");
+		}
 
 		//
 		public static void SaveConfig(string filename = null)
@@ -66,23 +88,16 @@ namespace DutyContent
 		}
 
 		//
-		public static void Load()
-		{
-			Packet.Load();
-			LoadConfig();
-		}
-
-		//
 		public static void ReadLanguage(bool is_in_init = false)
 		{
-			if (string.IsNullOrWhiteSpace(DcConfig.Language))
+			if (string.IsNullOrWhiteSpace(Language))
 			{
 				if (!is_in_init)
 					MesgLog.Initialize(Properties.Resources.DefaultMessage);
 			}
 			else
 			{
-				string filename = Path.Combine(DcConfig.DataPath, $"DcLang-{DcConfig.Language}.txt");
+				string filename = BuildLangFileName(Language);
 
 				if (File.Exists(filename))
 					MesgLog.LoadFile(filename);
@@ -91,22 +106,100 @@ namespace DutyContent
 			}
 		}
 
+		public static bool ReadPacket(string set = null)
+		{
+			if (set == null)
+				set = Duty.PacketSet;
+			else if (!Duty.PacketSet.Equals(set))
+				Duty.PacketSet = set;
+
+			var filename = BuildPacketFileName(set);
+
+			if (!File.Exists(filename))
+			{
+				filename = BuildPacketFileName(set = PacketConfig.DefaultSetNameGlobal);
+
+				if (!File.Exists(filename))
+				{
+					filename = BuildPacketFileName(set = PacketConfig.DefaultSetNameCustom);
+
+					if (!File.Exists(filename))
+					{
+						MesgLog.E(27, " ");
+						return false;
+					}
+				}
+
+				if (!Duty.PacketSet.Equals(set))
+					Duty.PacketSet = set;
+			}
+
+			// load. if file not exist, create new one with default value
+			Packet.Load(filename);
+
+			MesgLog.I(29, Packet.Version, Packet.Description);
+
+			return true;
+		}
+
 		//
 		public class PacketConfig
 		{
 			// Packet
-			public string Version { get; set; } = "5.55 HotFix";
+			public string Version { get; set; } = "2005551";
+			public string Description { get; set; } = "5.55 HotFix";
 			public ushort OpFate { get; set; } = 858;
 			public ushort OpDuty { get; set; } = 271;
 			public ushort OpMatch { get; set; } = 220;
 			public ushort OpInstance { get; set; } = 923;
 			public ushort OpSouthernBozja { get; set; } = 584;
 
+			// packet version structure
+			// 0 - Service area (1:Custom, 2:Global, 3:Korea)
+			// 1 - Reserved. Must be 0
+			// 2 - Expansion version
+			// 3
+			// 4 - Update version
+			// 5
+			// 6 - HotFix or packet version
+
+			public readonly static string DefaultSetNameCustom = "Custom";
+			public readonly static string DefaultSetNameGlobal = "Global";
+
+			public PacketConfig()
+			{
+				// nothing to do
+			}
+
+			public PacketConfig(DateTime dt, PacketConfig right = null)
+			{
+				// for custom
+				Version = $"1{dt:yyMMdd}";
+				Description = $"Created {dt}";
+
+				if (right != null)
+				{
+					OpFate = right.OpFate;
+					OpDuty = right.OpDuty;
+					OpMatch = right.OpMatch;
+					OpInstance = right.OpInstance;
+					OpSouthernBozja = right.OpSouthernBozja;
+				}
+				else
+				{
+					OpFate = 0;
+					OpDuty = 0;
+					OpMatch = 0;
+					OpInstance = 0;
+					OpSouthernBozja = 0;
+				}
+			}
+
 			// 
-			public void Save(string filename = null)
+			public bool Save(string filename)
 			{
 				if (filename == null)
-					filename = PacketPath;
+					return false;
 
 				using (var sw = new StreamWriter(filename, false, Encoding.UTF8))
 				{
@@ -115,6 +208,7 @@ namespace DutyContent
 
 					sw.WriteLine("# packet");
 					sw.WriteLine("Version={0}", Version);
+					sw.WriteLine("Description={0}", Description);
 					sw.WriteLine("OpFate={0}", OpFate);
 					sw.WriteLine("OpDuty={0}", OpDuty);
 					sw.WriteLine("OpMatch={0}", OpMatch);
@@ -122,20 +216,20 @@ namespace DutyContent
 					sw.WriteLine("OpSouthernBozja={0}", OpSouthernBozja);
 					sw.WriteLine();
 				}
+
+				return true;
 			}
 
 			//
 			public void Load(string filename = null)
 			{
-				if (filename == null)
-					filename = PacketPath;
-
 				if (!File.Exists(filename))
 					Save(filename);
 
 				var db = new ThirdParty.LineDb(filename, Encoding.UTF8, false);
 
 				Version = db["Version"];
+				Description = db["Description"];
 				OpFate = ThirdParty.Converter.ToUshort(db["OpFate"], OpFate);
 				OpDuty = ThirdParty.Converter.ToUshort(db["OpDuty"], OpDuty);
 				OpMatch = ThirdParty.Converter.ToUshort(db["OpMatch"], OpMatch);
@@ -149,6 +243,7 @@ namespace DutyContent
 		{
 			public string Language { get; set; } = "English";
 			public int ActiveFate { get; set; } = 0;
+			public string PacketSet { get; set; } = "Global";
 			public string LogFontFamily { get; set; } = "Microsoft Sans Serif";
 			public float LogFontSize { get; set; } = 12.0f;
 
@@ -201,6 +296,7 @@ namespace DutyContent
 				sw.WriteLine("DutyFate1={0}", Fates[1].Line);
 				sw.WriteLine("DutyFate2={0}", Fates[2].Line);
 				sw.WriteLine("DutyFate3={0}", Fates[3].Line);
+				sw.WriteLine("DutypPacketSet={0}", PacketSet);
 
 				sw.WriteLine("DutyLogFontFamily={0}", LogFontFamily);
 				sw.WriteLine("DutyLogFontSize={0}", LogFontSize);
@@ -241,6 +337,7 @@ namespace DutyContent
 				Fates[1].Line = db["DutyFate1"];
 				Fates[2].Line = db["DutyFate2"];
 				Fates[3].Line = db["DutyFate3"];
+				PacketSet = db.Get("DutypPacketSet", PacketSet);
 
 				LogFontFamily = db.Get("DutyLogFontFamily", LogFontFamily);
 				LogFontSize = ThirdParty.Converter.ToFloat(db["DutyLogFontSize"], LogFontSize);

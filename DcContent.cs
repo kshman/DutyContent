@@ -199,12 +199,11 @@ namespace DutyContent
 			else if (!DcConfig.Duty.Language.Equals(language))
 				DcConfig.Duty.Language = language;
 
-			string filename = Path.Combine(DcConfig.DataPath, $"DcDuty-{language}.json");
+			string filename = DcConfig.BuildDutyFileName(language);
 
 			if (!File.Exists(filename))
 			{
-				language = "English";
-				filename = Path.Combine(DcConfig.DataPath, $"DcDuty-{language}.json");
+				filename = DcConfig.BuildDutyFileName(language = "English");
 
 				if (!File.Exists(filename))
 				{

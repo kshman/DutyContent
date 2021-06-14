@@ -79,6 +79,9 @@ namespace DutyContent.Tab
 			this.txtLineToken = new System.Windows.Forms.TextBox();
 			this.chkUseNotifyLine = new System.Windows.Forms.CheckBox();
 			this.panel3 = new System.Windows.Forms.Panel();
+			this.lblCurrentPacketSet = new System.Windows.Forms.Label();
+			this.cboPacketset = new System.Windows.Forms.ComboBox();
+			this.lblPacketSet = new System.Windows.Forms.Label();
 			this.lblCurrentDataSet = new System.Windows.Forms.Label();
 			this.cboDataset = new System.Windows.Forms.ComboBox();
 			this.lblDataSet = new System.Windows.Forms.Label();
@@ -102,6 +105,7 @@ namespace DutyContent.Tab
 			this.chkEnableOverlay = new System.Windows.Forms.CheckBox();
 			this.tabPagePacket = new System.Windows.Forms.TabPage();
 			this.panel5 = new System.Windows.Forms.Panel();
+			this.lblPacketVersion = new System.Windows.Forms.Label();
 			this.txtPacketDescription = new System.Windows.Forms.TextBox();
 			this.lblPacketDesc = new System.Windows.Forms.Label();
 			this.btnPacketApply = new System.Windows.Forms.Button();
@@ -145,7 +149,7 @@ namespace DutyContent.Tab
 			this.tabContent.Location = new System.Drawing.Point(0, 0);
 			this.tabContent.Name = "tabContent";
 			this.tabContent.SelectedIndex = 0;
-			this.tabContent.Size = new System.Drawing.Size(800, 502);
+			this.tabContent.Size = new System.Drawing.Size(800, 542);
 			this.tabContent.TabIndex = 0;
 			// 
 			// tabPageContent
@@ -155,7 +159,7 @@ namespace DutyContent.Tab
 			this.tabPageContent.Location = new System.Drawing.Point(4, 39);
 			this.tabPageContent.Name = "tabPageContent";
 			this.tabPageContent.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageContent.Size = new System.Drawing.Size(792, 459);
+			this.tabPageContent.Size = new System.Drawing.Size(792, 499);
 			this.tabPageContent.TabIndex = 0;
 			this.tabPageContent.Text = "301";
 			this.tabPageContent.UseVisualStyleBackColor = true;
@@ -178,7 +182,7 @@ namespace DutyContent.Tab
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.txtContentLog);
-			this.splitContainer1.Size = new System.Drawing.Size(786, 453);
+			this.splitContainer1.Size = new System.Drawing.Size(786, 493);
 			this.splitContainer1.SplitterDistance = 262;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -255,7 +259,7 @@ namespace DutyContent.Tab
 			this.treeFates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.treeFates.Location = new System.Drawing.Point(0, 29);
 			this.treeFates.Name = "treeFates";
-			this.treeFates.Size = new System.Drawing.Size(260, 424);
+			this.treeFates.Size = new System.Drawing.Size(260, 464);
 			this.treeFates.TabIndex = 0;
 			this.treeFates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeFates_AfterCheck);
 			// 
@@ -267,7 +271,7 @@ namespace DutyContent.Tab
 			this.txtContentLog.Location = new System.Drawing.Point(0, 0);
 			this.txtContentLog.Name = "txtContentLog";
 			this.txtContentLog.ReadOnly = true;
-			this.txtContentLog.Size = new System.Drawing.Size(520, 453);
+			this.txtContentLog.Size = new System.Drawing.Size(520, 493);
 			this.txtContentLog.TabIndex = 0;
 			this.txtContentLog.Text = "";
 			// 
@@ -281,7 +285,7 @@ namespace DutyContent.Tab
 			this.tabPageSetting.Location = new System.Drawing.Point(4, 39);
 			this.tabPageSetting.Name = "tabPageSetting";
 			this.tabPageSetting.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageSetting.Size = new System.Drawing.Size(792, 459);
+			this.tabPageSetting.Size = new System.Drawing.Size(792, 499);
 			this.tabPageSetting.TabIndex = 1;
 			this.tabPageSetting.Text = "302";
 			this.tabPageSetting.UseVisualStyleBackColor = true;
@@ -301,7 +305,7 @@ namespace DutyContent.Tab
 			this.panel4.Controls.Add(this.lblLineToken);
 			this.panel4.Controls.Add(this.txtLineToken);
 			this.panel4.Controls.Add(this.chkUseNotifyLine);
-			this.panel4.Location = new System.Drawing.Point(6, 234);
+			this.panel4.Location = new System.Drawing.Point(6, 288);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(778, 143);
 			this.panel4.TabIndex = 3;
@@ -410,6 +414,9 @@ namespace DutyContent.Tab
 			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel3.Controls.Add(this.lblCurrentPacketSet);
+			this.panel3.Controls.Add(this.cboPacketset);
+			this.panel3.Controls.Add(this.lblPacketSet);
 			this.panel3.Controls.Add(this.lblCurrentDataSet);
 			this.panel3.Controls.Add(this.cboDataset);
 			this.panel3.Controls.Add(this.lblDataSet);
@@ -417,14 +424,43 @@ namespace DutyContent.Tab
 			this.panel3.Controls.Add(this.lblLogFont);
 			this.panel3.Location = new System.Drawing.Point(6, 6);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(778, 56);
+			this.panel3.Size = new System.Drawing.Size(778, 110);
 			this.panel3.TabIndex = 2;
+			// 
+			// lblCurrentPacketSet
+			// 
+			this.lblCurrentPacketSet.Location = new System.Drawing.Point(110, 84);
+			this.lblCurrentPacketSet.Name = "lblCurrentPacketSet";
+			this.lblCurrentPacketSet.Size = new System.Drawing.Size(243, 15);
+			this.lblCurrentPacketSet.TabIndex = 14;
+			this.lblCurrentPacketSet.Text = "--";
+			this.lblCurrentPacketSet.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// cboPacketset
+			// 
+			this.cboPacketset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboPacketset.FormattingEnabled = true;
+			this.cboPacketset.Location = new System.Drawing.Point(110, 60);
+			this.cboPacketset.Name = "cboPacketset";
+			this.cboPacketset.Size = new System.Drawing.Size(243, 21);
+			this.cboPacketset.TabIndex = 13;
+			this.cboPacketset.SelectedIndexChanged += new System.EventHandler(this.CboPacketset_SelectedIndexChanged);
+			// 
+			// lblPacketSet
+			// 
+			this.lblPacketSet.AutoSize = true;
+			this.lblPacketSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblPacketSet.Location = new System.Drawing.Point(21, 58);
+			this.lblPacketSet.Name = "lblPacketSet";
+			this.lblPacketSet.Size = new System.Drawing.Size(39, 20);
+			this.lblPacketSet.TabIndex = 12;
+			this.lblPacketSet.Text = "336";
 			// 
 			// lblCurrentDataSet
 			// 
-			this.lblCurrentDataSet.Location = new System.Drawing.Point(203, 30);
+			this.lblCurrentDataSet.Location = new System.Drawing.Point(110, 30);
 			this.lblCurrentDataSet.Name = "lblCurrentDataSet";
-			this.lblCurrentDataSet.Size = new System.Drawing.Size(150, 15);
+			this.lblCurrentDataSet.Size = new System.Drawing.Size(243, 15);
 			this.lblCurrentDataSet.TabIndex = 3;
 			this.lblCurrentDataSet.Text = "--";
 			this.lblCurrentDataSet.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -451,9 +487,9 @@ namespace DutyContent.Tab
 			// 
 			// btnLogFont
 			// 
-			this.btnLogFont.Location = new System.Drawing.Point(515, 1);
+			this.btnLogFont.Location = new System.Drawing.Point(413, 33);
 			this.btnLogFont.Name = "btnLogFont";
-			this.btnLogFont.Size = new System.Drawing.Size(243, 48);
+			this.btnLogFont.Size = new System.Drawing.Size(273, 48);
 			this.btnLogFont.TabIndex = 3;
 			this.btnLogFont.Text = "--";
 			this.btnLogFont.UseVisualStyleBackColor = true;
@@ -463,7 +499,7 @@ namespace DutyContent.Tab
 			// 
 			this.lblLogFont.AutoSize = true;
 			this.lblLogFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblLogFont.Location = new System.Drawing.Point(380, 7);
+			this.lblLogFont.Location = new System.Drawing.Point(409, 7);
 			this.lblLogFont.Name = "lblLogFont";
 			this.lblLogFont.Size = new System.Drawing.Size(39, 20);
 			this.lblLogFont.TabIndex = 9;
@@ -483,7 +519,7 @@ namespace DutyContent.Tab
 			this.panel2.Controls.Add(this.txtSoundInstance);
 			this.panel2.Controls.Add(this.chkEnableSound);
 			this.panel2.Controls.Add(this.lblSoundInstance);
-			this.panel2.Location = new System.Drawing.Point(6, 136);
+			this.panel2.Location = new System.Drawing.Point(6, 190);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(778, 92);
 			this.panel2.TabIndex = 1;
@@ -598,7 +634,7 @@ namespace DutyContent.Tab
 			this.panel1.Controls.Add(this.btnOverlayDimming);
 			this.panel1.Controls.Add(this.lblOverlayTransparent);
 			this.panel1.Controls.Add(this.chkEnableOverlay);
-			this.panel1.Location = new System.Drawing.Point(6, 68);
+			this.panel1.Location = new System.Drawing.Point(6, 122);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(778, 62);
 			this.panel1.TabIndex = 0;
@@ -666,9 +702,9 @@ namespace DutyContent.Tab
 			this.tabPagePacket.Location = new System.Drawing.Point(4, 39);
 			this.tabPagePacket.Name = "tabPagePacket";
 			this.tabPagePacket.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPagePacket.Size = new System.Drawing.Size(792, 459);
+			this.tabPagePacket.Size = new System.Drawing.Size(792, 499);
 			this.tabPagePacket.TabIndex = 2;
-			this.tabPagePacket.Text = "303";
+			this.tabPagePacket.Text = "337";
 			this.tabPagePacket.UseVisualStyleBackColor = true;
 			// 
 			// panel5
@@ -676,6 +712,7 @@ namespace DutyContent.Tab
 			this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel5.Controls.Add(this.lblPacketVersion);
 			this.panel5.Controls.Add(this.txtPacketDescription);
 			this.panel5.Controls.Add(this.lblPacketDesc);
 			this.panel5.Controls.Add(this.btnPacketApply);
@@ -689,6 +726,16 @@ namespace DutyContent.Tab
 			this.panel5.Name = "panel5";
 			this.panel5.Size = new System.Drawing.Size(780, 261);
 			this.panel5.TabIndex = 0;
+			// 
+			// lblPacketVersion
+			// 
+			this.lblPacketVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblPacketVersion.Location = new System.Drawing.Point(625, 42);
+			this.lblPacketVersion.Name = "lblPacketVersion";
+			this.lblPacketVersion.Size = new System.Drawing.Size(150, 15);
+			this.lblPacketVersion.TabIndex = 9;
+			this.lblPacketVersion.Text = "--";
+			this.lblPacketVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// txtPacketDescription
 			// 
@@ -711,8 +758,9 @@ namespace DutyContent.Tab
 			// 
 			// btnPacketApply
 			// 
+			this.btnPacketApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPacketApply.Enabled = false;
-			this.btnPacketApply.Location = new System.Drawing.Point(287, 6);
+			this.btnPacketApply.Location = new System.Drawing.Point(652, 3);
 			this.btnPacketApply.Name = "btnPacketApply";
 			this.btnPacketApply.Size = new System.Drawing.Size(123, 30);
 			this.btnPacketApply.TabIndex = 6;
@@ -723,7 +771,8 @@ namespace DutyContent.Tab
 			// 
 			// btnPacketStart
 			// 
-			this.btnPacketStart.Location = new System.Drawing.Point(158, 5);
+			this.btnPacketStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnPacketStart.Location = new System.Drawing.Point(523, 3);
 			this.btnPacketStart.Name = "btnPacketStart";
 			this.btnPacketStart.Size = new System.Drawing.Size(123, 30);
 			this.btnPacketStart.TabIndex = 5;
@@ -822,6 +871,7 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.UseCompatibleStateImageBehavior = false;
 			this.lstPacketInfo.View = System.Windows.Forms.View.Details;
 			this.lstPacketInfo.SelectedIndexChanged += new System.EventHandler(this.LstPacketInfo_SelectedIndexChanged);
+			this.lstPacketInfo.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LstPacketInfo_MouseDoubleClick);
 			// 
 			// columnHeader1
 			// 
@@ -867,7 +917,7 @@ namespace DutyContent.Tab
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
-			this.ClientSize = new System.Drawing.Size(800, 502);
+			this.ClientSize = new System.Drawing.Size(800, 542);
 			this.Controls.Add(this.tabContent);
 			this.Name = "DutyForm";
 			this.Text = "Duty";
@@ -961,5 +1011,9 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.CheckBox chkOverlayClickThru;
 		private System.Windows.Forms.CheckBox chkShowDebug;
+		private System.Windows.Forms.Label lblCurrentPacketSet;
+		private System.Windows.Forms.ComboBox cboPacketset;
+		private System.Windows.Forms.Label lblPacketSet;
+		private System.Windows.Forms.Label lblPacketVersion;
 	}
 }

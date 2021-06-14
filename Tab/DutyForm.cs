@@ -44,6 +44,7 @@ namespace DutyContent.Tab
 		{
 			//
 			lblCurrentDataSet.Text = DcContent.DisplayLanguage;
+			lblCurrentPacketSet.Text = DcConfig.Packet.Description;
 
 			//
 			var lang = MakeDutyLangList();
@@ -53,6 +54,16 @@ namespace DutyContent.Tab
 				var n = cboDataset.Items.Add(i);
 				if (i.Equals(DcConfig.Duty.Language))
 					cboDataset.SelectedIndex = n;
+			}
+
+			//
+			var pks = MakePacketList();
+
+			foreach (var i in pks)
+			{
+				var n = cboPacketset.Items.Add(i);
+				if (i.Equals(DcConfig.Duty.PacketSet))
+					cboPacketset.SelectedIndex = n;
 			}
 
 			//
@@ -77,7 +88,7 @@ namespace DutyContent.Tab
 			else
 				_overlay.Hide();
 			if (DcConfig.Duty.OverlayClickThru)
-				EnableOverlayClickThru();
+				_overlay.SetClickThruStatus(true);
 
 			//
 			chkEnableSound.Checked = DcConfig.Duty.EnableSound;
@@ -142,6 +153,21 @@ namespace DutyContent.Tab
 			return lst;
 		}
 
+		public static List<string> MakePacketList()
+		{
+			List<string> l = new List<string>();
+
+			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
+
+			foreach (var fi in di.GetFiles("DcPacket-*.config"))
+			{
+				var s = fi.Name.Substring(9, fi.Name.Length - 9 - 7);
+				l.Add(s);
+			}
+
+			return l;
+		}
+
 		public void RefreshLocale()
 		{
 
@@ -151,9 +177,10 @@ namespace DutyContent.Tab
 		{
 			tabPageContent.Text = MesgLog.Text(301);
 			tabPageSetting.Text = MesgLog.Text(302);
-			tabPagePacket.Text = MesgLog.Text(303);
+			tabPagePacket.Text = MesgLog.Text(337);
 
 			lblDataSet.Text = MesgLog.Text(304);
+			lblPacketSet.Text = MesgLog.Text(336);
 			lblLogFont.Text = MesgLog.Text(305);
 
 			chkEnableOverlay.Text = MesgLog.Text(306);
@@ -545,6 +572,26 @@ namespace DutyContent.Tab
 			}
 		}
 
+		private void CboPacketset_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			var l = (string)cboPacketset.SelectedItem;
+
+			if (!string.IsNullOrWhiteSpace(l) && !l.Equals(DcConfig.Duty.PacketSet) && DcConfig.ReadPacket(l))
+			{
+				lblCurrentPacketSet.Text = DcConfig.Packet.Description;
+
+				SaveConfig();
+
+				if (!l.Equals(DcConfig.PacketConfig.DefaultSetNameCustom))
+				{
+					// not custom, call Updater?
+				}
+			}
+		}
+
 		private void BtnLogFont_Click(object sender, EventArgs e)
 		{
 			Font ret = (Font)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
@@ -676,10 +723,7 @@ namespace DutyContent.Tab
 				return;
 
 			DcConfig.Duty.OverlayClickThru = chkOverlayClickThru.Checked;
-			if (DcConfig.Duty.OverlayClickThru)
-				EnableOverlayClickThru();
-			else
-				DisableOverlayClickThru();
+			_overlay.SetClickThruStatus(chkOverlayClickThru.Checked);
 
 			SaveConfig();
 		}
@@ -1026,7 +1070,8 @@ namespace DutyContent.Tab
 		private void PacketFindClearUi(DcConfig.PacketConfig newpk)
 		{
 			//
-			txtPacketDescription.Text = DcConfig.Packet.Version;
+			lblPacketVersion.Text = newpk.Version;
+			txtPacketDescription.Text = newpk.Description;
 			lstBozjaInfo.Items.Clear();
 
 			// FATE
@@ -1059,16 +1104,7 @@ namespace DutyContent.Tab
 		{
 			if (!_is_packet_finder)
 			{
-				_new_packet = new DcConfig.PacketConfig()
-				{
-					Version = DcConfig.Packet.Version,
-					OpFate = 0,
-					OpDuty = 0,
-					OpMatch = 0,
-					OpInstance = 0,
-					OpSouthernBozja = 0,
-				};
-
+				_new_packet = new DcConfig.PacketConfig(DateTime.Now);
 				PacketFindClearUi(_new_packet);
 			}
 
@@ -1086,18 +1122,17 @@ namespace DutyContent.Tab
 
 			if (ret == DialogResult.Yes)
 			{
-				_new_packet.Version = txtPacketDescription.Text;
+				var newfilename = DcConfig.BuildPacketFileName(DcConfig.PacketConfig.DefaultSetNameCustom);
 
-				DcConfig.Packet.Version = _new_packet.Version;
-				DcConfig.Packet.OpFate = _new_packet.OpFate;
-				DcConfig.Packet.OpDuty = _new_packet.OpDuty;
-				DcConfig.Packet.OpMatch = _new_packet.OpMatch;
-				DcConfig.Packet.OpInstance = _new_packet.OpInstance;
-				DcConfig.Packet.OpSouthernBozja = _new_packet.OpSouthernBozja;
-				DcConfig.Packet.Save();
+				_new_packet.Description = txtPacketDescription.Text;
+				_new_packet.Save(newfilename);
 
 				_is_packet_finder = false;
 				PacketFinderResetUi(false);
+
+				// is this good idea?
+				// no bad idea
+				//cboPacketset.SelectedIndex = 0;
 			}
 		}
 
@@ -1121,9 +1156,43 @@ namespace DutyContent.Tab
 			txtPacketInfo.Text = MesgLog.Text(m);
 		}
 
-		private void LstBozjaInfo_MouseDoubleClick(object sender, MouseEventArgs e)
+		private void LstPacketInfo_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
+			if (lstPacketInfo.SelectedIndices.Count != 1)
+				return;
 
+			//MesgLog.Write("double clicked: {0}", lstPacketInfo.SelectedIndices[0]);
+
+			var v = int.MaxValue;
+
+			switch (lstPacketInfo.SelectedIndices[0])
+			{
+				case 0:
+					v = _new_packet.OpFate = DcConfig.Packet.OpFate;
+					break;
+
+				case 1:
+					v = _new_packet.OpDuty = DcConfig.Packet.OpDuty;
+					break;
+
+				case 2:
+					v = _new_packet.OpMatch = DcConfig.Packet.OpMatch;
+					break;
+
+				case 3:
+					v = _new_packet.OpInstance = DcConfig.Packet.OpInstance;
+					break;
+
+				case 4:
+					v = _new_packet.OpSouthernBozja = DcConfig.Packet.OpSouthernBozja;
+					break;
+			}
+
+			if (v != int.MaxValue)
+			{
+				lstPacketInfo.SelectedItems[0].SubItems[2].Text = MesgLog.Text(10024);
+				lstPacketInfo.SelectedItems[0].SubItems[3].Text = v.ToString();
+			}
 		}
 
 		private void LstBozjaInfo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1137,6 +1206,11 @@ namespace DutyContent.Tab
 
 			lstPacketInfo.Items[4].SubItems[2].Text = MesgLog.Text(10023);
 			lstPacketInfo.Items[4].SubItems[3].Text = _new_packet.OpSouthernBozja.ToString();
+		}
+
+		private void LstBozjaInfo_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+
 		}
 
 		private static readonly short[] _packet_target_fates =
@@ -1323,32 +1397,6 @@ namespace DutyContent.Tab
 						lstBozjaInfo.EnsureVisible(lstBozjaInfo.Items.Count - 1);
 					});
 				}
-			}
-		}
-
-		void EnableOverlayClickThru()
-		{
-			long initialStyle = (long)ThirdParty.NativeMethods.GetWindowLong(_overlay.Handle, -20);
-			if (DcConfig.Duty.OverlayClickThru)
-			{
-				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(initialStyle | 0x80000 | 0x20));
-			}
-			else
-			{
-				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(0x00000 | 0x80000));
-			}
-		}
-
-		void DisableOverlayClickThru()
-		{
-			long initialStyle = (long)ThirdParty.NativeMethods.GetWindowLong(_overlay.Handle, -20);
-			if (DcConfig.Duty.OverlayClickThru)
-			{
-				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(initialStyle | 0x80000 | 0x20));
-			}
-			else
-			{
-				ThirdParty.NativeMethods.SetWindowLong(_overlay.Handle, -20, (IntPtr)(0x00000 | 0x80000));
 			}
 		}
 	}

@@ -44,7 +44,7 @@ namespace DutyContent.Overlay
 			this.lblText.TabIndex = 0;
 			this.lblText.Text = "Duty Content";
 			this.lblText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.lblText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblText_MouseDown);
+			this.lblText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LblText_MouseDown);
 			// 
 			// lblStat
 			// 

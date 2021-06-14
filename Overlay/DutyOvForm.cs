@@ -80,9 +80,16 @@ namespace DutyContent.Overlay
 			DcConfig.Duty.OverlayLocation = Location;
 		}
 
-		private void lblText_MouseDown(object sender, MouseEventArgs e)
+		private void LblText_MouseDown(object sender, MouseEventArgs e)
 		{
 			DoMoveDown(e);
+		}
+
+		public void SetClickThruStatus(bool is_click_thru)
+		{
+			long style = (long)ThirdParty.NativeMethods.GetWindowLong(Handle, -20);
+			long value = is_click_thru ? (style | 0x80000 | 0x20) : (0x80000 | 0x0);
+			ThirdParty.NativeMethods.SetWindowLong(Handle, -20, (IntPtr)value);
 		}
 
 		public void SetText(string text)

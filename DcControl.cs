@@ -75,7 +75,6 @@ namespace DutyContent
 
 			DcConfig.DataPath = Path.Combine(DcConfig.PluginPath, "Data");
 			DcConfig.ConfigPath = Path.Combine(DcConfig.PluginPath, "DutyContent.config");
-			DcConfig.PacketPath = Path.Combine(DcConfig.PluginPath, "DutyPacket.config");
 		}
 
 		//
@@ -176,8 +175,9 @@ namespace DutyContent
 
 			MesgLog.C(Color.Aquamarine, 4);
 
-			DcConfig.Load();
+			DcConfig.LoadConfig();
 			DcConfig.ReadLanguage(true);
+			DcConfig.ReadPacket();
 			DcContent.ReadContent();
 
 			UpdateUiLocale();
