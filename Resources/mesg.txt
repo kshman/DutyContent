@@ -44,6 +44,10 @@ LANG=English
 203=Data update
 204=Use local data only
 205=Check && update using Internet
+206=UPDATE!!!
+207=New update found! {0} -> {1}
+208=Visit DutyContent plugin repository for download.
+209=https://github.com/kshman/DutyContent/releases/latest
 
 300=Duty
 301=Contents

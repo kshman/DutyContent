@@ -215,7 +215,7 @@ namespace DutyContent.Tab
 
 						if (DcConfig.Duty.Fates[DcConfig.Duty.ActiveFate].Selected.Contains(fcode))
 						{
-							MesgLog.L("{0} - {1}", DcConfig.Duty.ActiveFate, fcode);
+							//MesgLog.L("{0} - {1}", DcConfig.Duty.ActiveFate, fcode);
 							PlayEffectSoundFate();
 							NotifyFate(fate);
 							_overlay.PlayFate(fate);
