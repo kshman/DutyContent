@@ -14,6 +14,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
+		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 		public static bool PluginEnable { get; set; }
 		public static string PluginPath { get; set; }
 		public static string DataPath { get; set; }
@@ -140,7 +141,7 @@ namespace DutyContent
 			// load. if file not exist, create new one with default value
 			Packet.Load(filename);
 
-			MesgLog.I(29, Packet.Version, Packet.Description);
+			MesgLog.I(29, Packet.Version, Packet.Description, filename);
 
 			return true;
 		}

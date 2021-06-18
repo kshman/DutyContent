@@ -173,22 +173,17 @@ namespace DutyContent
 			MesgLog.SetTextBox(txtMesg);
 			MesgLog.Initialize(Properties.Resources.DefaultMessage);
 
-			MesgLog.C(Color.Aquamarine, 4);
+			MesgLog.C(Color.Aquamarine, 4, DcConfig.PluginVersion.ToString());
 
 			DcConfig.LoadConfig();
 			DcConfig.ReadLanguage(true);
-			DcConfig.ReadPacket();
 			DcContent.ReadContent();
+			DcConfig.ReadPacket();
 
 			UpdateUiLocale();
 
-			MesgLog.C(Color.Aquamarine, 4);
-
 			//
 			Dock = DockStyle.Fill;
-
-			_act_label.Text = MesgLog.Text(1);  // Duty ready
-			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
 			_act_tab.Controls.Add(this);
 
 			//
@@ -322,6 +317,9 @@ namespace DutyContent
 		//
 		public void UpdateUiLocale()
 		{
+			_act_label.Text = MesgLog.Text(1);  // Duty ready
+			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
+
 			tabPageDuty.Text = MesgLog.Text(300);
 			Tab.DutyForm.Self?.UpdateUiLocale();
 
