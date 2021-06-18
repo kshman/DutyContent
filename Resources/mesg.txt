@@ -1,13 +1,13 @@
 ﻿# Default English message
 LANG=English
 
-0=FFXIV dc
+0=DutyCon
 1=Duty ready
 2=FFXIV plugin is missing!
 3=FFXIV plugin found!
-4=FFXIV Duty Content starting!
+4=FFXIV Duty Content: {0}
 5=ACT info: {0} ({1})
-6=FFXIV plugin info {0} ({1})
+6=FFXIV plugin info: {0} ({1})
 7=Invalid data: {0}
 8=Parsing error
 9=Unknown roulette: {0}
@@ -25,7 +25,7 @@ LANG=English
 26=Default
 27=None
 28=Packet file not found! {0}
-29=Packet info: {0} "{1}"
+29=Packet info: {0} "{1}" ({2})
 30=Error requesting web service
 31=Error while updating duty/FATE Data
 32=Error while updating packet info
@@ -44,6 +44,10 @@ LANG=English
 203=Data update
 204=Use local data only
 205=Check && update using Internet
+206=UPDATE!!!
+207=New update found! {0} -> {1}
+208=Visit DutyContent plugin repository for download.
+209=https://github.com/kshman/DutyContent/releases/latest
 
 300=Duty
 301=Contents

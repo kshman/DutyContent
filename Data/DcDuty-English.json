@@ -536,6 +536,8 @@
     "757": "the Navel (Unreal)",
     "758": "Eden`s Promise: Eternity",
     "759": "Eden`s Promise: Eternity (Savage)",
+    "760": "Delubrum Reginae",
+    "761": "Delubrum Reginae (Savage)",
     "762": "Castrum Marinum",
     "763": "Castrum Marinum (Extreme)",
     "766": "Novice Mahjong (Quick Ranked Match)",
@@ -548,13 +550,11 @@
     "773": "Ocean Fishing",
     "774": "Ocean Fishing",
     "775": "Ocean Fishing",
-    "760": "Delubrum Reginae",
-    "761": "Delubrum Reginae (Savage)",
     "777": "Paglth'an",
     "778": "Zadnor",
+    "779": "the Tower at Paradigm's Breach",
     "781": "The Cloud Deck",
-    "782": "The Cloud Deck (Extreme)",
-    "799": "the Tower at Paradigm's Breach"
+    "782": "The Cloud Deck (Extreme)"
   },
   "areas": {
     "134": {

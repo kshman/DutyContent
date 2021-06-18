@@ -101,6 +101,12 @@
     <Compile Include="Tab\PingForm.Designer.cs">
       <DependentUpon>PingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tab\UpdateNotifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tab\UpdateNotifyForm.Designer.cs">
+      <DependentUpon>UpdateNotifyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThirdParty\Converter.cs" />
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
@@ -142,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tab\PingForm.resx">
       <DependentUpon>PingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tab\UpdateNotifyForm.resx">
+      <DependentUpon>UpdateNotifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Data\DcDuty-English.json" />
     <None Include="Data\DcDuty-German.json" />

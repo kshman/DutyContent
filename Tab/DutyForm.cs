@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Collections.Specialized;
 
 namespace DutyContent.Tab
 {
@@ -22,10 +23,12 @@ namespace DutyContent.Tab
 		private bool _is_lock_fate;
 		private bool _is_packet_finder;
 		private DcContent.SaveTheQueenType _stq_type = DcContent.SaveTheQueenType.No;
-
 		private DcConfig.PacketConfig _new_packet;
-		private List<string> _packet_names = new List<string>();
+		
+		private Dictionary<string, string> _packet_list = new Dictionary<string, string>();
+		//private OrderedDictionary _packet_list = new OrderedDictionary();
 
+		//
 		private Overlay.DutyOvForm _overlay;
 
 		public DutyForm()
@@ -48,29 +51,8 @@ namespace DutyContent.Tab
 			lblCurrentDataSet.Text = DcContent.DisplayLanguage;
 
 			//
-			var lang = MakeDutyLangList();
-
-			foreach (var i in lang)
-			{
-				var n = cboDataset.Items.Add(i);
-
-				if (i.Equals(DcConfig.Duty.Language))
-					cboDataset.SelectedIndex = n;
-			}
-
-			//
-			_packet_names.Clear();
-			var pks = MakePacketList();
-
-			for (var i = 0; i < pks.name.Count; i++)
-			{
-				var n = cboPacketset.Items.Add(pks.desc[i]);
-
-				if (pks.name[i].Equals(DcConfig.Duty.PacketSet))
-					cboPacketset.SelectedIndex = n;
-
-				_packet_names.Add(pks.name[i]);
-			}
+			RefreshDatasetList();
+			RefreshPacketList();
 
 			//
 			var font = new Font(DcConfig.Duty.LogFontFamily, DcConfig.Duty.LogFontSize, FontStyle.Regular, GraphicsUnit.Point);
@@ -86,7 +68,7 @@ namespace DutyContent.Tab
 			chkOverlayClickThru.Checked = DcConfig.Duty.OverlayClickThru;
 
 			//
-			_overlay.SetText(MesgLog.Text(99, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()));
+			_overlay.SetText(MesgLog.Text(99, DcConfig.PluginVersion.ToString()));
 			_overlay.Location = DcConfig.Duty.OverlayLocation;
 
 			if (DcConfig.Duty.EnableOverlay)
@@ -134,7 +116,10 @@ namespace DutyContent.Tab
 
 			//
 			if (cboPacketset.SelectedIndex >= 0)
-				RemotePacketUpdate(_packet_names[cboPacketset.SelectedIndex]);
+			{
+				var p = _packet_list.ElementAt(cboPacketset.SelectedIndex);
+				RemotePacketUpdate(p.Key);
+			}
 		}
 
 		public void PluginDeinitialize()
@@ -146,45 +131,6 @@ namespace DutyContent.Tab
 		private void SaveConfig(int interval = 5000)
 		{
 			DcControl.Self.RefreshSaveConfig(interval);
-		}
-
-		public static List<string> MakeDutyLangList()
-		{
-			List<string> lst = new List<string>();
-
-			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
-
-			foreach (var fi in di.GetFiles("DcDuty-*.json"))
-			{
-				var s = fi.Name.Substring(7, fi.Name.Length - 7 - 5);
-				lst.Add(s);
-			}
-
-			return lst;
-		}
-
-		public static (List<string> name, List<string> desc) MakePacketList()
-		{
-			List<string> l = new List<string>();
-			List<string> d = new List<string>();
-
-			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
-
-			foreach (var fi in di.GetFiles("DcPacket-*.config"))
-			{
-				var s = fi.Name.Substring(9, fi.Name.Length - 9 - 7);
-				l.Add(s);
-
-				if (!File.Exists(fi.FullName))
-					d.Add(s);
-				else
-				{
-					var db = new ThirdParty.LineDb(fi.FullName, Encoding.UTF8, false);
-					d.Add(db.Get("Description", s));
-				}
-			}
-
-			return (l, d);
 		}
 
 		public void RefreshLocale()
@@ -269,7 +215,7 @@ namespace DutyContent.Tab
 
 						if (DcConfig.Duty.Fates[DcConfig.Duty.ActiveFate].Selected.Contains(fcode))
 						{
-							MesgLog.L("{0} - {1}", DcConfig.Duty.ActiveFate, fcode);
+							//MesgLog.L("{0} - {1}", DcConfig.Duty.ActiveFate, fcode);
 							PlayEffectSoundFate();
 							NotifyFate(fate);
 							_overlay.PlayFate(fate);
@@ -597,19 +543,20 @@ namespace DutyContent.Tab
 			if (!DcConfig.PluginEnable)
 				return;
 
-			if (cboPacketset.SelectedIndex >= _packet_names.Count)
+			if (cboPacketset.SelectedIndex >= _packet_list.Count)
 				return;
 
-			var l = _packet_names[cboPacketset.SelectedIndex];
+			var p = _packet_list.ElementAt(cboPacketset.SelectedIndex);
+			var n = p.Key;
 
-			if (!string.IsNullOrWhiteSpace(l) && !l.Equals(DcConfig.Duty.PacketSet) && DcConfig.ReadPacket(l))
+			if (!string.IsNullOrWhiteSpace(n) && !n.Equals(DcConfig.Duty.PacketSet) && DcConfig.ReadPacket(n))
 			{
 				SaveConfig();
 
-				if (!l.Equals(DcConfig.PacketConfig.DefaultSetNameCustom))
+				if (!n.Equals(DcConfig.PacketConfig.DefaultSetNameCustom))
 				{
 					// check update and save
-					RemotePacketUpdate(l);
+					RemotePacketUpdate(n);
 				}
 			}
 		}
@@ -1449,8 +1396,68 @@ namespace DutyContent.Tab
 
 					MesgLog.I(33, pk.Version, pk.Description);
 
-					cboDataset.SelectedItem = pk.Description;
+					//
+					_packet_list.Remove(name);
+					_packet_list.Add(name, pk.Description);
+
+					RefreshPacketList(false);
 				}
+			}
+		}
+
+		private void RefreshDatasetList()
+		{
+			// quick description read?
+
+			cboDataset.Items.Clear();
+
+			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
+
+			foreach (var fi in di.GetFiles("DcDuty-*.json"))
+			{
+				var s = fi.Name.Substring(7, fi.Name.Length - 7 - 5);
+				var n = cboDataset.Items.Add(s);
+
+				if (s.Equals(DcConfig.Duty.Language))
+					cboDataset.SelectedIndex = n;
+			}
+		}
+
+		private void RefreshPacketList(bool reload_file_info = true)
+		{
+			if (reload_file_info)
+			{
+				_packet_list.Clear();
+
+				DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
+
+				foreach (var fi in di.GetFiles("DcPacket-*.config"))
+				{
+					var name = fi.Name.Substring(9, fi.Name.Length - 9 - 7);
+
+					var db = new ThirdParty.LineDb(fi.FullName, Encoding.UTF8, false);
+					var desc = db.Get("Description", null);
+
+					if (desc == null)
+					{
+						// config file was for below version 9
+						_packet_list.Add(name, name);
+					}
+					else
+					{
+						_packet_list.Add(name, desc);
+					}
+				}
+			}
+
+			cboPacketset.Items.Clear();
+
+			foreach (var i in _packet_list)
+			{
+				var n = cboPacketset.Items.Add(i.Value);
+
+				if (i.Key.Equals(DcConfig.Duty.PacketSet))
+					cboPacketset.SelectedIndex = n;
 			}
 		}
 	}

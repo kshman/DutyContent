@@ -124,7 +124,7 @@ namespace DutyContent
 			_update_timer.Elapsed += (sender, e) =>
 			  {
 				  UpdateAndCheckProc();
-				  _update_timer.Interval = _game_exist ? _game_active ? 
+				  _update_timer.Interval = _game_exist ? _game_active ?
 					IntervalGameActive : IntervalGameExist : IntervalGameNone;
 			  };
 			_update_timer.Start();
@@ -138,6 +138,7 @@ namespace DutyContent
 
 			DcConfig.PluginEnable = false;
 
+			Tab.UpdateNotifyForm.Self?.PluginDeinitialize();
 			Tab.PingForm.Self?.PluginDeinitialize();
 			Tab.DutyForm.Self?.PluginDeinitialize();
 			Tab.ConfigForm.Self?.PluginDeinitialize();
@@ -173,28 +174,51 @@ namespace DutyContent
 			MesgLog.SetTextBox(txtMesg);
 			MesgLog.Initialize(Properties.Resources.DefaultMessage);
 
-			MesgLog.C(Color.Aquamarine, 4);
+			MesgLog.C(Color.Aquamarine, 4, DcConfig.PluginVersion.ToString());
 
 			DcConfig.LoadConfig();
 			DcConfig.ReadLanguage(true);
-			DcConfig.ReadPacket();
 			DcContent.ReadContent();
+			DcConfig.ReadPacket();
 
 			UpdateUiLocale();
 
-			MesgLog.C(Color.Aquamarine, 4);
-
 			//
 			Dock = DockStyle.Fill;
-
-			_act_label.Text = MesgLog.Text(1);  // Duty ready
-			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
 			_act_tab.Controls.Add(this);
 
 			//
 			Tab.ConfigForm.Self?.PluginInitialize();
 			Tab.DutyForm.Self?.PluginInitialize();
 			Tab.PingForm.Self?.PluginInitialize();
+
+			// 
+			if (DcConfig.DataRemoteUpdate)
+			{
+				var tag = Updater.CheckPluginUpdate(out string body);
+				if (tag > DcConfig.PluginTag)
+				{
+					Tab.UpdateNotifyForm frm = new Tab.UpdateNotifyForm(tag, body);
+					frm.PluginInitialize();
+					frm.UpdateUiLocale();
+
+					TabPage tp = new TabPage(MesgLog.Text(206));
+					try
+					{
+						// why? sometimes trouble
+						tp.Controls.Add(frm.Controls[0]);
+					}
+					catch (Exception ex)
+					{
+						MesgLog.Ex(ex);
+					}
+
+					tabMain.TabPages.Add(tp);
+					tabMain.SelectedTab = tp;
+
+					MesgLog.C(Color.Aquamarine, 207, DcConfig.PluginTag, tag);
+				}
+			}
 
 			//
 			DcConfig.PluginEnable = true;
@@ -241,7 +265,7 @@ namespace DutyContent
 		}
 
 		//
-		public void RefreshSaveConfig(int interval=5000)
+		public void RefreshSaveConfig(int interval = 5000)
 		{
 			_save_timer.Enabled = false;
 			_save_timer.Interval = interval;
@@ -322,6 +346,9 @@ namespace DutyContent
 		//
 		public void UpdateUiLocale()
 		{
+			_act_label.Text = MesgLog.Text(1);  // Duty ready
+			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
+
 			tabPageDuty.Text = MesgLog.Text(300);
 			Tab.DutyForm.Self?.UpdateUiLocale();
 
@@ -330,6 +357,8 @@ namespace DutyContent
 
 			tabPageConfig.Text = MesgLog.Text(200);
 			Tab.ConfigForm.Self?.UpdateUiLocale();
+
+			Tab.UpdateNotifyForm.Self?.UpdateUiLocale();
 		}
 	}
 }
