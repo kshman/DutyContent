@@ -1,5 +1,4 @@
-﻿using DutyContent.ThirdParty;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -69,6 +68,8 @@ namespace DutyContent.Tab
 
 			lblUiFont.Text = MesgLog.Text(210);
 			btnUiFont.Text = DcConfig.UiFontFamily;
+
+			lblTag.Text = MesgLog.Text(211, DcConfig.PluginTag, DcConfig.PluginVersion);
 		}
 
 		public static List<string> MakeConfigLangList()
@@ -163,8 +164,6 @@ namespace DutyContent.Tab
 			{
 				DcConfig.UiFontFamily = ret.Name;
 				DcControl.Self.UpdateUiLocale();
-
-				// locale change first. because when error occured in ui working, prevent saving invalid value
 				DcConfig.SaveConfig();
 			}
 		}

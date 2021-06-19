@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 10;
+		public static int PluginTag => 11;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -33,6 +31,9 @@ namespace DutyContent
 		public static string Language { get; set; } = "";
 		public static bool DataRemoteUpdate { get; set; } = true;   // true = use remote update
 		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
+		// Microsoft Sans Serif / SegoUI
+		// GoyangIlsan R / Dotum / Malgun
+		// Bitstream Vera Sans Mono / Consolas
 
 		//
 		public static string BuildDataFileName(string header, string context, string ext)

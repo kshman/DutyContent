@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace DutyContent.ThirdParty
@@ -12,24 +7,22 @@ namespace DutyContent.ThirdParty
 
 	public static class FontUtilities
 	{
-		public static void SimpleChangeFont(this Control ctrl, string fontname, bool recursive = false)
+		public static void SimpleChangeFont(Control ctrl, string fontname, bool recursive = false)
 		{
-			var font = new Font(fontname, ctrl.Font.Size, ctrl.Font.Style, GraphicsUnit.Point);
-			ctrl.Font = font;
+			ctrl.Font = new Font(fontname, ctrl.Font.Size, ctrl.Font.Style, GraphicsUnit.Point);
 
 			if (recursive)
-				RecursiveChangeFont(fontname, ctrl.Controls);
+				InternalRecursiveChangeFont(fontname, ctrl.Controls);
 		}
 
-		private static void RecursiveChangeFont(string fontname, Control.ControlCollection ctrls)
+		private static void InternalRecursiveChangeFont(string fontname, Control.ControlCollection ctrls)
 		{
 			foreach (Control c in ctrls)
 			{
-				var font = new Font(fontname, c.Font.Size, c.Font.Style, GraphicsUnit.Point);
-				c.Font = font;
+				c.Font = new Font(fontname, c.Font.Size, c.Font.Style, GraphicsUnit.Point);
 
 				if (c.Controls.Count > 0)
-					RecursiveChangeFont(fontname, c.Controls);
+					InternalRecursiveChangeFont(fontname, c.Controls);
 			}
 		}
 	}

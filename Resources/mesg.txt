@@ -49,6 +49,7 @@ LANG=English
 208=Visit DutyContent plugin repository for download.
 209=https://github.com/kshman/DutyContent/releases/latest
 210=UI Font
+211=Version: {0} / {1}
 
 300=Duty
 301=Contents
@@ -113,3 +114,4 @@ LANG=English
 10022=Apply and overwrite packet data?
 10023=Selected
 10024=Copied
+10025=Area: {0}

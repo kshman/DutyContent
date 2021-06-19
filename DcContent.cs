@@ -257,5 +257,14 @@ namespace DutyContent
 			Delubrum,
 			Zadnor,
 		}
+
+		//
+		public static int SaveTheQueenTypeToCeBase(SaveTheQueenType stq)
+		{
+			return
+				stq == SaveTheQueenType.Bozja ? 30000 :
+				stq == SaveTheQueenType.Zadnor ? 30100 :
+				30100;	// fail safe
+		}
 	}
 }
