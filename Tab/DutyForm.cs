@@ -9,8 +9,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Collections.Specialized;
 
 namespace DutyContent.Tab
 {
@@ -21,12 +19,16 @@ namespace DutyContent.Tab
 
 		//
 		private bool _is_lock_fate;
+
+		private short _last_fate = 0;
+
+		//
 		private bool _is_packet_finder;
 		private DcContent.SaveTheQueenType _stq_type = DcContent.SaveTheQueenType.No;
 		private DcConfig.PacketConfig _new_packet;
-		
+
+		//
 		private Dictionary<string, string> _packet_list = new Dictionary<string, string>();
-		//private OrderedDictionary _packet_list = new OrderedDictionary();
 
 		//
 		private Overlay.DutyOvForm _overlay;
@@ -54,10 +56,6 @@ namespace DutyContent.Tab
 			RefreshDatasetList();
 			RefreshPacketList();
 
-			//
-			var font = new Font(DcConfig.Duty.LogFontFamily, DcConfig.Duty.LogFontSize, FontStyle.Regular, GraphicsUnit.Point);
-			txtContentLog.Font = font;
-			btnLogFont.Font = font;
 			btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
 
 			//
@@ -179,6 +177,11 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = MesgLog.Text(10007);
 			btnPacketApply.Text = MesgLog.Text(10009);
+
+			//
+			var logfont = new Font(DcConfig.Duty.LogFontFamily, DcConfig.Duty.LogFontSize, FontStyle.Regular);
+			txtContentLog.Font = logfont;
+			btnLogFont.Font = logfont;
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -220,6 +223,8 @@ namespace DutyContent.Tab
 							NotifyFate(fate);
 							_overlay.PlayFate(fate);
 						}
+
+						_last_fate = (short)fcode;
 					}
 				}
 				else if (chkShowDebug.Checked && data[0] == 62 && data[8] > 0)  // more than 0%
@@ -231,6 +236,8 @@ namespace DutyContent.Tab
 						var fate = DcContent.TryFate(fcode);
 						if (fate == null)
 							LogDebug("unknown fate {0}% \"{1}\"", data[8], fcode);
+
+						_last_fate = (short)fcode;
 					}
 				}
 			}
@@ -328,12 +335,17 @@ namespace DutyContent.Tab
 				// 10[1] status 0=end, 1=register, 2=entry, 3=progress
 				// 12[1] progress percentage
 
-				var stq =
-					_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
-					_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 :
-					30100;  // temporary
+				if (_stq_type == DcContent.SaveTheQueenType.No)
+				{
+					if (IsFateForSouthernBozja(_last_fate))
+						_stq_type = DcContent.SaveTheQueenType.Bozja;
+					else if (IsFateForZadnor(_last_fate))
+						_stq_type = DcContent.SaveTheQueenType.Zadnor;
+					else
+						_stq_type = DcContent.SaveTheQueenType.Zadnor;
+				}
 
-				var ce = stq + data[8];
+				var ce = data[8] + DcContent.SaveTheQueenTypeToCeBase(_stq_type);
 				var stat = data[10];
 
 				if (stat == 0 /* || data[10] == 3 */)
@@ -381,8 +393,10 @@ namespace DutyContent.Tab
 				(zone_id == 921) ? DcContent.SaveTheQueenType.Zadnor :
 				DcContent.SaveTheQueenType.No;
 
+			LogInstance(10025, zone_name);
+
 			if (chkShowDebug.Checked)
-				LogDebug("Zone: {0} \"{1}\"", zone_id, zone_name);
+				LogDebug("Zone: {0}", zone_id);
 		}
 
 		//
@@ -1099,9 +1113,9 @@ namespace DutyContent.Tab
 				_is_packet_finder = false;
 				PacketFinderResetUi(false);
 
-				// is this good idea?
-				// no bad idea
-				//cboPacketset.SelectedIndex = 0;
+				// select custom
+				DcConfig.Duty.PacketSet = DcConfig.PacketConfig.DefaultSetNameCustom;
+				RefreshPacketList();
 			}
 		}
 
@@ -1129,8 +1143,6 @@ namespace DutyContent.Tab
 		{
 			if (lstPacketInfo.SelectedIndices.Count != 1)
 				return;
-
-			//MesgLog.Write("double clicked: {0}", lstPacketInfo.SelectedIndices[0]);
 
 			var v = int.MaxValue;
 
@@ -1182,24 +1194,51 @@ namespace DutyContent.Tab
 
 		}
 
-		private static readonly short[] _packet_target_fates =
+		// middle la noscea
+		private static readonly short[] _fates_middle_la_noscea =
 		{
-			// middle la noscea
 			553, 649, 687, 688, 693, 717,
 			220, 221, 222, 223, 225, 226, 227, 229, 231, 233, 235, 237, 238, 239, 240,
 			1387,
+		};
 
-			// southern bozja front
+		// southern bozja front
+		private static readonly short[] _fates_southern_bojza =
+		{
 			1597, 1598, 1599,
 			1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609,
 			1610, 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619,
 			1620, 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628,
+		};
 
-			// zadnor
+		// zadnor
+		private static readonly short[] _fates_zadnor =
+		{
 			1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724,
 			1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732,
 			1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742,
 		};
+
+		//
+		private bool IsFateInFindList(short code)
+		{
+			return
+				_fates_middle_la_noscea.Contains(code) ||
+				_fates_southern_bojza.Contains(code) ||
+				_fates_zadnor.Contains(code);
+		}
+
+		//
+		private bool IsFateForSouthernBozja(short code)
+		{
+			return _fates_southern_bojza.Contains(code);
+		}
+
+		//
+		private bool IsFateForZadnor(short code)
+		{
+			return _fates_zadnor.Contains(code);
+		}
 
 		//
 		private void PacketFinderHandler(byte[] message)
@@ -1211,7 +1250,7 @@ namespace DutyContent.Tab
 			if (_new_packet.OpFate == 0 && data.Length > 4 && data[0] == 0x3E)
 			{
 				var cc = BitConverter.ToInt16(data, 4);
-				if (_packet_target_fates.Contains(cc) && _new_packet.OpFate != opcode)
+				if (IsFateInFindList(cc) && _new_packet.OpFate != opcode)
 				{
 					_new_packet.OpFate = opcode;
 
@@ -1220,6 +1259,8 @@ namespace DutyContent.Tab
 						lstPacketInfo.Items[0].SubItems[2].Text = MesgLog.Text(10016);
 						lstPacketInfo.Items[0].SubItems[3].Text = _new_packet.OpFate.ToString();
 					});
+
+					_last_fate = cc;
 
 					return;
 				}
@@ -1343,11 +1384,17 @@ namespace DutyContent.Tab
 
 				if (ok)
 				{
-					var stq =
-						_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
-						_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 :
-						30100;  // temporary
-					var ce = DcContent.GetFate(code + stq);
+					if (_stq_type == DcContent.SaveTheQueenType.No)
+					{
+						if (IsFateForSouthernBozja(_last_fate))
+							_stq_type = DcContent.SaveTheQueenType.Bozja;
+						else if (IsFateForZadnor(_last_fate))
+							_stq_type = DcContent.SaveTheQueenType.Zadnor;
+						else
+							_stq_type = DcContent.SaveTheQueenType.Zadnor;
+					}
+
+					var ce = DcContent.GetFate(code + DcContent.SaveTheQueenTypeToCeBase(_stq_type));
 
 					var li = new ListViewItem(new string[]
 					{

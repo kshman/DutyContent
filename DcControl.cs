@@ -346,6 +346,8 @@ namespace DutyContent
 		//
 		public void UpdateUiLocale()
 		{
+			ThirdParty.FontUtilities.SimpleChangeFont(this, DcConfig.UiFontFamily, true);
+
 			_act_label.Text = MesgLog.Text(1);  // Duty ready
 			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
 

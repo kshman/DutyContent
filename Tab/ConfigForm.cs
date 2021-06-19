@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,6 +65,11 @@ namespace DutyContent.Tab
 			lblDataUpdate.Text = MesgLog.Text(203);
 			rdoDataUpdateLocal.Text = MesgLog.Text(204);
 			rdoDataUpdateRemote.Text = MesgLog.Text(205);
+
+			lblUiFont.Text = MesgLog.Text(210);
+			btnUiFont.Text = DcConfig.UiFontFamily;
+
+			lblTag.Text = MesgLog.Text(211, DcConfig.PluginTag, DcConfig.PluginVersion);
 		}
 
 		public static List<string> MakeConfigLangList()
@@ -133,6 +139,33 @@ namespace DutyContent.Tab
 		private void RdoDataUpdateRemote_CheckedChanged(object sender, EventArgs e)
 		{
 			InternalDataUpdate(true);
+		}
+
+		private void BtnUiFont_Click(object sender, EventArgs e)
+		{
+			Font ret = (Font)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
+			  {
+				  FontDialog dg = new FontDialog
+				  {
+					  Font = btnUiFont.Font,
+					  FontMustExist = true,
+					  AllowVerticalFonts = false,
+					  AllowVectorFonts = false,
+					  ShowColor = false,
+					  ShowEffects = false,
+					  MaxSize = 12,
+					  MinSize = 12,
+				  };
+
+				  return dg.ShowDialog() == DialogResult.OK ? dg.Font : null;
+			  }));
+
+			if (ret != null)
+			{
+				DcConfig.UiFontFamily = ret.Name;
+				DcControl.Self.UpdateUiLocale();
+				DcConfig.SaveConfig();
+			}
 		}
 	}
 }
