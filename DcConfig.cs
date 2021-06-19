@@ -32,7 +32,9 @@ namespace DutyContent
 		//
 		public static string Language { get; set; } = "";
 		public static bool DataRemoteUpdate { get; set; } = true;   // true = use remote update
+		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
 
+		//
 		public static string BuildDataFileName(string header, string context, string ext)
 		{
 			return Path.Combine(DataPath, $"{header}-{context}.{ext}");
@@ -70,6 +72,7 @@ namespace DutyContent
 				sw.WriteLine("# config");
 				sw.WriteLine("Language={0}", Language);
 				sw.WriteLine("DataRemoteUpdate={0}", DataRemoteUpdate);
+				sw.WriteLine("UiFontFamily={0}", UiFontFamily);
 				sw.WriteLine();
 
 				Duty.InternalSaveStream(sw);
@@ -89,6 +92,7 @@ namespace DutyContent
 
 			Language = db["Language"];
 			DataRemoteUpdate = ThirdParty.Converter.ToBool(db["DataRemoteUpdate"], DataRemoteUpdate);
+			UiFontFamily = db.Get("UiFontFamily", UiFontFamily);
 
 			Duty.InternalReadFromDb(db);
 		}

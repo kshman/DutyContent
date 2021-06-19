@@ -108,6 +108,7 @@
       <DependentUpon>UpdateNotifyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ThirdParty\Converter.cs" />
+    <Compile Include="ThirdParty\FontUtilities.cs" />
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
     <Compile Include="ThirdParty\ThreadWorker.cs" />

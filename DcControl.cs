@@ -1,4 +1,5 @@
 ﻿using Advanced_Combat_Tracker;
+using DutyContent.ThirdParty;
 using System;
 using System.Data;
 using System.Diagnostics;
@@ -26,7 +27,7 @@ namespace DutyContent
 
 		private System.Timers.Timer _save_timer;
 		private System.Timers.Timer _update_timer;
-		private ThirdParty.NativeMethods.ProcessHandle _game_process;
+		private NativeMethods.ProcessHandle _game_process;
 		private long _game_connection_tick = DateTime.Now.Ticks;
 		private bool _game_exist;
 		private bool _game_active;
@@ -289,7 +290,7 @@ namespace DutyContent
 				if (((_game_process == null) != (p == null)) ||
 					(_game_process != null && p != null && _game_process.Process.Id != p.Id))
 				{
-					_game_process = p != null ? new ThirdParty.NativeMethods.ProcessHandle(p) : null;
+					_game_process = p != null ? new NativeMethods.ProcessHandle(p) : null;
 				}
 			}
 			else
@@ -297,8 +298,8 @@ namespace DutyContent
 				_game_exist = true;
 
 				//
-				var fgw = ThirdParty.NativeMethods.GetForegroundWindow();
-				ThirdParty.NativeMethods.GetWindowThreadProcessId(fgw, out int id);
+				var fgw = NativeMethods.GetForegroundWindow();
+				NativeMethods.GetWindowThreadProcessId(fgw, out int id);
 				_game_active = _game_process.Process.Id == id;
 
 				//
@@ -346,6 +347,8 @@ namespace DutyContent
 		//
 		public void UpdateUiLocale()
 		{
+			this.SimpleChangeFont(DcConfig.UiFontFamily, true);
+
 			_act_label.Text = MesgLog.Text(1);  // Duty ready
 			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
 

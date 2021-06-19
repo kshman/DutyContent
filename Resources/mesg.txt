@@ -48,6 +48,7 @@ LANG=English
 207=New update found! {0} -> {1}
 208=Visit DutyContent plugin repository for download.
 209=https://github.com/kshman/DutyContent/releases/latest
+210=UI Font
 
 300=Duty
 301=Contents
