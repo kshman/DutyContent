@@ -99,6 +99,7 @@ namespace DutyContent.Tab
 
 			chkUseNotifyDiscowk.Checked = DcConfig.Duty.UseNotifyDiscordWebhook;
 			txtDiscowkUrl.Text = DcConfig.Duty.NotifyDiscordWebhookUrl;
+			chkDiscowkTts.Checked = DcConfig.Duty.NotifyDiscordWebhookTts;
 
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
@@ -1070,12 +1071,24 @@ namespace DutyContent.Tab
 					MesgLog.E(342);
 					return;
 				}
-				
+
 				DcConfig.Duty.NotifyDiscordWebhookUrl = txtDiscowkUrl.Text;
 				SaveConfig();
 			}
 
 			btnTestNotify.Enabled = true;
+		}
+
+		private void ChkDiscowkTts_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.NotifyDiscordWebhookTts = chkDiscowkTts.Checked;
+
+			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
+
+			SaveConfig();
 		}
 
 		private static bool IsValidDiscwkUrl(string url)
@@ -1106,7 +1119,7 @@ namespace DutyContent.Tab
 			var param = new Dictionary<string, string>
 			{
 				{ "content", mesg },
-				{ "tts", "false" },
+				{ "tts", DcConfig.Duty.NotifyDiscordWebhookTts.ToString() },
 			};
 
 			await hc.PostAsync(DcConfig.Duty.NotifyDiscordWebhookUrl,

@@ -30,27 +30,27 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
             "Duty",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
             "Match",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem(new string[] {
             "Instance",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem(new string[] {
             "Southern Bozja",
             "",
             "",
@@ -327,6 +327,7 @@ namespace DutyContent.Tab
 			this.chkDiscowkTts.TabIndex = 5;
 			this.chkDiscowkTts.Text = "341";
 			this.chkDiscowkTts.UseVisualStyleBackColor = true;
+			this.chkDiscowkTts.CheckedChanged += new System.EventHandler(this.ChkDiscowkTts_CheckedChanged);
 			// 
 			// lblDiscowkUrl
 			// 
@@ -901,11 +902,11 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstPacketInfo.HideSelection = false;
 			this.lstPacketInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14,
-            listViewItem15});
+            listViewItem16,
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20});
 			this.lstPacketInfo.Location = new System.Drawing.Point(3, 42);
 			this.lstPacketInfo.MultiSelect = false;
 			this.lstPacketInfo.Name = "lstPacketInfo";
