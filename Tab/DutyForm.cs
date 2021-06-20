@@ -20,7 +20,7 @@ namespace DutyContent.Tab
 		//
 		private bool _is_lock_fate;
 
-		private short _last_fate = 0;
+		private ushort _last_fate = 0;
 
 		//
 		private bool _is_packet_finder;
@@ -92,13 +92,13 @@ namespace DutyContent.Tab
 			//
 			chkUseNotifyLine.Checked = DcConfig.Duty.UseNotifyLine;
 			txtLineToken.Text = DcConfig.Duty.NotifyLineToken;
-			//txtLineToken.Enabled = !DcConfig.Duty.UseNotifyLine;
 
 			chkUseNotifyTelegram.Checked = DcConfig.Duty.UseNotifyTelegram;
 			txtTelegramId.Text = DcConfig.Duty.NotifyTelegramId;
 			txtTelegramToken.Text = DcConfig.Duty.NotifyTelegramToken;
-			//txtLineToken.Enabled = !DcConfig.Duty.UseNotifyTelegram;
-			//txtLineToken.Enabled = !DcConfig.Duty.UseNotifyTelegram;
+
+			chkUseNotifyDiscowk.Checked = DcConfig.Duty.UseNotifyDiscordWebhook;
+			txtDiscowkUrl.Text = DcConfig.Duty.NotifyDiscordWebhookUrl;
 
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
@@ -161,6 +161,12 @@ namespace DutyContent.Tab
 			lblTelegramId.Text = MesgLog.Text(314);
 			lblTelegramToken.Text = MesgLog.Text(315);
 
+			chkUseNotifyDiscowk.Text = MesgLog.Text(338);
+			chkDiscowkTts.Text = MesgLog.Text(341);
+			lblDiscowkUrl.Text = MesgLog.Text(339);
+
+			btnTestNotify.Text = MesgLog.Text(340);
+
 			lblPacketFinder.Text = MesgLog.Text(316);
 			lblPacketDesc.Text = MesgLog.Text(317);
 			lblPacketBozja.Text = MesgLog.Text(318);
@@ -211,20 +217,19 @@ namespace DutyContent.Tab
 					if (fcode > 100)
 					{
 						var fate = DcContent.GetFate(fcode);
-						if (_stq_type != DcContent.SaveTheQueenType.No)
+						if (_stq_type != DcContent.SaveTheQueenType.No || IsSkirmishFate(fcode))
 							LogSkirmish(10001, fate.Name);
 						else
 							LogFate(10001, fate.Name);
 
 						if (DcConfig.Duty.Fates[DcConfig.Duty.ActiveFate].Selected.Contains(fcode))
 						{
-							//MesgLog.L("{0} - {1}", DcConfig.Duty.ActiveFate, fcode);
 							PlayEffectSoundFate();
 							NotifyFate(fate);
 							_overlay.PlayFate(fate);
 						}
 
-						_last_fate = (short)fcode;
+						_last_fate = fcode;
 					}
 				}
 				else if (chkShowDebug.Checked && data[0] == 62 && data[8] > 0)  // more than 0%
@@ -237,7 +242,7 @@ namespace DutyContent.Tab
 						if (fate == null)
 							LogDebug("unknown fate {0}% \"{1}\"", data[8], fcode);
 
-						_last_fate = (short)fcode;
+						_last_fate = fcode;
 					}
 				}
 			}
@@ -324,6 +329,7 @@ namespace DutyContent.Tab
 					_overlay.PlayNone();
 				}
 			}
+
 			// southen bozja front critical engagement
 			else if (opcode == DcConfig.Packet.OpSouthernBozja)
 			{
@@ -393,7 +399,7 @@ namespace DutyContent.Tab
 				(zone_id == 921) ? DcContent.SaveTheQueenType.Zadnor :
 				DcContent.SaveTheQueenType.No;
 
-			LogInstance(10025, zone_name);
+			LogInstance(10025, $"{zone_name} ({zone_id})");
 
 			if (chkShowDebug.Checked)
 				LogDebug("Zone: {0}", zone_id);
@@ -814,6 +820,9 @@ namespace DutyContent.Tab
 
 			if (DcConfig.Duty.UseNotifyTelegram)
 				NotifyUsingTelegram(s);
+
+			if (DcConfig.Duty.UseNotifyDiscordWebhook)
+				await NotifyUsingDiscordWebhook(s);
 		}
 
 		//
@@ -824,6 +833,9 @@ namespace DutyContent.Tab
 
 			if (DcConfig.Duty.UseNotifyTelegram)
 				NotifyUsingTelegram(s);
+
+			if (DcConfig.Duty.UseNotifyDiscordWebhook)
+				NotifyUsingDiscordWebhook(s).Wait();
 		}
 
 		//
@@ -877,6 +889,8 @@ namespace DutyContent.Tab
 				DcConfig.Duty.NotifyLineToken = txtLineToken.Text;
 				SaveConfig();
 			}
+
+			btnTestNotify.Enabled = true;
 		}
 
 		//
@@ -928,6 +942,8 @@ namespace DutyContent.Tab
 				DcConfig.Duty.NotifyTelegramId = txtTelegramId.Text;
 				SaveConfig();
 			}
+
+			btnTestNotify.Enabled = true;
 		}
 
 		private void TxtTelegramToken_KeyDown(object sender, KeyEventArgs e)
@@ -940,6 +956,8 @@ namespace DutyContent.Tab
 				DcConfig.Duty.NotifyTelegramToken = txtTelegramToken.Text;
 				SaveConfig();
 			}
+
+			btnTestNotify.Enabled = true;
 		}
 
 		//
@@ -1025,6 +1043,74 @@ namespace DutyContent.Tab
 				if (res != null)
 					res.Close();
 			}
+		}
+
+		private void ChkUseNotifyDiscowk_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.UseNotifyDiscordWebhook = chkUseNotifyDiscowk.Checked;
+			txtDiscowkUrl.Enabled = chkUseNotifyDiscowk.Checked;
+
+			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
+
+			SaveConfig();
+		}
+
+		private void TxtDiscowkUrl_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (e.KeyCode == Keys.Enter)
+			{
+				if (!IsValidDiscwkUrl(txtDiscowkUrl.Text))
+				{
+					MesgLog.E(342);
+					return;
+				}
+				
+				DcConfig.Duty.NotifyDiscordWebhookUrl = txtDiscowkUrl.Text;
+				SaveConfig();
+			}
+
+			btnTestNotify.Enabled = true;
+		}
+
+		private static bool IsValidDiscwkUrl(string url)
+		{
+			url = url.ToLower();
+			return url.StartsWith("https://discord.com/api/webhooks/");
+		}
+
+		//
+		internal async Task NotifyUsingDiscordWebhook(string mesg)
+		{
+			if (txtDiscowkUrl.TextLength == 0)
+				return;
+
+			if (!IsValidDiscwkUrl(txtDiscowkUrl.Text))
+			{
+				MesgLog.E(342);
+				return;
+			}
+
+			if (!txtDiscowkUrl.Text.Equals(DcConfig.Duty.NotifyDiscordWebhookUrl))
+			{
+				DcConfig.Duty.NotifyDiscordWebhookUrl = txtDiscowkUrl.Text;
+				SaveConfig();
+			}
+
+			var hc = new HttpClient();
+			var param = new Dictionary<string, string>
+			{
+				{ "content", mesg },
+				{ "tts", "false" },
+			};
+
+			await hc.PostAsync(DcConfig.Duty.NotifyDiscordWebhookUrl,
+				new FormUrlEncodedContent(param)).ConfigureAwait(false);
 		}
 
 		//
@@ -1195,7 +1281,7 @@ namespace DutyContent.Tab
 		}
 
 		// middle la noscea
-		private static readonly short[] _fates_middle_la_noscea =
+		private static readonly ushort[] _fates_middle_la_noscea =
 		{
 			553, 649, 687, 688, 693, 717,
 			220, 221, 222, 223, 225, 226, 227, 229, 231, 233, 235, 237, 238, 239, 240,
@@ -1203,7 +1289,7 @@ namespace DutyContent.Tab
 		};
 
 		// southern bozja front
-		private static readonly short[] _fates_southern_bojza =
+		private static readonly ushort[] _fates_southern_bojza =
 		{
 			1597, 1598, 1599,
 			1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609,
@@ -1212,7 +1298,7 @@ namespace DutyContent.Tab
 		};
 
 		// zadnor
-		private static readonly short[] _fates_zadnor =
+		private static readonly ushort[] _fates_zadnor =
 		{
 			1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724,
 			1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732,
@@ -1220,7 +1306,7 @@ namespace DutyContent.Tab
 		};
 
 		//
-		private bool IsFateInFindList(short code)
+		private bool IsFateInFindList(ushort code)
 		{
 			return
 				_fates_middle_la_noscea.Contains(code) ||
@@ -1229,13 +1315,21 @@ namespace DutyContent.Tab
 		}
 
 		//
-		private bool IsFateForSouthernBozja(short code)
+		private bool IsSkirmishFate(ushort code)
+		{
+			return
+				_fates_southern_bojza.Contains(code) ||
+				_fates_zadnor.Contains(code);
+		}
+
+		//
+		private bool IsFateForSouthernBozja(ushort code)
 		{
 			return _fates_southern_bojza.Contains(code);
 		}
 
 		//
-		private bool IsFateForZadnor(short code)
+		private bool IsFateForZadnor(ushort code)
 		{
 			return _fates_zadnor.Contains(code);
 		}
@@ -1249,7 +1343,7 @@ namespace DutyContent.Tab
 			// fate
 			if (_new_packet.OpFate == 0 && data.Length > 4 && data[0] == 0x3E)
 			{
-				var cc = BitConverter.ToInt16(data, 4);
+				var cc = BitConverter.ToUInt16(data, 4);
 				if (IsFateInFindList(cc) && _new_packet.OpFate != opcode)
 				{
 					_new_packet.OpFate = opcode;

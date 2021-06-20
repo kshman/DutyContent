@@ -89,6 +89,11 @@ LANG=English
 335=Addresses when client doesn't have connections
 336=Packet
 337=Custom Packet
+338=Use Discord Webhook
+339=URL
+340=Test && Save Notifies
+341=Use TTS
+342=Invalid discord webhook URL
 
 10001="{0}" spawned!
 10002=Entry: {0}

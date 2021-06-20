@@ -286,6 +286,8 @@ namespace DutyContent
 			public bool UseNotifyTelegram { get; set; }
 			public string NotifyTelegramId { get; set; }
 			public string NotifyTelegramToken { get; set; }
+			public bool UseNotifyDiscordWebhook { get; set; }
+			public string NotifyDiscordWebhookUrl { get; set; }
 
 			public bool UsePing { get; set; }
 			public Color[] PingColors { get; set; } = new Color[4]
@@ -299,7 +301,7 @@ namespace DutyContent
 			public string PingDefAddr { get; set; }
 
 			//
-			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram;
+			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram || UseNotifyDiscordWebhook;
 
 			//
 			public FateSelection[] Fates { get; set; } = new FateSelection[4]
@@ -341,6 +343,8 @@ namespace DutyContent
 				sw.WriteLine("DutyUseNotifyTelegram={0}", UseNotifyTelegram);
 				sw.WriteLine("DutyNotifyTelegramId={0}", NotifyTelegramId);
 				sw.WriteLine("DutyNotifyTelegramToken={0}", NotifyTelegramToken);
+				sw.WriteLine("DutyUseNotifyDiscordWebhook={0}", UseNotifyDiscordWebhook);
+				sw.WriteLine("DutyNotifyDiscordWebhookUrl={0}", NotifyDiscordWebhookUrl);
 
 				sw.WriteLine("DutyUsePing={0}", UsePing);
 				sw.WriteLine("DutyPingColor0={0:X}", PingColors[0].ToArgb());
@@ -383,6 +387,8 @@ namespace DutyContent
 				UseNotifyTelegram = ThirdParty.Converter.ToBool(db["DutyUseNotifyTelegram"]);
 				NotifyTelegramId = db["DutyNotifyTelegramId"];
 				NotifyTelegramToken = db["DutyNotifyTelegramToken"];
+				UseNotifyDiscordWebhook = ThirdParty.Converter.ToBool(db["DutyUseNotifyDiscordWebhook"]);
+				NotifyDiscordWebhookUrl = db["DutyNotifyDiscordWebhookUrl"];
 
 				UsePing = ThirdParty.Converter.ToBool(db["DutyUsePing"]);
 				PingColors[0] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor0"], PingColors[0]);
