@@ -8,7 +8,7 @@ Duty Content for FFXIV
 <pre><code>
 # DutyPacket configuration
 # packet
-Version=1210602
+Version=1210622
 Description=5.57 (JP/NA/EU/OC)
 OpFate=854
 OpDuty=186
