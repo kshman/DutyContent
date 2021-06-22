@@ -30,6 +30,7 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.pnlBase = new System.Windows.Forms.Panel();
+			this.lblTag = new System.Windows.Forms.Label();
 			this.btnUiFont = new System.Windows.Forms.Button();
 			this.lblUiFont = new System.Windows.Forms.Label();
 			this.rdoDataUpdateRemote = new System.Windows.Forms.RadioButton();
@@ -38,14 +39,16 @@ namespace DutyContent.Tab
 			this.lblCurrentLang = new System.Windows.Forms.Label();
 			this.cboDispLang = new System.Windows.Forms.ComboBox();
 			this.lblDispLang = new System.Windows.Forms.Label();
-			this.lblTag = new System.Windows.Forms.Label();
+			this.panelBase = new System.Windows.Forms.Panel();
 			this.pnlBase.SuspendLayout();
+			this.panelBase.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pnlBase
 			// 
 			this.pnlBase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlBase.AutoScroll = true;
 			this.pnlBase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlBase.Controls.Add(this.lblTag);
 			this.pnlBase.Controls.Add(this.btnUiFont);
@@ -58,8 +61,17 @@ namespace DutyContent.Tab
 			this.pnlBase.Controls.Add(this.lblDispLang);
 			this.pnlBase.Location = new System.Drawing.Point(12, 12);
 			this.pnlBase.Name = "pnlBase";
-			this.pnlBase.Size = new System.Drawing.Size(776, 296);
+			this.pnlBase.Size = new System.Drawing.Size(776, 213);
 			this.pnlBase.TabIndex = 0;
+			// 
+			// lblTag
+			// 
+			this.lblTag.AutoSize = true;
+			this.lblTag.Location = new System.Drawing.Point(27, 4);
+			this.lblTag.Name = "lblTag";
+			this.lblTag.Size = new System.Drawing.Size(35, 13);
+			this.lblTag.TabIndex = 10;
+			this.lblTag.Text = "label1";
 			// 
 			// btnUiFont
 			// 
@@ -144,14 +156,15 @@ namespace DutyContent.Tab
 			this.lblDispLang.TabIndex = 0;
 			this.lblDispLang.Text = "201";
 			// 
-			// lblTag
+			// panelBase
 			// 
-			this.lblTag.AutoSize = true;
-			this.lblTag.Location = new System.Drawing.Point(27, 4);
-			this.lblTag.Name = "lblTag";
-			this.lblTag.Size = new System.Drawing.Size(35, 13);
-			this.lblTag.TabIndex = 10;
-			this.lblTag.Text = "label1";
+			this.panelBase.AutoScroll = true;
+			this.panelBase.Controls.Add(this.pnlBase);
+			this.panelBase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelBase.Location = new System.Drawing.Point(0, 0);
+			this.panelBase.Name = "panelBase";
+			this.panelBase.Size = new System.Drawing.Size(800, 450);
+			this.panelBase.TabIndex = 1;
 			// 
 			// ConfigForm
 			// 
@@ -159,11 +172,12 @@ namespace DutyContent.Tab
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.pnlBase);
+			this.Controls.Add(this.panelBase);
 			this.Name = "ConfigForm";
 			this.Text = "Config";
 			this.pnlBase.ResumeLayout(false);
 			this.pnlBase.PerformLayout();
+			this.panelBase.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -180,5 +194,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.Button btnUiFont;
 		private System.Windows.Forms.Label lblUiFont;
 		private System.Windows.Forms.Label lblTag;
+		private System.Windows.Forms.Panel panelBase;
 	}
 }

@@ -183,6 +183,8 @@ namespace DutyContent
 
 			UpdateUiLocale();
 
+			lblStatusLeft.Text = MesgLog.Text(99, DcConfig.PluginVersion);	// once here
+
 			//
 			Dock = DockStyle.Fill;
 			_act_tab.Controls.Add(this);
@@ -214,7 +216,14 @@ namespace DutyContent
 					}
 
 					tabMain.TabPages.Add(tp);
-					tabMain.SelectedTab = tp;
+
+					if (DcConfig.LastUpdatedPlugin < tag)
+					{
+						tabMain.SelectedTab = tp;
+
+						DcConfig.LastUpdatedPlugin = tag;
+						DcConfig.SaveConfig();
+					}
 
 					MesgLog.C(Color.Aquamarine, 207, DcConfig.PluginTag, tag);
 				}
@@ -341,6 +350,8 @@ namespace DutyContent
 		private void FFXIVPlugin_ZoneChanged(uint zone_id, string zone_name)
 		{
 			Tab.DutyForm.Self?.ZoneChanged(zone_id, zone_name);
+
+			lblStatusLeft.Text = MesgLog.Text(34, zone_name, zone_id);
 		}
 
 		//
@@ -361,6 +372,11 @@ namespace DutyContent
 			Tab.ConfigForm.Self?.UpdateUiLocale();
 
 			Tab.UpdateNotifyForm.Self?.UpdateUiLocale();
+		}
+
+		private void lblStatusLeft_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

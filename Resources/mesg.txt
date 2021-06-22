@@ -30,6 +30,7 @@ LANG=English
 31=Error while updating duty/FATE Data
 32=Error while updating packet info
 33=Packet updated: {0} "{1}"
+34={0} ({1})
 
 99=DutyContent Plugin {0}
 

@@ -400,10 +400,12 @@ namespace DutyContent.Tab
 				(zone_id == 921) ? DcContent.SaveTheQueenType.Zadnor :
 				DcContent.SaveTheQueenType.No;
 
+#if false
 			LogInstance(10025, $"{zone_name} ({zone_id})");
 
 			if (chkShowDebug.Checked)
 				LogDebug("Zone: {0}", zone_id);
+#endif
 		}
 
 		//

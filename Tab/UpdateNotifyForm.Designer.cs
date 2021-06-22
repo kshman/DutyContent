@@ -34,7 +34,9 @@ namespace DutyContent.Tab
 			this.lblLink = new System.Windows.Forms.LinkLabel();
 			this.txtBody = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.panelBase = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
+			this.panelBase.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitle
@@ -70,13 +72,16 @@ namespace DutyContent.Tab
 			// 
 			// txtBody
 			// 
+			this.txtBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBody.BackColor = System.Drawing.Color.OldLace;
 			this.txtBody.Location = new System.Drawing.Point(16, 108);
 			this.txtBody.Multiline = true;
 			this.txtBody.Name = "txtBody";
 			this.txtBody.ReadOnly = true;
 			this.txtBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtBody.Size = new System.Drawing.Size(464, 163);
+			this.txtBody.Size = new System.Drawing.Size(464, 296);
 			this.txtBody.TabIndex = 3;
 			// 
 			// panel1
@@ -95,17 +100,28 @@ namespace DutyContent.Tab
 			this.panel1.Size = new System.Drawing.Size(776, 426);
 			this.panel1.TabIndex = 4;
 			// 
+			// panelBase
+			// 
+			this.panelBase.AutoScroll = true;
+			this.panelBase.Controls.Add(this.panel1);
+			this.panelBase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelBase.Location = new System.Drawing.Point(0, 0);
+			this.panelBase.Name = "panelBase";
+			this.panelBase.Size = new System.Drawing.Size(800, 450);
+			this.panelBase.TabIndex = 5;
+			// 
 			// UpdateNotifyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.panelBase);
 			this.Name = "UpdateNotifyForm";
 			this.Text = "Update";
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.panelBase.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -117,5 +133,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.LinkLabel lblLink;
 		private System.Windows.Forms.TextBox txtBody;
 		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel panelBase;
 	}
 }
