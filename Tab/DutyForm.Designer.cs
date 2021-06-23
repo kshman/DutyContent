@@ -30,27 +30,27 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Duty",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Match",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Instance",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Southern Bozja",
             "",
             "",
@@ -280,6 +280,7 @@ namespace DutyContent.Tab
 			// 
 			// tabPageSetting
 			// 
+			this.tabPageSetting.AutoScroll = true;
 			this.tabPageSetting.Controls.Add(this.panel4);
 			this.tabPageSetting.Controls.Add(this.panel3);
 			this.tabPageSetting.Controls.Add(this.panel2);
@@ -742,6 +743,7 @@ namespace DutyContent.Tab
 			// 
 			// tabPagePacket
 			// 
+			this.tabPagePacket.AutoScroll = true;
 			this.tabPagePacket.Controls.Add(this.panel5);
 			this.tabPagePacket.ImageIndex = 2;
 			this.tabPagePacket.Location = new System.Drawing.Point(4, 39);
@@ -903,11 +905,11 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstPacketInfo.HideSelection = false;
 			this.lstPacketInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
 			this.lstPacketInfo.Location = new System.Drawing.Point(3, 42);
 			this.lstPacketInfo.MultiSelect = false;
 			this.lstPacketInfo.Name = "lstPacketInfo";

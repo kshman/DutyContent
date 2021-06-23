@@ -50,6 +50,10 @@ LANG=한국어
 209=https://github.com/kshman/DutyContent/releases/latest
 210=UI 글꼴
 211=버전: {0} / {1}
+212=스테이터스 표시줄
+213=보이기
+214=감추기
+215=※플러그인을 다시 실행해야합니다
 
 300=듀티
 301=콘텐츠

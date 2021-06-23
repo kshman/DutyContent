@@ -30,36 +30,138 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.pnlBase = new System.Windows.Forms.Panel();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.rdoStatusBarEnable = new System.Windows.Forms.RadioButton();
+			this.rdoStatusBarDisable = new System.Windows.Forms.RadioButton();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.rdoDataUpdateLocal = new System.Windows.Forms.RadioButton();
+			this.rdoDataUpdateRemote = new System.Windows.Forms.RadioButton();
+			this.lblUseStatusBar = new System.Windows.Forms.Label();
+			this.lblTag = new System.Windows.Forms.Label();
 			this.btnUiFont = new System.Windows.Forms.Button();
 			this.lblUiFont = new System.Windows.Forms.Label();
-			this.rdoDataUpdateRemote = new System.Windows.Forms.RadioButton();
-			this.rdoDataUpdateLocal = new System.Windows.Forms.RadioButton();
 			this.lblDataUpdate = new System.Windows.Forms.Label();
 			this.lblCurrentLang = new System.Windows.Forms.Label();
 			this.cboDispLang = new System.Windows.Forms.ComboBox();
 			this.lblDispLang = new System.Windows.Forms.Label();
-			this.lblTag = new System.Windows.Forms.Label();
+			this.panelBase = new System.Windows.Forms.Panel();
+			this.lblStatusBarNeedRestart = new System.Windows.Forms.Label();
 			this.pnlBase.SuspendLayout();
+			this.panel2.SuspendLayout();
+			this.panel1.SuspendLayout();
+			this.panelBase.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pnlBase
 			// 
 			this.pnlBase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlBase.AutoScroll = true;
 			this.pnlBase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlBase.Controls.Add(this.panel2);
+			this.pnlBase.Controls.Add(this.panel1);
+			this.pnlBase.Controls.Add(this.lblUseStatusBar);
 			this.pnlBase.Controls.Add(this.lblTag);
 			this.pnlBase.Controls.Add(this.btnUiFont);
 			this.pnlBase.Controls.Add(this.lblUiFont);
-			this.pnlBase.Controls.Add(this.rdoDataUpdateRemote);
-			this.pnlBase.Controls.Add(this.rdoDataUpdateLocal);
 			this.pnlBase.Controls.Add(this.lblDataUpdate);
 			this.pnlBase.Controls.Add(this.lblCurrentLang);
 			this.pnlBase.Controls.Add(this.cboDispLang);
 			this.pnlBase.Controls.Add(this.lblDispLang);
 			this.pnlBase.Location = new System.Drawing.Point(12, 12);
 			this.pnlBase.Name = "pnlBase";
-			this.pnlBase.Size = new System.Drawing.Size(776, 296);
+			this.pnlBase.Size = new System.Drawing.Size(776, 286);
 			this.pnlBase.TabIndex = 0;
+			// 
+			// panel2
+			// 
+			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel2.Controls.Add(this.lblStatusBarNeedRestart);
+			this.panel2.Controls.Add(this.rdoStatusBarEnable);
+			this.panel2.Controls.Add(this.rdoStatusBarDisable);
+			this.panel2.Location = new System.Drawing.Point(251, 220);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(520, 47);
+			this.panel2.TabIndex = 15;
+			// 
+			// rdoStatusBarEnable
+			// 
+			this.rdoStatusBarEnable.AutoSize = true;
+			this.rdoStatusBarEnable.Location = new System.Drawing.Point(2, 3);
+			this.rdoStatusBarEnable.Name = "rdoStatusBarEnable";
+			this.rdoStatusBarEnable.Size = new System.Drawing.Size(43, 17);
+			this.rdoStatusBarEnable.TabIndex = 12;
+			this.rdoStatusBarEnable.Text = "213";
+			this.rdoStatusBarEnable.UseVisualStyleBackColor = true;
+			this.rdoStatusBarEnable.CheckedChanged += new System.EventHandler(this.RdoStatusBarEnable_CheckedChanged);
+			// 
+			// rdoStatusBarDisable
+			// 
+			this.rdoStatusBarDisable.AutoSize = true;
+			this.rdoStatusBarDisable.Checked = true;
+			this.rdoStatusBarDisable.Location = new System.Drawing.Point(105, 3);
+			this.rdoStatusBarDisable.Name = "rdoStatusBarDisable";
+			this.rdoStatusBarDisable.Size = new System.Drawing.Size(43, 17);
+			this.rdoStatusBarDisable.TabIndex = 13;
+			this.rdoStatusBarDisable.TabStop = true;
+			this.rdoStatusBarDisable.Text = "214";
+			this.rdoStatusBarDisable.UseVisualStyleBackColor = true;
+			this.rdoStatusBarDisable.CheckedChanged += new System.EventHandler(this.RdoStatusBarDisable_CheckedChanged);
+			// 
+			// panel1
+			// 
+			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.rdoDataUpdateLocal);
+			this.panel1.Controls.Add(this.rdoDataUpdateRemote);
+			this.panel1.Location = new System.Drawing.Point(251, 83);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(520, 67);
+			this.panel1.TabIndex = 14;
+			// 
+			// rdoDataUpdateLocal
+			// 
+			this.rdoDataUpdateLocal.AutoSize = true;
+			this.rdoDataUpdateLocal.Location = new System.Drawing.Point(3, 3);
+			this.rdoDataUpdateLocal.Name = "rdoDataUpdateLocal";
+			this.rdoDataUpdateLocal.Size = new System.Drawing.Size(43, 17);
+			this.rdoDataUpdateLocal.TabIndex = 6;
+			this.rdoDataUpdateLocal.Text = "204";
+			this.rdoDataUpdateLocal.UseVisualStyleBackColor = true;
+			this.rdoDataUpdateLocal.CheckedChanged += new System.EventHandler(this.RdoDataUpdateLocal_CheckedChanged);
+			// 
+			// rdoDataUpdateRemote
+			// 
+			this.rdoDataUpdateRemote.AutoSize = true;
+			this.rdoDataUpdateRemote.Checked = true;
+			this.rdoDataUpdateRemote.Location = new System.Drawing.Point(3, 26);
+			this.rdoDataUpdateRemote.Name = "rdoDataUpdateRemote";
+			this.rdoDataUpdateRemote.Size = new System.Drawing.Size(43, 17);
+			this.rdoDataUpdateRemote.TabIndex = 7;
+			this.rdoDataUpdateRemote.TabStop = true;
+			this.rdoDataUpdateRemote.Text = "205";
+			this.rdoDataUpdateRemote.UseVisualStyleBackColor = true;
+			this.rdoDataUpdateRemote.CheckedChanged += new System.EventHandler(this.RdoDataUpdateRemote_CheckedChanged);
+			// 
+			// lblUseStatusBar
+			// 
+			this.lblUseStatusBar.AutoSize = true;
+			this.lblUseStatusBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblUseStatusBar.Location = new System.Drawing.Point(12, 220);
+			this.lblUseStatusBar.Name = "lblUseStatusBar";
+			this.lblUseStatusBar.Size = new System.Drawing.Size(39, 20);
+			this.lblUseStatusBar.TabIndex = 11;
+			this.lblUseStatusBar.Text = "212";
+			// 
+			// lblTag
+			// 
+			this.lblTag.AutoSize = true;
+			this.lblTag.Location = new System.Drawing.Point(27, 4);
+			this.lblTag.Name = "lblTag";
+			this.lblTag.Size = new System.Drawing.Size(35, 13);
+			this.lblTag.TabIndex = 10;
+			this.lblTag.Text = "label1";
 			// 
 			// btnUiFont
 			// 
@@ -80,30 +182,6 @@ namespace DutyContent.Tab
 			this.lblUiFont.Size = new System.Drawing.Size(39, 20);
 			this.lblUiFont.TabIndex = 8;
 			this.lblUiFont.Text = "210";
-			// 
-			// rdoDataUpdateRemote
-			// 
-			this.rdoDataUpdateRemote.AutoSize = true;
-			this.rdoDataUpdateRemote.Checked = true;
-			this.rdoDataUpdateRemote.Location = new System.Drawing.Point(251, 110);
-			this.rdoDataUpdateRemote.Name = "rdoDataUpdateRemote";
-			this.rdoDataUpdateRemote.Size = new System.Drawing.Size(43, 17);
-			this.rdoDataUpdateRemote.TabIndex = 7;
-			this.rdoDataUpdateRemote.TabStop = true;
-			this.rdoDataUpdateRemote.Text = "205";
-			this.rdoDataUpdateRemote.UseVisualStyleBackColor = true;
-			this.rdoDataUpdateRemote.CheckedChanged += new System.EventHandler(this.RdoDataUpdateRemote_CheckedChanged);
-			// 
-			// rdoDataUpdateLocal
-			// 
-			this.rdoDataUpdateLocal.AutoSize = true;
-			this.rdoDataUpdateLocal.Location = new System.Drawing.Point(251, 87);
-			this.rdoDataUpdateLocal.Name = "rdoDataUpdateLocal";
-			this.rdoDataUpdateLocal.Size = new System.Drawing.Size(43, 17);
-			this.rdoDataUpdateLocal.TabIndex = 6;
-			this.rdoDataUpdateLocal.Text = "204";
-			this.rdoDataUpdateLocal.UseVisualStyleBackColor = true;
-			this.rdoDataUpdateLocal.CheckedChanged += new System.EventHandler(this.RdoDataUpdateLocal_CheckedChanged);
 			// 
 			// lblDataUpdate
 			// 
@@ -144,14 +222,24 @@ namespace DutyContent.Tab
 			this.lblDispLang.TabIndex = 0;
 			this.lblDispLang.Text = "201";
 			// 
-			// lblTag
+			// panelBase
 			// 
-			this.lblTag.AutoSize = true;
-			this.lblTag.Location = new System.Drawing.Point(27, 4);
-			this.lblTag.Name = "lblTag";
-			this.lblTag.Size = new System.Drawing.Size(35, 13);
-			this.lblTag.TabIndex = 10;
-			this.lblTag.Text = "label1";
+			this.panelBase.AutoScroll = true;
+			this.panelBase.Controls.Add(this.pnlBase);
+			this.panelBase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelBase.Location = new System.Drawing.Point(0, 0);
+			this.panelBase.Name = "panelBase";
+			this.panelBase.Size = new System.Drawing.Size(800, 450);
+			this.panelBase.TabIndex = 1;
+			// 
+			// lblStatusBarNeedRestart
+			// 
+			this.lblStatusBarNeedRestart.AutoSize = true;
+			this.lblStatusBarNeedRestart.Location = new System.Drawing.Point(238, 5);
+			this.lblStatusBarNeedRestart.Name = "lblStatusBarNeedRestart";
+			this.lblStatusBarNeedRestart.Size = new System.Drawing.Size(25, 13);
+			this.lblStatusBarNeedRestart.TabIndex = 14;
+			this.lblStatusBarNeedRestart.Text = "215";
 			// 
 			// ConfigForm
 			// 
@@ -159,11 +247,16 @@ namespace DutyContent.Tab
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.pnlBase);
+			this.Controls.Add(this.panelBase);
 			this.Name = "ConfigForm";
 			this.Text = "Config";
 			this.pnlBase.ResumeLayout(false);
 			this.pnlBase.PerformLayout();
+			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
+			this.panelBase.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -180,5 +273,12 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.Button btnUiFont;
 		private System.Windows.Forms.Label lblUiFont;
 		private System.Windows.Forms.Label lblTag;
+		private System.Windows.Forms.Panel panelBase;
+		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.RadioButton rdoStatusBarEnable;
+		private System.Windows.Forms.RadioButton rdoStatusBarDisable;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Label lblUseStatusBar;
+		private System.Windows.Forms.Label lblStatusBarNeedRestart;
 	}
 }

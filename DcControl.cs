@@ -177,11 +177,15 @@ namespace DutyContent
 			MesgLog.C(Color.Aquamarine, 4, DcConfig.PluginVersion.ToString());
 
 			DcConfig.LoadConfig();
+			ShowStatusBarAsConfig(true);
+
 			DcConfig.ReadLanguage(true);
 			DcContent.ReadContent();
 			DcConfig.ReadPacket();
 
 			UpdateUiLocale();
+
+			lblStatusLeft.Text = MesgLog.Text(99, DcConfig.PluginVersion);  // once here
 
 			//
 			Dock = DockStyle.Fill;
@@ -214,7 +218,14 @@ namespace DutyContent
 					}
 
 					tabMain.TabPages.Add(tp);
-					tabMain.SelectedTab = tp;
+
+					if (DcConfig.LastUpdatedPlugin < tag)
+					{
+						tabMain.SelectedTab = tp;
+
+						DcConfig.LastUpdatedPlugin = tag;
+						DcConfig.SaveConfig();
+					}
 
 					MesgLog.C(Color.Aquamarine, 207, DcConfig.PluginTag, tag);
 				}
@@ -341,6 +352,8 @@ namespace DutyContent
 		private void FFXIVPlugin_ZoneChanged(uint zone_id, string zone_name)
 		{
 			Tab.DutyForm.Self?.ZoneChanged(zone_id, zone_name);
+
+			lblStatusLeft.Text = MesgLog.Text(34, zone_name, zone_id);
 		}
 
 		//
@@ -361,6 +374,27 @@ namespace DutyContent
 			Tab.ConfigForm.Self?.UpdateUiLocale();
 
 			Tab.UpdateNotifyForm.Self?.UpdateUiLocale();
+		}
+
+		//
+		public void ShowStatusBarAsConfig(bool force=false)
+		{
+			if (DcConfig.StatusBar)
+			{
+				if (!lblStatusLeft.Visible || force)
+				{
+					spctBase.Dock = DockStyle.None;
+					lblStatusLeft.Visible = true;
+				}
+			}
+			else
+			{
+				if (lblStatusLeft.Visible || force)
+				{
+					lblStatusLeft.Visible = false;
+					spctBase.Dock = DockStyle.Fill;
+				}
+			}
 		}
 	}
 }
