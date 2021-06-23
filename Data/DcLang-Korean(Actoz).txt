@@ -50,6 +50,9 @@ LANG=한국어(액토즈)
 209=https://github.com/kshman/DutyContent/releases/latest
 210=UI 글꼴
 211=버전: {0} / {1}
+212=스테이터스 표시줄
+213=사용함
+214=사용안함
 
 300=임무
 301=콘텐츠

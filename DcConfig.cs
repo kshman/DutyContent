@@ -32,9 +32,7 @@ namespace DutyContent
 		public static bool DataRemoteUpdate { get; set; } = true;   // true = use remote update
 		public static int LastUpdatedPlugin { get; set; } = 0;
 		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
-		// Microsoft Sans Serif / SegoUI
-		// GoyangIlsan R / Dotum / Malgun
-		// Bitstream Vera Sans Mono / Consolas
+		public static bool StatusBar { get; set; } = false;
 
 		//
 		public static string BuildDataFileName(string header, string context, string ext)
@@ -76,6 +74,7 @@ namespace DutyContent
 				sw.WriteLine("DataRemoteUpdate={0}", DataRemoteUpdate);
 				sw.WriteLine("LastUpdatedPlugin={0}", LastUpdatedPlugin);
 				sw.WriteLine("UiFontFamily={0}", UiFontFamily);
+				sw.WriteLine("StatusBar={0}", StatusBar);
 				sw.WriteLine();
 
 				Duty.InternalSaveStream(sw);
@@ -97,6 +96,7 @@ namespace DutyContent
 			DataRemoteUpdate = ThirdParty.Converter.ToBool(db["DataRemoteUpdate"], DataRemoteUpdate);
 			LastUpdatedPlugin = ThirdParty.Converter.ToInt(db["LastUpdatedPlugin"]);
 			UiFontFamily = db.Get("UiFontFamily", UiFontFamily);
+			StatusBar = ThirdParty.Converter.ToBool(db["StatusBar"], StatusBar);
 
 			Duty.InternalReadFromDb(db);
 		}

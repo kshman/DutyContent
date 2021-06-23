@@ -51,6 +51,14 @@ namespace DutyContent.Tab
 					Thread.Sleep(30 * 60 * 1000);
 				}
 			});
+
+			//
+			rdoDataUpdateLocal.Checked = !DcConfig.DataRemoteUpdate;
+			rdoDataUpdateRemote.Checked = DcConfig.DataRemoteUpdate;
+
+			//
+			rdoStatusBarEnable.Checked = DcConfig.StatusBar;
+			rdoStatusBarDisable.Checked = !DcConfig.StatusBar;
 		}
 
 		public void RefreshLocale()
@@ -70,6 +78,11 @@ namespace DutyContent.Tab
 			btnUiFont.Text = DcConfig.UiFontFamily;
 
 			lblTag.Text = MesgLog.Text(211, DcConfig.PluginTag, DcConfig.PluginVersion);
+
+			lblUseStatusBar.Text = MesgLog.Text(212);
+			rdoStatusBarEnable.Text = MesgLog.Text(213);
+			rdoStatusBarDisable.Text = MesgLog.Text(214);
+			lblStatusBarNeedRestart.Text = MesgLog.Text(215);
 		}
 
 		public static List<string> MakeConfigLangList()
@@ -166,6 +179,32 @@ namespace DutyContent.Tab
 				DcControl.Self.UpdateUiLocale();
 				DcConfig.SaveConfig();
 			}
+		}
+
+		private void InternalStatusBar(bool value)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (value && DcConfig.StatusBar)
+				return;
+			if (!value && !DcConfig.StatusBar)
+				return;
+
+			DcConfig.StatusBar = value;
+			DcConfig.SaveConfig();
+
+			DcControl.Self?.ShowStatusBarAsConfig();
+		}
+
+		private void RdoStatusBarEnable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalStatusBar(true);
+		}
+
+		private void RdoStatusBarDisable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalStatusBar(false);
 		}
 	}
 }

@@ -50,6 +50,9 @@ LANG=日本語
 209=https://github.com/kshman/DutyContent/releases/latest
 210=UIフォント
 211=バージョン: {0} / {1}
+212=ステータス・バー
+213=使用する
+214=使用しない
 
 300=コンテンツ
 301=コンテンツ

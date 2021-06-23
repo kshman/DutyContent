@@ -177,13 +177,15 @@ namespace DutyContent
 			MesgLog.C(Color.Aquamarine, 4, DcConfig.PluginVersion.ToString());
 
 			DcConfig.LoadConfig();
+			ShowStatusBarAsConfig(true);
+
 			DcConfig.ReadLanguage(true);
 			DcContent.ReadContent();
 			DcConfig.ReadPacket();
 
 			UpdateUiLocale();
 
-			lblStatusLeft.Text = MesgLog.Text(99, DcConfig.PluginVersion);	// once here
+			lblStatusLeft.Text = MesgLog.Text(99, DcConfig.PluginVersion);  // once here
 
 			//
 			Dock = DockStyle.Fill;
@@ -374,9 +376,25 @@ namespace DutyContent
 			Tab.UpdateNotifyForm.Self?.UpdateUiLocale();
 		}
 
-		private void lblStatusLeft_Click(object sender, EventArgs e)
+		//
+		public void ShowStatusBarAsConfig(bool force=false)
 		{
-
+			if (DcConfig.StatusBar)
+			{
+				if (!lblStatusLeft.Visible || force)
+				{
+					spctBase.Dock = DockStyle.None;
+					lblStatusLeft.Visible = true;
+				}
+			}
+			else
+			{
+				if (lblStatusLeft.Visible || force)
+				{
+					lblStatusLeft.Visible = false;
+					spctBase.Dock = DockStyle.Fill;
+				}
+			}
 		}
 	}
 }

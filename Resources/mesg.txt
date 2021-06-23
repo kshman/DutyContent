@@ -51,6 +51,10 @@ LANG=English
 209=https://github.com/kshman/DutyContent/releases/latest
 210=UI Font
 211=Version: {0} / {1}
+212=Status bar
+213=Enable
+214=Disable
+215=* Need restart plugin
 
 300=Duty
 301=Contents

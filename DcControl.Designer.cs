@@ -29,7 +29,7 @@ namespace DutyContent
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.spctBase = new System.Windows.Forms.SplitContainer();
 			this.tabMain = new System.Windows.Forms.TabControl();
 			this.tabPageDuty = new System.Windows.Forms.TabPage();
 			this.tabPagePing = new System.Windows.Forms.TabPage();
@@ -38,34 +38,34 @@ namespace DutyContent
 			this.btnClearMesg = new System.Windows.Forms.Button();
 			this.panelBase = new System.Windows.Forms.Panel();
 			this.lblStatusLeft = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spctBase)).BeginInit();
+			this.spctBase.Panel1.SuspendLayout();
+			this.spctBase.Panel2.SuspendLayout();
+			this.spctBase.SuspendLayout();
 			this.tabMain.SuspendLayout();
 			this.panelBase.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// splitContainer1
+			// spctBase
 			// 
-			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.spctBase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-			this.splitContainer1.Name = "splitContainer1";
-			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.spctBase.Location = new System.Drawing.Point(3, 3);
+			this.spctBase.Name = "spctBase";
+			this.spctBase.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// splitContainer1.Panel1
+			// spctBase.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.tabMain);
+			this.spctBase.Panel1.Controls.Add(this.tabMain);
 			// 
-			// splitContainer1.Panel2
+			// spctBase.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.txtMesg);
-			this.splitContainer1.Panel2.Controls.Add(this.btnClearMesg);
-			this.splitContainer1.Size = new System.Drawing.Size(786, 534);
-			this.splitContainer1.SplitterDistance = 467;
-			this.splitContainer1.TabIndex = 0;
+			this.spctBase.Panel2.Controls.Add(this.txtMesg);
+			this.spctBase.Panel2.Controls.Add(this.btnClearMesg);
+			this.spctBase.Size = new System.Drawing.Size(786, 534);
+			this.spctBase.SplitterDistance = 467;
+			this.spctBase.TabIndex = 0;
 			// 
 			// tabMain
 			// 
@@ -99,7 +99,7 @@ namespace DutyContent
 			// 
 			this.tabPagePing.Location = new System.Drawing.Point(104, 4);
 			this.tabPagePing.Name = "tabPagePing";
-			this.tabPagePing.Size = new System.Drawing.Size(678, 456);
+			this.tabPagePing.Size = new System.Drawing.Size(678, 459);
 			this.tabPagePing.TabIndex = 2;
 			this.tabPagePing.Text = "Ping";
 			this.tabPagePing.UseVisualStyleBackColor = true;
@@ -109,7 +109,7 @@ namespace DutyContent
 			this.tabPageConfig.Location = new System.Drawing.Point(104, 4);
 			this.tabPageConfig.Name = "tabPageConfig";
 			this.tabPageConfig.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConfig.Size = new System.Drawing.Size(678, 456);
+			this.tabPageConfig.Size = new System.Drawing.Size(678, 459);
 			this.tabPageConfig.TabIndex = 1;
 			this.tabPageConfig.Text = "Config";
 			this.tabPageConfig.UseVisualStyleBackColor = true;
@@ -139,7 +139,7 @@ namespace DutyContent
 			// panelBase
 			// 
 			this.panelBase.Controls.Add(this.lblStatusLeft);
-			this.panelBase.Controls.Add(this.splitContainer1);
+			this.panelBase.Controls.Add(this.spctBase);
 			this.panelBase.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelBase.Location = new System.Drawing.Point(0, 0);
 			this.panelBase.Name = "panelBase";
@@ -159,6 +159,7 @@ namespace DutyContent
 			this.lblStatusLeft.TabIndex = 1;
 			this.lblStatusLeft.Text = "99";
 			this.lblStatusLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblStatusLeft.Visible = false;
 			// 
 			// DcControl
 			// 
@@ -167,10 +168,10 @@ namespace DutyContent
 			this.Controls.Add(this.panelBase);
 			this.Name = "DcControl";
 			this.Size = new System.Drawing.Size(792, 567);
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-			this.splitContainer1.ResumeLayout(false);
+			this.spctBase.Panel1.ResumeLayout(false);
+			this.spctBase.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.spctBase)).EndInit();
+			this.spctBase.ResumeLayout(false);
 			this.tabMain.ResumeLayout(false);
 			this.panelBase.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -179,7 +180,7 @@ namespace DutyContent
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.SplitContainer spctBase;
 		private System.Windows.Forms.Button btnClearMesg;
 		private System.Windows.Forms.TabControl tabMain;
 		private System.Windows.Forms.TabPage tabPageDuty;
