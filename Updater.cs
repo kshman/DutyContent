@@ -4,38 +4,75 @@ using Newtonsoft.Json;
 
 namespace DutyContent
 {
-    internal class Updater
-    {
-        internal static void CheckNewVersion()
-        {
-            Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    var json = WebApi.Request($"https://raw.githubusercontent.com/kshman/DutyContent/main/Data/DcDuty-{DcContent.Language}.json");
-                    DcContent.Fill(json);
-                }
-                catch (Exception ex)
-                {
-                    MesgLog.Ex(ex, 31);
-                }
-            });
-        }
+	internal class Updater
+	{
+		// https://raw.githubusercontent.com/kshman/DutyContent/main/Data/####-####.####
+		// https://api.github.com/repos/kshman/DutyContent/releases/latest
 
-        public static string CheckNewPacket(string name)
+		private const string UrlContent = "https://raw.githubusercontent.com/kshman/DutyContent";
+		private const string UrlApiRepo = "https://api.github.com/repos/kshman/DutyContent";
+		private const string PathData = "main/Data";
+
+		private const string PfxDuty = "DcDuty";
+		private const string PfxPacket = "DcPacket";
+
+		internal static void CheckNewVersion()
 		{
-            try
+			Task.Factory.StartNew(() =>
 			{
-                var ret = WebApi.Request($"https://raw.githubusercontent.com/kshman/DutyContent/main/Data/DcPacket-{name}.config");
+				try
+				{
+					var url = $"{UrlContent}/{PathData}/{PfxDuty}-{DcContent.Language}.json";
+					var json = WebApi.Request(url);
+					DcContent.Fill(json);
+				}
+				catch (Exception ex)
+				{
+					MesgLog.Ex(ex, 31);
+				}
+			});
+		}
 
-                return ret;
-            }
-            catch (Exception ex)
+		public static string CheckNewPacket(string name)
+		{
+			try
 			{
-                MesgLog.Ex(ex, 32);
+				var url = $"{UrlContent}/{PathData}/{PfxPacket}-{name}.config";
+				var ret = WebApi.Request(url);
 
-                return null;
+				return ret;
+			}
+			catch (Exception ex)
+			{
+				MesgLog.Ex(ex, 32);
+
+				return null;
 			}
 		}
-    }
+
+		public static int CheckPluginUpdate(out string body)
+		{
+			body = string.Empty;
+
+			var url = $"{UrlApiRepo}/releases/latest";
+			var req = WebApi.Request(url);
+
+			if (!string.IsNullOrEmpty(req))
+			{
+				try
+				{
+					var js = JsonConvert.DeserializeObject<dynamic>(req);
+					var tag = js.tag_name.ToObject<string>();
+					body = js.body.ToObject<string>();
+
+					return ThirdParty.Converter.ToInt(tag);
+				}
+				catch (Exception /*ex*/)
+				{
+				}
+			}
+
+			return 0;
+		}
+	}
 }

@@ -9,7 +9,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace DutyContent.Tab
 {
@@ -20,12 +19,18 @@ namespace DutyContent.Tab
 
 		//
 		private bool _is_lock_fate;
+
+		private ushort _last_fate = 0;
+
+		//
 		private bool _is_packet_finder;
 		private DcContent.SaveTheQueenType _stq_type = DcContent.SaveTheQueenType.No;
-
 		private DcConfig.PacketConfig _new_packet;
-		private List<string> _packet_names = new List<string>();
 
+		//
+		private Dictionary<string, string> _packet_list = new Dictionary<string, string>();
+
+		//
 		private Overlay.DutyOvForm _overlay;
 
 		public DutyForm()
@@ -48,34 +53,9 @@ namespace DutyContent.Tab
 			lblCurrentDataSet.Text = DcContent.DisplayLanguage;
 
 			//
-			var lang = MakeDutyLangList();
+			RefreshDatasetList();
+			RefreshPacketList();
 
-			foreach (var i in lang)
-			{
-				var n = cboDataset.Items.Add(i);
-
-				if (i.Equals(DcConfig.Duty.Language))
-					cboDataset.SelectedIndex = n;
-			}
-
-			//
-			_packet_names.Clear();
-			var pks = MakePacketList();
-
-			for (var i = 0; i < pks.name.Count; i++)
-			{
-				var n = cboPacketset.Items.Add(pks.desc[i]);
-
-				if (pks.name[i].Equals(DcConfig.Duty.PacketSet))
-					cboPacketset.SelectedIndex = n;
-
-				_packet_names.Add(pks.name[i]);
-			}
-
-			//
-			var font = new Font(DcConfig.Duty.LogFontFamily, DcConfig.Duty.LogFontSize, FontStyle.Regular, GraphicsUnit.Point);
-			txtContentLog.Font = font;
-			btnLogFont.Font = font;
 			btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
 
 			//
@@ -86,7 +66,7 @@ namespace DutyContent.Tab
 			chkOverlayClickThru.Checked = DcConfig.Duty.OverlayClickThru;
 
 			//
-			_overlay.SetText(MesgLog.Text(99, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()));
+			_overlay.SetText(MesgLog.Text(99, DcConfig.PluginVersion.ToString()));
 			_overlay.Location = DcConfig.Duty.OverlayLocation;
 
 			if (DcConfig.Duty.EnableOverlay)
@@ -112,13 +92,14 @@ namespace DutyContent.Tab
 			//
 			chkUseNotifyLine.Checked = DcConfig.Duty.UseNotifyLine;
 			txtLineToken.Text = DcConfig.Duty.NotifyLineToken;
-			//txtLineToken.Enabled = !DcConfig.Duty.UseNotifyLine;
 
 			chkUseNotifyTelegram.Checked = DcConfig.Duty.UseNotifyTelegram;
 			txtTelegramId.Text = DcConfig.Duty.NotifyTelegramId;
 			txtTelegramToken.Text = DcConfig.Duty.NotifyTelegramToken;
-			//txtLineToken.Enabled = !DcConfig.Duty.UseNotifyTelegram;
-			//txtLineToken.Enabled = !DcConfig.Duty.UseNotifyTelegram;
+
+			chkUseNotifyDiscowk.Checked = DcConfig.Duty.UseNotifyDiscordWebhook;
+			txtDiscowkUrl.Text = DcConfig.Duty.NotifyDiscordWebhookUrl;
+			chkDiscowkTts.Checked = DcConfig.Duty.NotifyDiscordWebhookTts;
 
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
@@ -134,7 +115,10 @@ namespace DutyContent.Tab
 
 			//
 			if (cboPacketset.SelectedIndex >= 0)
-				RemotePacketUpdate(_packet_names[cboPacketset.SelectedIndex]);
+			{
+				var p = _packet_list.ElementAt(cboPacketset.SelectedIndex);
+				RemotePacketUpdate(p.Key);
+			}
 		}
 
 		public void PluginDeinitialize()
@@ -146,45 +130,6 @@ namespace DutyContent.Tab
 		private void SaveConfig(int interval = 5000)
 		{
 			DcControl.Self.RefreshSaveConfig(interval);
-		}
-
-		public static List<string> MakeDutyLangList()
-		{
-			List<string> lst = new List<string>();
-
-			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
-
-			foreach (var fi in di.GetFiles("DcDuty-*.json"))
-			{
-				var s = fi.Name.Substring(7, fi.Name.Length - 7 - 5);
-				lst.Add(s);
-			}
-
-			return lst;
-		}
-
-		public static (List<string> name, List<string> desc) MakePacketList()
-		{
-			List<string> l = new List<string>();
-			List<string> d = new List<string>();
-
-			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
-
-			foreach (var fi in di.GetFiles("DcPacket-*.config"))
-			{
-				var s = fi.Name.Substring(9, fi.Name.Length - 9 - 7);
-				l.Add(s);
-
-				if (!File.Exists(fi.FullName))
-					d.Add(s);
-				else
-				{
-					var db = new ThirdParty.LineDb(fi.FullName, Encoding.UTF8, false);
-					d.Add(db.Get("Description", s));
-				}
-			}
-
-			return (l, d);
 		}
 
 		public void RefreshLocale()
@@ -217,6 +162,12 @@ namespace DutyContent.Tab
 			lblTelegramId.Text = MesgLog.Text(314);
 			lblTelegramToken.Text = MesgLog.Text(315);
 
+			chkUseNotifyDiscowk.Text = MesgLog.Text(338);
+			chkDiscowkTts.Text = MesgLog.Text(341);
+			lblDiscowkUrl.Text = MesgLog.Text(339);
+
+			btnTestNotify.Text = MesgLog.Text(340);
+
 			lblPacketFinder.Text = MesgLog.Text(316);
 			lblPacketDesc.Text = MesgLog.Text(317);
 			lblPacketBozja.Text = MesgLog.Text(318);
@@ -233,6 +184,11 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = MesgLog.Text(10007);
 			btnPacketApply.Text = MesgLog.Text(10009);
+
+			//
+			var logfont = new Font(DcConfig.Duty.LogFontFamily, DcConfig.Duty.LogFontSize, FontStyle.Regular);
+			txtContentLog.Font = logfont;
+			btnLogFont.Font = logfont;
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -262,18 +218,19 @@ namespace DutyContent.Tab
 					if (fcode > 100)
 					{
 						var fate = DcContent.GetFate(fcode);
-						if (_stq_type != DcContent.SaveTheQueenType.No)
+						if (_stq_type != DcContent.SaveTheQueenType.No || IsSkirmishFate(fcode))
 							LogSkirmish(10001, fate.Name);
 						else
 							LogFate(10001, fate.Name);
 
 						if (DcConfig.Duty.Fates[DcConfig.Duty.ActiveFate].Selected.Contains(fcode))
 						{
-							MesgLog.L("{0} - {1}", DcConfig.Duty.ActiveFate, fcode);
 							PlayEffectSoundFate();
 							NotifyFate(fate);
 							_overlay.PlayFate(fate);
 						}
+
+						_last_fate = fcode;
 					}
 				}
 				else if (chkShowDebug.Checked && data[0] == 62 && data[8] > 0)  // more than 0%
@@ -285,6 +242,8 @@ namespace DutyContent.Tab
 						var fate = DcContent.TryFate(fcode);
 						if (fate == null)
 							LogDebug("unknown fate {0}% \"{1}\"", data[8], fcode);
+
+						_last_fate = fcode;
 					}
 				}
 			}
@@ -371,6 +330,7 @@ namespace DutyContent.Tab
 					_overlay.PlayNone();
 				}
 			}
+
 			// southen bozja front critical engagement
 			else if (opcode == DcConfig.Packet.OpSouthernBozja)
 			{
@@ -382,12 +342,17 @@ namespace DutyContent.Tab
 				// 10[1] status 0=end, 1=register, 2=entry, 3=progress
 				// 12[1] progress percentage
 
-				var stq =
-					_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
-					_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 :
-					30100;  // temporary
+				if (_stq_type == DcContent.SaveTheQueenType.No)
+				{
+					if (IsFateForSouthernBozja(_last_fate))
+						_stq_type = DcContent.SaveTheQueenType.Bozja;
+					else if (IsFateForZadnor(_last_fate))
+						_stq_type = DcContent.SaveTheQueenType.Zadnor;
+					else
+						_stq_type = DcContent.SaveTheQueenType.Zadnor;
+				}
 
-				var ce = stq + data[8];
+				var ce = data[8] + DcContent.SaveTheQueenTypeToCeBase(_stq_type);
 				var stat = data[10];
 
 				if (stat == 0 /* || data[10] == 3 */)
@@ -435,8 +400,12 @@ namespace DutyContent.Tab
 				(zone_id == 921) ? DcContent.SaveTheQueenType.Zadnor :
 				DcContent.SaveTheQueenType.No;
 
+#if false
+			LogInstance(10025, $"{zone_name} ({zone_id})");
+
 			if (chkShowDebug.Checked)
-				LogDebug("Zone: {0} \"{1}\"", zone_id, zone_name);
+				LogDebug("Zone: {0}", zone_id);
+#endif
 		}
 
 		//
@@ -597,19 +566,20 @@ namespace DutyContent.Tab
 			if (!DcConfig.PluginEnable)
 				return;
 
-			if (cboPacketset.SelectedIndex >= _packet_names.Count)
+			if (cboPacketset.SelectedIndex >= _packet_list.Count)
 				return;
 
-			var l = _packet_names[cboPacketset.SelectedIndex];
+			var p = _packet_list.ElementAt(cboPacketset.SelectedIndex);
+			var n = p.Key;
 
-			if (!string.IsNullOrWhiteSpace(l) && !l.Equals(DcConfig.Duty.PacketSet) && DcConfig.ReadPacket(l))
+			if (!string.IsNullOrWhiteSpace(n) && !n.Equals(DcConfig.Duty.PacketSet) && DcConfig.ReadPacket(n))
 			{
 				SaveConfig();
 
-				if (!l.Equals(DcConfig.PacketConfig.DefaultSetNameCustom))
+				if (!n.Equals(DcConfig.PacketConfig.DefaultSetNameCustom))
 				{
 					// check update and save
-					RemotePacketUpdate(l);
+					RemotePacketUpdate(n);
 				}
 			}
 		}
@@ -853,6 +823,9 @@ namespace DutyContent.Tab
 
 			if (DcConfig.Duty.UseNotifyTelegram)
 				NotifyUsingTelegram(s);
+
+			if (DcConfig.Duty.UseNotifyDiscordWebhook)
+				await NotifyUsingDiscordWebhook(s);
 		}
 
 		//
@@ -863,6 +836,9 @@ namespace DutyContent.Tab
 
 			if (DcConfig.Duty.UseNotifyTelegram)
 				NotifyUsingTelegram(s);
+
+			if (DcConfig.Duty.UseNotifyDiscordWebhook)
+				NotifyUsingDiscordWebhook(s).Wait();
 		}
 
 		//
@@ -916,6 +892,8 @@ namespace DutyContent.Tab
 				DcConfig.Duty.NotifyLineToken = txtLineToken.Text;
 				SaveConfig();
 			}
+
+			btnTestNotify.Enabled = true;
 		}
 
 		//
@@ -967,6 +945,8 @@ namespace DutyContent.Tab
 				DcConfig.Duty.NotifyTelegramId = txtTelegramId.Text;
 				SaveConfig();
 			}
+
+			btnTestNotify.Enabled = true;
 		}
 
 		private void TxtTelegramToken_KeyDown(object sender, KeyEventArgs e)
@@ -979,6 +959,8 @@ namespace DutyContent.Tab
 				DcConfig.Duty.NotifyTelegramToken = txtTelegramToken.Text;
 				SaveConfig();
 			}
+
+			btnTestNotify.Enabled = true;
 		}
 
 		//
@@ -1064,6 +1046,86 @@ namespace DutyContent.Tab
 				if (res != null)
 					res.Close();
 			}
+		}
+
+		private void ChkUseNotifyDiscowk_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.UseNotifyDiscordWebhook = chkUseNotifyDiscowk.Checked;
+			txtDiscowkUrl.Enabled = chkUseNotifyDiscowk.Checked;
+
+			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
+
+			SaveConfig();
+		}
+
+		private void TxtDiscowkUrl_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (e.KeyCode == Keys.Enter)
+			{
+				if (!IsValidDiscwkUrl(txtDiscowkUrl.Text))
+				{
+					MesgLog.E(342);
+					return;
+				}
+
+				DcConfig.Duty.NotifyDiscordWebhookUrl = txtDiscowkUrl.Text;
+				SaveConfig();
+			}
+
+			btnTestNotify.Enabled = true;
+		}
+
+		private void ChkDiscowkTts_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.NotifyDiscordWebhookTts = chkDiscowkTts.Checked;
+
+			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
+
+			SaveConfig();
+		}
+
+		private static bool IsValidDiscwkUrl(string url)
+		{
+			url = url.ToLower();
+			return url.StartsWith("https://discord.com/api/webhooks/");
+		}
+
+		//
+		internal async Task NotifyUsingDiscordWebhook(string mesg)
+		{
+			if (txtDiscowkUrl.TextLength == 0)
+				return;
+
+			if (!IsValidDiscwkUrl(txtDiscowkUrl.Text))
+			{
+				MesgLog.E(342);
+				return;
+			}
+
+			if (!txtDiscowkUrl.Text.Equals(DcConfig.Duty.NotifyDiscordWebhookUrl))
+			{
+				DcConfig.Duty.NotifyDiscordWebhookUrl = txtDiscowkUrl.Text;
+				SaveConfig();
+			}
+
+			var hc = new HttpClient();
+			var param = new Dictionary<string, string>
+			{
+				{ "content", mesg },
+				{ "tts", DcConfig.Duty.NotifyDiscordWebhookTts.ToString() },
+			};
+
+			await hc.PostAsync(DcConfig.Duty.NotifyDiscordWebhookUrl,
+				new FormUrlEncodedContent(param)).ConfigureAwait(false);
 		}
 
 		//
@@ -1152,9 +1214,9 @@ namespace DutyContent.Tab
 				_is_packet_finder = false;
 				PacketFinderResetUi(false);
 
-				// is this good idea?
-				// no bad idea
-				//cboPacketset.SelectedIndex = 0;
+				// select custom
+				DcConfig.Duty.PacketSet = DcConfig.PacketConfig.DefaultSetNameCustom;
+				RefreshPacketList();
 			}
 		}
 
@@ -1182,8 +1244,6 @@ namespace DutyContent.Tab
 		{
 			if (lstPacketInfo.SelectedIndices.Count != 1)
 				return;
-
-			//MesgLog.Write("double clicked: {0}", lstPacketInfo.SelectedIndices[0]);
 
 			var v = int.MaxValue;
 
@@ -1235,24 +1295,59 @@ namespace DutyContent.Tab
 
 		}
 
-		private static readonly short[] _packet_target_fates =
+		// middle la noscea
+		private static readonly ushort[] _fates_middle_la_noscea =
 		{
-			// middle la noscea
 			553, 649, 687, 688, 693, 717,
 			220, 221, 222, 223, 225, 226, 227, 229, 231, 233, 235, 237, 238, 239, 240,
 			1387,
+		};
 
-			// southern bozja front
+		// southern bozja front
+		private static readonly ushort[] _fates_southern_bojza =
+		{
 			1597, 1598, 1599,
 			1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609,
 			1610, 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619,
 			1620, 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628,
+		};
 
-			// zadnor
+		// zadnor
+		private static readonly ushort[] _fates_zadnor =
+		{
 			1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724,
 			1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732,
 			1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742,
 		};
+
+		//
+		private bool IsFateInFindList(ushort code)
+		{
+			return
+				_fates_middle_la_noscea.Contains(code) ||
+				_fates_southern_bojza.Contains(code) ||
+				_fates_zadnor.Contains(code);
+		}
+
+		//
+		private bool IsSkirmishFate(ushort code)
+		{
+			return
+				_fates_southern_bojza.Contains(code) ||
+				_fates_zadnor.Contains(code);
+		}
+
+		//
+		private bool IsFateForSouthernBozja(ushort code)
+		{
+			return _fates_southern_bojza.Contains(code);
+		}
+
+		//
+		private bool IsFateForZadnor(ushort code)
+		{
+			return _fates_zadnor.Contains(code);
+		}
 
 		//
 		private void PacketFinderHandler(byte[] message)
@@ -1263,8 +1358,8 @@ namespace DutyContent.Tab
 			// fate
 			if (_new_packet.OpFate == 0 && data.Length > 4 && data[0] == 0x3E)
 			{
-				var cc = BitConverter.ToInt16(data, 4);
-				if (_packet_target_fates.Contains(cc) && _new_packet.OpFate != opcode)
+				var cc = BitConverter.ToUInt16(data, 4);
+				if (IsFateInFindList(cc) && _new_packet.OpFate != opcode)
 				{
 					_new_packet.OpFate = opcode;
 
@@ -1273,6 +1368,8 @@ namespace DutyContent.Tab
 						lstPacketInfo.Items[0].SubItems[2].Text = MesgLog.Text(10016);
 						lstPacketInfo.Items[0].SubItems[3].Text = _new_packet.OpFate.ToString();
 					});
+
+					_last_fate = cc;
 
 					return;
 				}
@@ -1396,11 +1493,17 @@ namespace DutyContent.Tab
 
 				if (ok)
 				{
-					var stq =
-						_stq_type == DcContent.SaveTheQueenType.Bozja ? 30000 :
-						_stq_type == DcContent.SaveTheQueenType.Zadnor ? 30100 :
-						30100;  // temporary
-					var ce = DcContent.GetFate(code + stq);
+					if (_stq_type == DcContent.SaveTheQueenType.No)
+					{
+						if (IsFateForSouthernBozja(_last_fate))
+							_stq_type = DcContent.SaveTheQueenType.Bozja;
+						else if (IsFateForZadnor(_last_fate))
+							_stq_type = DcContent.SaveTheQueenType.Zadnor;
+						else
+							_stq_type = DcContent.SaveTheQueenType.Zadnor;
+					}
+
+					var ce = DcContent.GetFate(code + DcContent.SaveTheQueenTypeToCeBase(_stq_type));
 
 					var li = new ListViewItem(new string[]
 					{
@@ -1449,8 +1552,68 @@ namespace DutyContent.Tab
 
 					MesgLog.I(33, pk.Version, pk.Description);
 
-					cboDataset.SelectedItem = pk.Description;
+					//
+					_packet_list.Remove(name);
+					_packet_list.Add(name, pk.Description);
+
+					RefreshPacketList(false);
 				}
+			}
+		}
+
+		private void RefreshDatasetList()
+		{
+			// quick description read?
+
+			cboDataset.Items.Clear();
+
+			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
+
+			foreach (var fi in di.GetFiles("DcDuty-*.json"))
+			{
+				var s = fi.Name.Substring(7, fi.Name.Length - 7 - 5);
+				var n = cboDataset.Items.Add(s);
+
+				if (s.Equals(DcConfig.Duty.Language))
+					cboDataset.SelectedIndex = n;
+			}
+		}
+
+		private void RefreshPacketList(bool reload_file_info = true)
+		{
+			if (reload_file_info)
+			{
+				_packet_list.Clear();
+
+				DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
+
+				foreach (var fi in di.GetFiles("DcPacket-*.config"))
+				{
+					var name = fi.Name.Substring(9, fi.Name.Length - 9 - 7);
+
+					var db = new ThirdParty.LineDb(fi.FullName, Encoding.UTF8, false);
+					var desc = db.Get("Description", null);
+
+					if (desc == null)
+					{
+						// config file was for below version 9
+						_packet_list.Add(name, name);
+					}
+					else
+					{
+						_packet_list.Add(name, desc);
+					}
+				}
+			}
+
+			cboPacketset.Items.Clear();
+
+			foreach (var i in _packet_list)
+			{
+				var n = cboPacketset.Items.Add(i.Value);
+
+				if (i.Key.Equals(DcConfig.Duty.PacketSet))
+					cboPacketset.SelectedIndex = n;
 			}
 		}
 	}

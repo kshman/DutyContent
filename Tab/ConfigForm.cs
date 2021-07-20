@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,6 +51,14 @@ namespace DutyContent.Tab
 					Thread.Sleep(30 * 60 * 1000);
 				}
 			});
+
+			//
+			rdoDataUpdateLocal.Checked = !DcConfig.DataRemoteUpdate;
+			rdoDataUpdateRemote.Checked = DcConfig.DataRemoteUpdate;
+
+			//
+			rdoStatusBarEnable.Checked = DcConfig.StatusBar;
+			rdoStatusBarDisable.Checked = !DcConfig.StatusBar;
 		}
 
 		public void RefreshLocale()
@@ -64,6 +73,16 @@ namespace DutyContent.Tab
 			lblDataUpdate.Text = MesgLog.Text(203);
 			rdoDataUpdateLocal.Text = MesgLog.Text(204);
 			rdoDataUpdateRemote.Text = MesgLog.Text(205);
+
+			lblUiFont.Text = MesgLog.Text(210);
+			btnUiFont.Text = DcConfig.UiFontFamily;
+
+			lblTag.Text = MesgLog.Text(211, DcConfig.PluginTag, DcConfig.PluginVersion);
+
+			lblUseStatusBar.Text = MesgLog.Text(212);
+			rdoStatusBarEnable.Text = MesgLog.Text(213);
+			rdoStatusBarDisable.Text = MesgLog.Text(214);
+			lblStatusBarNeedRestart.Text = MesgLog.Text(215);
 		}
 
 		public static List<string> MakeConfigLangList()
@@ -133,6 +152,59 @@ namespace DutyContent.Tab
 		private void RdoDataUpdateRemote_CheckedChanged(object sender, EventArgs e)
 		{
 			InternalDataUpdate(true);
+		}
+
+		private void BtnUiFont_Click(object sender, EventArgs e)
+		{
+			Font ret = (Font)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
+			  {
+				  FontDialog dg = new FontDialog
+				  {
+					  Font = btnUiFont.Font,
+					  FontMustExist = true,
+					  AllowVerticalFonts = false,
+					  AllowVectorFonts = false,
+					  ShowColor = false,
+					  ShowEffects = false,
+					  MaxSize = 12,
+					  MinSize = 12,
+				  };
+
+				  return dg.ShowDialog() == DialogResult.OK ? dg.Font : null;
+			  }));
+
+			if (ret != null)
+			{
+				DcConfig.UiFontFamily = ret.Name;
+				DcControl.Self.UpdateUiLocale();
+				DcConfig.SaveConfig();
+			}
+		}
+
+		private void InternalStatusBar(bool value)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (value && DcConfig.StatusBar)
+				return;
+			if (!value && !DcConfig.StatusBar)
+				return;
+
+			DcConfig.StatusBar = value;
+			DcConfig.SaveConfig();
+
+			DcControl.Self?.ShowStatusBarAsConfig();
+		}
+
+		private void RdoStatusBarEnable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalStatusBar(true);
+		}
+
+		private void RdoStatusBarDisable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalStatusBar(false);
 		}
 	}
 }

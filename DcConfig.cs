@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DutyContent
 {
 	class DcConfig
 	{
+		public static int PluginTag => 14;
+		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
 		public static bool PluginEnable { get; set; }
 		public static string PluginPath { get; set; }
 		public static string DataPath { get; set; }
@@ -29,7 +30,11 @@ namespace DutyContent
 		//
 		public static string Language { get; set; } = "";
 		public static bool DataRemoteUpdate { get; set; } = true;   // true = use remote update
+		public static int LastUpdatedPlugin { get; set; } = 0;
+		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
+		public static bool StatusBar { get; set; } = false;
 
+		//
 		public static string BuildDataFileName(string header, string context, string ext)
 		{
 			return Path.Combine(DataPath, $"{header}-{context}.{ext}");
@@ -67,6 +72,9 @@ namespace DutyContent
 				sw.WriteLine("# config");
 				sw.WriteLine("Language={0}", Language);
 				sw.WriteLine("DataRemoteUpdate={0}", DataRemoteUpdate);
+				sw.WriteLine("LastUpdatedPlugin={0}", LastUpdatedPlugin);
+				sw.WriteLine("UiFontFamily={0}", UiFontFamily);
+				sw.WriteLine("StatusBar={0}", StatusBar);
 				sw.WriteLine();
 
 				Duty.InternalSaveStream(sw);
@@ -86,6 +94,9 @@ namespace DutyContent
 
 			Language = db["Language"];
 			DataRemoteUpdate = ThirdParty.Converter.ToBool(db["DataRemoteUpdate"], DataRemoteUpdate);
+			LastUpdatedPlugin = ThirdParty.Converter.ToInt(db["LastUpdatedPlugin"]);
+			UiFontFamily = db.Get("UiFontFamily", UiFontFamily);
+			StatusBar = ThirdParty.Converter.ToBool(db["StatusBar"], StatusBar);
 
 			Duty.InternalReadFromDb(db);
 		}
@@ -140,7 +151,7 @@ namespace DutyContent
 			// load. if file not exist, create new one with default value
 			Packet.Load(filename);
 
-			MesgLog.I(29, Packet.Version, Packet.Description);
+			MesgLog.I(29, Packet.Version, Packet.Description, filename);
 
 			return true;
 		}
@@ -278,6 +289,9 @@ namespace DutyContent
 			public bool UseNotifyTelegram { get; set; }
 			public string NotifyTelegramId { get; set; }
 			public string NotifyTelegramToken { get; set; }
+			public bool UseNotifyDiscordWebhook { get; set; }
+			public string NotifyDiscordWebhookUrl { get; set; }
+			public bool NotifyDiscordWebhookTts { get; set; }
 
 			public bool UsePing { get; set; }
 			public Color[] PingColors { get; set; } = new Color[4]
@@ -291,7 +305,7 @@ namespace DutyContent
 			public string PingDefAddr { get; set; }
 
 			//
-			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram;
+			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram || UseNotifyDiscordWebhook;
 
 			//
 			public FateSelection[] Fates { get; set; } = new FateSelection[4]
@@ -333,6 +347,9 @@ namespace DutyContent
 				sw.WriteLine("DutyUseNotifyTelegram={0}", UseNotifyTelegram);
 				sw.WriteLine("DutyNotifyTelegramId={0}", NotifyTelegramId);
 				sw.WriteLine("DutyNotifyTelegramToken={0}", NotifyTelegramToken);
+				sw.WriteLine("DutyUseNotifyDiscordWebhook={0}", UseNotifyDiscordWebhook);
+				sw.WriteLine("DutyNotifyDiscordWebhookUrl={0}", NotifyDiscordWebhookUrl);
+				sw.WriteLine("DutyNotifyDiscordWebhookTts={0}", NotifyDiscordWebhookTts);
 
 				sw.WriteLine("DutyUsePing={0}", UsePing);
 				sw.WriteLine("DutyPingColor0={0:X}", PingColors[0].ToArgb());
@@ -375,6 +392,9 @@ namespace DutyContent
 				UseNotifyTelegram = ThirdParty.Converter.ToBool(db["DutyUseNotifyTelegram"]);
 				NotifyTelegramId = db["DutyNotifyTelegramId"];
 				NotifyTelegramToken = db["DutyNotifyTelegramToken"];
+				UseNotifyDiscordWebhook = ThirdParty.Converter.ToBool(db["DutyUseNotifyDiscordWebhook"]);
+				NotifyDiscordWebhookUrl = db["DutyNotifyDiscordWebhookUrl"];
+				NotifyDiscordWebhookTts = ThirdParty.Converter.ToBool(db["DutyNotifyDiscordWebhookTts"]);
 
 				UsePing = ThirdParty.Converter.ToBool(db["DutyUsePing"]);
 				PingColors[0] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor0"], PingColors[0]);
