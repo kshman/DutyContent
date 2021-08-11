@@ -30,7 +30,10 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.pnlBase = new System.Windows.Forms.Panel();
+			this.btnLogFont = new System.Windows.Forms.Button();
+			this.lblLogFont = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.lblStatusBarNeedRestart = new System.Windows.Forms.Label();
 			this.rdoStatusBarEnable = new System.Windows.Forms.RadioButton();
 			this.rdoStatusBarDisable = new System.Windows.Forms.RadioButton();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -45,7 +48,6 @@ namespace DutyContent.Tab
 			this.cboDispLang = new System.Windows.Forms.ComboBox();
 			this.lblDispLang = new System.Windows.Forms.Label();
 			this.panelBase = new System.Windows.Forms.Panel();
-			this.lblStatusBarNeedRestart = new System.Windows.Forms.Label();
 			this.pnlBase.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -58,6 +60,8 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlBase.AutoScroll = true;
 			this.pnlBase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlBase.Controls.Add(this.btnLogFont);
+			this.pnlBase.Controls.Add(this.lblLogFont);
 			this.pnlBase.Controls.Add(this.panel2);
 			this.pnlBase.Controls.Add(this.panel1);
 			this.pnlBase.Controls.Add(this.lblUseStatusBar);
@@ -70,8 +74,28 @@ namespace DutyContent.Tab
 			this.pnlBase.Controls.Add(this.lblDispLang);
 			this.pnlBase.Location = new System.Drawing.Point(12, 12);
 			this.pnlBase.Name = "pnlBase";
-			this.pnlBase.Size = new System.Drawing.Size(776, 286);
+			this.pnlBase.Size = new System.Drawing.Size(776, 322);
 			this.pnlBase.TabIndex = 0;
+			// 
+			// btnLogFont
+			// 
+			this.btnLogFont.Location = new System.Drawing.Point(251, 209);
+			this.btnLogFont.Name = "btnLogFont";
+			this.btnLogFont.Size = new System.Drawing.Size(217, 38);
+			this.btnLogFont.TabIndex = 17;
+			this.btnLogFont.Text = "button1";
+			this.btnLogFont.UseVisualStyleBackColor = true;
+			this.btnLogFont.Click += new System.EventHandler(this.BtnLogFont_Click);
+			// 
+			// lblLogFont
+			// 
+			this.lblLogFont.AutoSize = true;
+			this.lblLogFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblLogFont.Location = new System.Drawing.Point(12, 209);
+			this.lblLogFont.Name = "lblLogFont";
+			this.lblLogFont.Size = new System.Drawing.Size(39, 20);
+			this.lblLogFont.TabIndex = 16;
+			this.lblLogFont.Text = "216";
 			// 
 			// panel2
 			// 
@@ -80,10 +104,19 @@ namespace DutyContent.Tab
 			this.panel2.Controls.Add(this.lblStatusBarNeedRestart);
 			this.panel2.Controls.Add(this.rdoStatusBarEnable);
 			this.panel2.Controls.Add(this.rdoStatusBarDisable);
-			this.panel2.Location = new System.Drawing.Point(251, 220);
+			this.panel2.Location = new System.Drawing.Point(251, 263);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(520, 47);
 			this.panel2.TabIndex = 15;
+			// 
+			// lblStatusBarNeedRestart
+			// 
+			this.lblStatusBarNeedRestart.AutoSize = true;
+			this.lblStatusBarNeedRestart.Location = new System.Drawing.Point(238, 5);
+			this.lblStatusBarNeedRestart.Name = "lblStatusBarNeedRestart";
+			this.lblStatusBarNeedRestart.Size = new System.Drawing.Size(25, 13);
+			this.lblStatusBarNeedRestart.TabIndex = 14;
+			this.lblStatusBarNeedRestart.Text = "215";
 			// 
 			// rdoStatusBarEnable
 			// 
@@ -148,7 +181,7 @@ namespace DutyContent.Tab
 			// 
 			this.lblUseStatusBar.AutoSize = true;
 			this.lblUseStatusBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblUseStatusBar.Location = new System.Drawing.Point(12, 220);
+			this.lblUseStatusBar.Location = new System.Drawing.Point(12, 263);
 			this.lblUseStatusBar.Name = "lblUseStatusBar";
 			this.lblUseStatusBar.Size = new System.Drawing.Size(39, 20);
 			this.lblUseStatusBar.TabIndex = 11;
@@ -232,15 +265,6 @@ namespace DutyContent.Tab
 			this.panelBase.Size = new System.Drawing.Size(800, 450);
 			this.panelBase.TabIndex = 1;
 			// 
-			// lblStatusBarNeedRestart
-			// 
-			this.lblStatusBarNeedRestart.AutoSize = true;
-			this.lblStatusBarNeedRestart.Location = new System.Drawing.Point(238, 5);
-			this.lblStatusBarNeedRestart.Name = "lblStatusBarNeedRestart";
-			this.lblStatusBarNeedRestart.Size = new System.Drawing.Size(25, 13);
-			this.lblStatusBarNeedRestart.TabIndex = 14;
-			this.lblStatusBarNeedRestart.Text = "215";
-			// 
 			// ConfigForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,5 +304,7 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label lblUseStatusBar;
 		private System.Windows.Forms.Label lblStatusBarNeedRestart;
+		private System.Windows.Forms.Button btnLogFont;
+		private System.Windows.Forms.Label lblLogFont;
 	}
 }

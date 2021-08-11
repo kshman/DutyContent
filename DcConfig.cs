@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 14;
+		public static int PluginTag => 15;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -107,16 +107,16 @@ namespace DutyContent
 			if (string.IsNullOrWhiteSpace(Language))
 			{
 				if (!is_in_init)
-					MesgLog.Initialize(Properties.Resources.DefaultMessage);
+					Locale.Initialize(Properties.Resources.DefaultMessage);
 			}
 			else
 			{
 				string filename = BuildLangFileName(Language);
 
 				if (File.Exists(filename))
-					MesgLog.LoadFile(filename);
+					Locale.LoadFile(filename);
 				else
-					MesgLog.Initialize(Properties.Resources.DefaultMessage);
+					Locale.Initialize(Properties.Resources.DefaultMessage);
 			}
 		}
 
@@ -139,7 +139,7 @@ namespace DutyContent
 
 					if (!File.Exists(filename))
 					{
-						MesgLog.E(27, " ");
+						Logger.E(27, " ");
 						return false;
 					}
 				}
@@ -150,8 +150,7 @@ namespace DutyContent
 
 			// load. if file not exist, create new one with default value
 			Packet.Load(filename);
-
-			MesgLog.I(29, Packet.Version, Packet.Description, filename);
+			Logger.Write(Packet.GetInformation());
 
 			return true;
 		}
@@ -207,6 +206,18 @@ namespace DutyContent
 					OpInstance = 0;
 					OpSouthernBozja = 0;
 				}
+			}
+
+			//
+			public string GetInformation()
+			{
+				return Locale.Text(29, Version, Description);
+			}
+
+			//
+			public override string ToString()
+			{
+				return GetInformation();
 			}
 
 			// 

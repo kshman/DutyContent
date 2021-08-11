@@ -30,6 +30,8 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.panel6 = new System.Windows.Forms.Panel();
+			this.lstPingAddress = new System.Windows.Forms.ListBox();
+			this.lblPingAddress = new System.Windows.Forms.Label();
 			this.cboPingDefAddr = new System.Windows.Forms.ComboBox();
 			this.lblPingDefAddr = new System.Windows.Forms.Label();
 			this.pbxPingGraph = new System.Windows.Forms.PictureBox();
@@ -46,8 +48,6 @@ namespace DutyContent.Tab
 			this.lblPingColors = new System.Windows.Forms.Label();
 			this.chkUsePing = new System.Windows.Forms.CheckBox();
 			this.panelDock = new System.Windows.Forms.Panel();
-			this.lblPingAddress = new System.Windows.Forms.Label();
-			this.lstPingAddress = new System.Windows.Forms.ListBox();
 			this.panel6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbxPingGraph)).BeginInit();
 			this.tlpnPingColors.SuspendLayout();
@@ -74,6 +74,29 @@ namespace DutyContent.Tab
 			this.panel6.Size = new System.Drawing.Size(776, 399);
 			this.panel6.TabIndex = 2;
 			// 
+			// lstPingAddress
+			// 
+			this.lstPingAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstPingAddress.FormattingEnabled = true;
+			this.lstPingAddress.Location = new System.Drawing.Point(129, 309);
+			this.lstPingAddress.Name = "lstPingAddress";
+			this.lstPingAddress.ScrollAlwaysVisible = true;
+			this.lstPingAddress.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.lstPingAddress.Size = new System.Drawing.Size(642, 82);
+			this.lstPingAddress.TabIndex = 17;
+			this.lstPingAddress.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LstPingAddress_MouseDoubleClick);
+			// 
+			// lblPingAddress
+			// 
+			this.lblPingAddress.AutoSize = true;
+			this.lblPingAddress.Location = new System.Drawing.Point(23, 315);
+			this.lblPingAddress.Name = "lblPingAddress";
+			this.lblPingAddress.Size = new System.Drawing.Size(25, 13);
+			this.lblPingAddress.TabIndex = 16;
+			this.lblPingAddress.Text = "409";
+			// 
 			// cboPingDefAddr
 			// 
 			this.cboPingDefAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -93,7 +116,7 @@ namespace DutyContent.Tab
 			this.lblPingDefAddr.Name = "lblPingDefAddr";
 			this.lblPingDefAddr.Size = new System.Drawing.Size(25, 13);
 			this.lblPingDefAddr.TabIndex = 14;
-			this.lblPingDefAddr.Text = "335";
+			this.lblPingDefAddr.Text = "408";
 			// 
 			// pbxPingGraph
 			// 
@@ -113,7 +136,7 @@ namespace DutyContent.Tab
 			this.chkPingGraph.Name = "chkPingGraph";
 			this.chkPingGraph.Size = new System.Drawing.Size(44, 17);
 			this.chkPingGraph.TabIndex = 12;
-			this.chkPingGraph.Text = "334";
+			this.chkPingGraph.Text = "407";
 			this.chkPingGraph.UseVisualStyleBackColor = true;
 			this.chkPingGraph.CheckedChanged += new System.EventHandler(this.ChkPingGraph_CheckedChanged);
 			// 
@@ -149,7 +172,7 @@ namespace DutyContent.Tab
 			this.lblPingStat1.Name = "lblPingStat1";
 			this.lblPingStat1.Size = new System.Drawing.Size(72, 22);
 			this.lblPingStat1.TabIndex = 6;
-			this.lblPingStat1.Text = "330";
+			this.lblPingStat1.Text = "403";
 			this.lblPingStat1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// btnPingColor4
@@ -193,7 +216,7 @@ namespace DutyContent.Tab
 			this.lblPingStat2.Name = "lblPingStat2";
 			this.lblPingStat2.Size = new System.Drawing.Size(72, 22);
 			this.lblPingStat2.TabIndex = 5;
-			this.lblPingStat2.Text = "331";
+			this.lblPingStat2.Text = "404";
 			this.lblPingStat2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// lblPingStat4
@@ -204,7 +227,7 @@ namespace DutyContent.Tab
 			this.lblPingStat4.Name = "lblPingStat4";
 			this.lblPingStat4.Size = new System.Drawing.Size(72, 22);
 			this.lblPingStat4.TabIndex = 3;
-			this.lblPingStat4.Text = "333";
+			this.lblPingStat4.Text = "406";
 			this.lblPingStat4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// btnPingColor1
@@ -226,7 +249,7 @@ namespace DutyContent.Tab
 			this.lblPingStat3.Name = "lblPingStat3";
 			this.lblPingStat3.Size = new System.Drawing.Size(72, 22);
 			this.lblPingStat3.TabIndex = 4;
-			this.lblPingStat3.Text = "332";
+			this.lblPingStat3.Text = "405";
 			this.lblPingStat3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// lblPingColors
@@ -236,7 +259,7 @@ namespace DutyContent.Tab
 			this.lblPingColors.Name = "lblPingColors";
 			this.lblPingColors.Size = new System.Drawing.Size(25, 13);
 			this.lblPingColors.TabIndex = 2;
-			this.lblPingColors.Text = "329";
+			this.lblPingColors.Text = "402";
 			// 
 			// chkUsePing
 			// 
@@ -246,7 +269,7 @@ namespace DutyContent.Tab
 			this.chkUsePing.Name = "chkUsePing";
 			this.chkUsePing.Size = new System.Drawing.Size(58, 24);
 			this.chkUsePing.TabIndex = 0;
-			this.chkUsePing.Text = "328";
+			this.chkUsePing.Text = "401";
 			this.chkUsePing.UseVisualStyleBackColor = true;
 			this.chkUsePing.CheckedChanged += new System.EventHandler(this.ChkUsePing_CheckedChanged);
 			// 
@@ -259,28 +282,6 @@ namespace DutyContent.Tab
 			this.panelDock.Name = "panelDock";
 			this.panelDock.Size = new System.Drawing.Size(800, 450);
 			this.panelDock.TabIndex = 3;
-			// 
-			// lblPingAddress
-			// 
-			this.lblPingAddress.AutoSize = true;
-			this.lblPingAddress.Location = new System.Drawing.Point(23, 315);
-			this.lblPingAddress.Name = "lblPingAddress";
-			this.lblPingAddress.Size = new System.Drawing.Size(25, 13);
-			this.lblPingAddress.TabIndex = 16;
-			this.lblPingAddress.Text = "343";
-			// 
-			// lstPingAddress
-			// 
-			this.lstPingAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstPingAddress.FormattingEnabled = true;
-			this.lstPingAddress.Location = new System.Drawing.Point(129, 309);
-			this.lstPingAddress.Name = "lstPingAddress";
-			this.lstPingAddress.ScrollAlwaysVisible = true;
-			this.lstPingAddress.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.lstPingAddress.Size = new System.Drawing.Size(642, 82);
-			this.lstPingAddress.TabIndex = 17;
 			// 
 			// PingForm
 			// 

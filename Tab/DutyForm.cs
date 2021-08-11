@@ -56,8 +56,6 @@ namespace DutyContent.Tab
 			RefreshDatasetList();
 			RefreshPacketList();
 
-			btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
-
 			//
 			chkEnableOverlay.Checked = DcConfig.Duty.EnableOverlay;
 
@@ -66,7 +64,7 @@ namespace DutyContent.Tab
 			chkOverlayClickThru.Checked = DcConfig.Duty.OverlayClickThru;
 
 			//
-			_overlay.SetText(MesgLog.Text(99, DcConfig.PluginVersion.ToString()));
+			_overlay.SetText(Locale.Text(99, DcConfig.PluginVersion.ToString()));
 			_overlay.Location = DcConfig.Duty.OverlayLocation;
 
 			if (DcConfig.Duty.EnableOverlay)
@@ -139,56 +137,50 @@ namespace DutyContent.Tab
 
 		public void UpdateUiLocale()
 		{
-			tabPageContent.Text = MesgLog.Text(301);
-			tabPageSetting.Text = MesgLog.Text(302);
-			tabPagePacket.Text = MesgLog.Text(337);
+			tabPageContent.Text = Locale.Text(301);
+			tabPageSetting.Text = Locale.Text(302);
+			tabPagePacket.Text = Locale.Text(337);
 
-			lblDataSet.Text = MesgLog.Text(304);
-			lblPacketSet.Text = MesgLog.Text(336);
-			lblLogFont.Text = MesgLog.Text(305);
+			lblDataSet.Text = Locale.Text(304);
+			lblPacketSet.Text = Locale.Text(336);
 
-			chkEnableOverlay.Text = MesgLog.Text(306);
-			lblOverlayTransparent.Text = MesgLog.Text(307);
-			chkOverlayClickThru.Text = MesgLog.Text(104);
+			chkEnableOverlay.Text = Locale.Text(306);
+			lblOverlayTransparent.Text = Locale.Text(307);
+			chkOverlayClickThru.Text = Locale.Text(104);
 
-			chkEnableSound.Text = MesgLog.Text(308);
-			lblSoundInstance.Text = MesgLog.Text(309);
-			lblSoundFate.Text = MesgLog.Text(310);
+			chkEnableSound.Text = Locale.Text(308);
+			lblSoundInstance.Text = Locale.Text(309);
+			lblSoundFate.Text = Locale.Text(310);
 
-			chkUseNotifyLine.Text = MesgLog.Text(311);
-			lblLineToken.Text = MesgLog.Text(312);
+			chkUseNotifyLine.Text = Locale.Text(311);
+			lblLineToken.Text = Locale.Text(312);
 
-			chkUseNotifyTelegram.Text = MesgLog.Text(313);
-			lblTelegramId.Text = MesgLog.Text(314);
-			lblTelegramToken.Text = MesgLog.Text(315);
+			chkUseNotifyTelegram.Text = Locale.Text(313);
+			lblTelegramId.Text = Locale.Text(314);
+			lblTelegramToken.Text = Locale.Text(315);
 
-			chkUseNotifyDiscowk.Text = MesgLog.Text(338);
-			chkDiscowkTts.Text = MesgLog.Text(341);
-			lblDiscowkUrl.Text = MesgLog.Text(339);
+			chkUseNotifyDiscowk.Text = Locale.Text(338);
+			chkDiscowkTts.Text = Locale.Text(341);
+			lblDiscowkUrl.Text = Locale.Text(339);
 
-			btnTestNotify.Text = MesgLog.Text(340);
+			btnTestNotify.Text = Locale.Text(340);
 
-			lblPacketFinder.Text = MesgLog.Text(316);
-			lblPacketDesc.Text = MesgLog.Text(317);
-			lblPacketBozja.Text = MesgLog.Text(318);
+			lblPacketFinder.Text = Locale.Text(316);
+			lblPacketDesc.Text = Locale.Text(317);
+			lblPacketBozja.Text = Locale.Text(318);
 
-			lstPacketInfo.Columns[0].Text = MesgLog.Text(319);
-			lstPacketInfo.Columns[1].Text = MesgLog.Text(320);
-			lstPacketInfo.Columns[2].Text = MesgLog.Text(321);
-			lstPacketInfo.Columns[3].Text = MesgLog.Text(322);
+			lstPacketInfo.Columns[0].Text = Locale.Text(319);
+			lstPacketInfo.Columns[1].Text = Locale.Text(320);
+			lstPacketInfo.Columns[2].Text = Locale.Text(321);
+			lstPacketInfo.Columns[3].Text = Locale.Text(322);
 
-			lstBozjaInfo.Columns[0].Text = MesgLog.Text(323);
-			lstBozjaInfo.Columns[1].Text = MesgLog.Text(324);
-			lstBozjaInfo.Columns[2].Text = MesgLog.Text(325);
-			lstBozjaInfo.Columns[3].Text = MesgLog.Text(326);
+			lstBozjaInfo.Columns[0].Text = Locale.Text(323);
+			lstBozjaInfo.Columns[1].Text = Locale.Text(324);
+			lstBozjaInfo.Columns[2].Text = Locale.Text(325);
+			lstBozjaInfo.Columns[3].Text = Locale.Text(326);
 
-			btnPacketStart.Text = MesgLog.Text(10007);
-			btnPacketApply.Text = MesgLog.Text(10009);
-
-			//
-			var logfont = new Font(DcConfig.Duty.LogFontFamily, DcConfig.Duty.LogFontSize, FontStyle.Regular);
-			txtContentLog.Font = logfont;
-			btnLogFont.Font = logfont;
+			btnPacketStart.Text = Locale.Text(10007);
+			btnPacketApply.Text = Locale.Text(10009);
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -272,7 +264,7 @@ namespace DutyContent.Tab
 					if (insts.Any())
 					{
 						LogInstance(10002, string.Join("/", insts.ToArray()));
-						_overlay.PlayQueue(MesgLog.Text(10006, $"#{insts.Count}"));
+						_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
 					}
 				}
 
@@ -301,7 +293,7 @@ namespace DutyContent.Tab
 				else
 				{
 					// ???
-					name = MesgLog.Text(10003, icode);
+					name = Locale.Text(10003, icode);
 				}
 
 				PlayEffecSoundInstance();
@@ -321,7 +313,7 @@ namespace DutyContent.Tab
 					var icode = BitConverter.ToUInt16(data, 0);
 					var instance = DcContent.GetInstance(icode);
 					LogInstance(10004, instance.Name);
-					_overlay.PlayMatch(MesgLog.Text(10004, instance.Name));
+					_overlay.PlayMatch(Locale.Text(10004, instance.Name));
 
 					DcContent.Missions.Clear();
 				}
@@ -409,38 +401,17 @@ namespace DutyContent.Tab
 		}
 
 		//
-		private void WriteLog(Color color, string category, string format, params object[] prms)
-		{
-			if (txtContentLog == null || txtContentLog.IsDisposed || format == null)
-				return;
-
-			var fmt = string.Format(format, prms);
-			var dt = DateTime.Now.ToString("HH:mm:ss");
-			var ms = $"[{dt}/{category}] {fmt}{Environment.NewLine}";
-
-			WorkerAct.Invoker(() =>
-			{
-				txtContentLog.SelectionColor = color;
-				txtContentLog.SelectionStart = txtContentLog.TextLength;
-				txtContentLog.SelectionLength = 0;
-				txtContentLog.AppendText(ms);
-
-				txtContentLog.SelectionColor = txtContentLog.ForeColor;
-				ThirdParty.NativeMethods.ScrollToBottom(txtContentLog);
-			});
-		}
-
 		private void WriteLog(Color color, int catkey, int fmtkey, params object[] prms)
 		{
-			string catergory = MesgLog.Text(catkey);
-			string format = MesgLog.Text(fmtkey);
-			WriteLog(color, catergory, format, prms);
+			string category = Locale.Text(catkey);
+			string format = Locale.Text(fmtkey);
+			Logger.WriteCategory(color, category, format, prms);
 		}
 
 		//
 		private void LogDebug(string msg, params object[] prms)
 		{
-			WriteLog(Color.Red, "Debug", msg, prms);
+			Logger.WriteCategory(Color.Red, "Debug", msg, prms);
 		}
 
 		//
@@ -581,34 +552,6 @@ namespace DutyContent.Tab
 					// check update and save
 					RemotePacketUpdate(n);
 				}
-			}
-		}
-
-		private void BtnLogFont_Click(object sender, EventArgs e)
-		{
-			Font ret = (Font)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
-			{
-				FontDialog dg = new FontDialog
-				{
-					Font = txtContentLog.Font,
-					FontMustExist = true,
-					AllowVerticalFonts = false
-				};
-
-				return (dg.ShowDialog() == DialogResult.OK) ? dg.Font : null;
-			}));
-
-			if (ret != null)
-			{
-				txtContentLog.Font = ret;
-
-				DcConfig.Duty.LogFontFamily = ret.Name;
-				DcConfig.Duty.LogFontSize = ret.Size;
-
-				SaveConfig();
-
-				btnLogFont.Font = ret;
-				btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
 			}
 		}
 
@@ -774,9 +717,9 @@ namespace DutyContent.Tab
 			{
 				var dg = new OpenFileDialog
 				{
-					Title = MesgLog.Text(101),
+					Title = Locale.Text(101),
 					DefaultExt = "wav",
-					Filter = MesgLog.Text(102)
+					Filter = Locale.Text(102)
 				};
 
 				return (dg.ShowDialog() == DialogResult.OK) ? dg.FileName : null;
@@ -816,7 +759,7 @@ namespace DutyContent.Tab
 			if (!DcConfig.PluginEnable)
 				return;
 
-			string s = MesgLog.Text(103);
+			string s = Locale.Text(103);
 
 			if (DcConfig.Duty.UseNotifyLine)
 				await NotifyUsingLine(s);
@@ -847,7 +790,7 @@ namespace DutyContent.Tab
 			if (!DcConfig.Duty.EnableNotify)
 				return;
 
-			string s = MesgLog.Text(10005, f.Name);
+			string s = Locale.Text(10005, f.Name);
 			SendNotify(s);
 		}
 
@@ -857,7 +800,7 @@ namespace DutyContent.Tab
 			if (!DcConfig.Duty.EnableNotify)
 				return;
 
-			string s = MesgLog.Text(10003, name);
+			string s = Locale.Text(10003, name);
 			SendNotify(s);
 		}
 
@@ -1070,7 +1013,7 @@ namespace DutyContent.Tab
 			{
 				if (!IsValidDiscwkUrl(txtDiscowkUrl.Text))
 				{
-					MesgLog.E(342);
+					Logger.E(342);
 					return;
 				}
 
@@ -1107,7 +1050,7 @@ namespace DutyContent.Tab
 
 			if (!IsValidDiscwkUrl(txtDiscowkUrl.Text))
 			{
-				MesgLog.E(342);
+				Logger.E(342);
 				return;
 			}
 
@@ -1133,12 +1076,12 @@ namespace DutyContent.Tab
 		{
 			if (!is_enable)
 			{
-				btnPacketStart.Text = MesgLog.Text(10007);
+				btnPacketStart.Text = Locale.Text(10007);
 				btnPacketStart.BackColor = Color.Transparent;
 			}
 			else
 			{
-				btnPacketStart.Text = MesgLog.Text(10008);
+				btnPacketStart.Text = Locale.Text(10008);
 				btnPacketStart.BackColor = Color.Salmon;
 			}
 
@@ -1200,7 +1143,7 @@ namespace DutyContent.Tab
 		{
 			var ret = (DialogResult)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
 				  {
-					  var r = MessageBox.Show(MesgLog.Text(10022), MesgLog.Text(0), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+					  var r = MessageBox.Show(Locale.Text(10022), Locale.Text(0), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 					  return r;
 				  }));
 
@@ -1237,7 +1180,7 @@ namespace DutyContent.Tab
 				default: m = 10015; break;
 			}
 
-			txtPacketInfo.Text = MesgLog.Text(m);
+			txtPacketInfo.Text = Locale.Text(m);
 		}
 
 		private void LstPacketInfo_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1272,7 +1215,7 @@ namespace DutyContent.Tab
 
 			if (v != int.MaxValue)
 			{
-				lstPacketInfo.SelectedItems[0].SubItems[2].Text = MesgLog.Text(10024);
+				lstPacketInfo.SelectedItems[0].SubItems[2].Text = Locale.Text(10024);
 				lstPacketInfo.SelectedItems[0].SubItems[3].Text = v.ToString();
 			}
 		}
@@ -1286,7 +1229,7 @@ namespace DutyContent.Tab
 
 			_new_packet.OpSouthernBozja = opcode;
 
-			lstPacketInfo.Items[4].SubItems[2].Text = MesgLog.Text(10023);
+			lstPacketInfo.Items[4].SubItems[2].Text = Locale.Text(10023);
 			lstPacketInfo.Items[4].SubItems[3].Text = _new_packet.OpSouthernBozja.ToString();
 		}
 
@@ -1365,7 +1308,7 @@ namespace DutyContent.Tab
 
 					WorkerAct.Invoker(() =>
 					{
-						lstPacketInfo.Items[0].SubItems[2].Text = MesgLog.Text(10016);
+						lstPacketInfo.Items[0].SubItems[2].Text = Locale.Text(10016);
 						lstPacketInfo.Items[0].SubItems[3].Text = _new_packet.OpFate.ToString();
 					});
 
@@ -1389,7 +1332,7 @@ namespace DutyContent.Tab
 
 						WorkerAct.Invoker(() =>
 						{
-							lstPacketInfo.Items[1].SubItems[2].Text = MesgLog.Text(10016);
+							lstPacketInfo.Items[1].SubItems[2].Text = Locale.Text(10016);
 							lstPacketInfo.Items[1].SubItems[3].Text = _new_packet.OpDuty.ToString();
 						});
 
@@ -1412,7 +1355,7 @@ namespace DutyContent.Tab
 
 						WorkerAct.Invoker(() =>
 						{
-							lstPacketInfo.Items[2].SubItems[2].Text = MesgLog.Text(10016);
+							lstPacketInfo.Items[2].SubItems[2].Text = Locale.Text(10016);
 							lstPacketInfo.Items[2].SubItems[3].Text = _new_packet.OpMatch.ToString();
 						});
 
@@ -1433,7 +1376,7 @@ namespace DutyContent.Tab
 
 					WorkerAct.Invoker(() =>
 					{
-						lstPacketInfo.Items[3].SubItems[2].Text = MesgLog.Text(10016);
+						lstPacketInfo.Items[3].SubItems[2].Text = Locale.Text(10016);
 						lstPacketInfo.Items[3].SubItems[3].Text = _new_packet.OpInstance.ToString();
 					});
 
@@ -1550,7 +1493,7 @@ namespace DutyContent.Tab
 					var nfn = DcConfig.BuildPacketFileName(name);
 					pk.Save(nfn);
 
-					MesgLog.I(33, pk.Version, pk.Description);
+					Logger.I(33, pk.Version, pk.Description);
 
 					//
 					_packet_list.Remove(name);

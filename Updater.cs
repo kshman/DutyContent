@@ -28,7 +28,7 @@ namespace DutyContent
 				}
 				catch (Exception ex)
 				{
-					MesgLog.Ex(ex, 31);
+					Logger.Ex(ex, 31);
 				}
 			});
 		}
@@ -44,7 +44,7 @@ namespace DutyContent
 			}
 			catch (Exception ex)
 			{
-				MesgLog.Ex(ex, 32);
+				Logger.Ex(ex, 32);
 
 				return null;
 			}

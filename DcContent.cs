@@ -72,6 +72,18 @@ namespace DutyContent
 		public static IReadOnlyDictionary<int, Fate> Fates { get; private set; } = new Dictionary<int, Fate>();
 		public static Dictionary<int, int> Missions { get; private set; } = new Dictionary<int, int>();
 
+		//
+		public static string GetInformation()
+		{
+			return Locale.Text(20,
+					Language,
+					Version,
+					Areas.Count,
+					Roulettes.Count,
+					Instances.Count,
+					Fates.Count);
+		}
+
 		// 
 		public static bool Initialize(string json)
 		{
@@ -116,12 +128,12 @@ namespace DutyContent
 						}
 						catch (NullReferenceException /*nex*/)
 						{
-							MesgLog.E(7, fate.Key);
+							Logger.E(7, fate.Key);
 							return false;
 						}
 						catch (Exception ex)
 						{
-							MesgLog.Ex(ex, 8);
+							Logger.Ex(ex, 8);
 							return false;
 						}
 					}
@@ -167,28 +179,28 @@ namespace DutyContent
 		public static Roulette GetRoulette(int code)
 		{
 			return Roulettes.TryGetValue(code, out Roulette roulette) ? roulette :
-				new Roulette { Name = MesgLog.Text(9, code) };
+				new Roulette { Name = Locale.Text(9, code) };
 		}
 
 		//
 		public static Instance GetInstance(int code)
 		{
 			return Instances.TryGetValue(code, out Instance instance) ? instance :
-				new Instance { Name = MesgLog.Text(10, code) };
+				new Instance { Name = Locale.Text(10, code) };
 		}
 
 		//
 		public static Area GetArea(int code)
 		{
 			return Areas.TryGetValue(code, out Area area) ? area :
-				new Area { Name = MesgLog.Text(11, code) };
+				new Area { Name = Locale.Text(11, code) };
 		}
 
 		//
 		public static Fate GetFate(int code)
 		{
 			return Fates.ContainsKey(code) ? Fates[code] :
-				new Fate { Name = MesgLog.Text(12, code) };
+				new Fate { Name = Locale.Text(12, code) };
 		}
 
 		//
@@ -207,7 +219,7 @@ namespace DutyContent
 
 				if (!File.Exists(filename))
 				{
-					MesgLog.E(14, filename);
+					Logger.E(14, filename);
 					return false;
 				}
 
@@ -217,22 +229,15 @@ namespace DutyContent
 
 			string json = File.ReadAllText(filename, Encoding.UTF8);
 
-			if (!Initialize(json))
+			if (Initialize(json))
 			{
-				MesgLog.E(13);
-				return false;
+				Logger.Write(GetInformation());
+				return true;
 			}
 			else
 			{
-				MesgLog.I(20,
-					Language,
-					Version,
-					Areas.Count,
-					Roulettes.Count,
-					Instances.Count,
-					Fates.Count,
-					filename);
-				return true;
+				Logger.E(13);
+				return false;
 			}
 		}
 
@@ -241,11 +246,11 @@ namespace DutyContent
 			// 10[1] status 0=end, 1=wait, 2=??, 3=progress
 			switch (s)
 			{
-				case 0: return MesgLog.Text(10017);
-				case 1: return MesgLog.Text(10018);
-				case 2: return MesgLog.Text(10019);
-				case 3: return MesgLog.Text(10020);
-				default: return MesgLog.Text(10021);
+				case 0: return Locale.Text(10017);
+				case 1: return Locale.Text(10018);
+				case 2: return Locale.Text(10019);
+				case 3: return Locale.Text(10020);
+				default: return Locale.Text(10021);
 			}
 		}
 

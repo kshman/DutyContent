@@ -65,7 +65,6 @@ namespace DutyContent.Tab
 			this.rdoFatePreset2 = new System.Windows.Forms.RadioButton();
 			this.rdoFatePreset1 = new System.Windows.Forms.RadioButton();
 			this.treeFates = new System.Windows.Forms.TreeView();
-			this.txtContentLog = new System.Windows.Forms.RichTextBox();
 			this.tabPageSetting = new System.Windows.Forms.TabPage();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.chkDiscowkTts = new System.Windows.Forms.CheckBox();
@@ -88,8 +87,6 @@ namespace DutyContent.Tab
 			this.lblCurrentDataSet = new System.Windows.Forms.Label();
 			this.cboDataset = new System.Windows.Forms.ComboBox();
 			this.lblDataSet = new System.Windows.Forms.Label();
-			this.btnLogFont = new System.Windows.Forms.Button();
-			this.lblLogFont = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.btnSoundPlayFate = new System.Windows.Forms.Button();
 			this.btnSoundPlayInstance = new System.Windows.Forms.Button();
@@ -127,6 +124,7 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
+			this.lstContents = new System.Windows.Forms.ListView();
 			this.tabContent.SuspendLayout();
 			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -184,7 +182,7 @@ namespace DutyContent.Tab
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.txtContentLog);
+			this.splitContainer1.Panel2.Controls.Add(this.lstContents);
 			this.splitContainer1.Size = new System.Drawing.Size(786, 493);
 			this.splitContainer1.SplitterDistance = 262;
 			this.splitContainer1.TabIndex = 0;
@@ -265,18 +263,6 @@ namespace DutyContent.Tab
 			this.treeFates.Size = new System.Drawing.Size(260, 464);
 			this.treeFates.TabIndex = 0;
 			this.treeFates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeFates_AfterCheck);
-			// 
-			// txtContentLog
-			// 
-			this.txtContentLog.BackColor = System.Drawing.Color.AliceBlue;
-			this.txtContentLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtContentLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtContentLog.Location = new System.Drawing.Point(0, 0);
-			this.txtContentLog.Name = "txtContentLog";
-			this.txtContentLog.ReadOnly = true;
-			this.txtContentLog.Size = new System.Drawing.Size(520, 493);
-			this.txtContentLog.TabIndex = 0;
-			this.txtContentLog.Text = "";
 			// 
 			// tabPageSetting
 			// 
@@ -475,8 +461,6 @@ namespace DutyContent.Tab
 			this.panel3.Controls.Add(this.lblCurrentDataSet);
 			this.panel3.Controls.Add(this.cboDataset);
 			this.panel3.Controls.Add(this.lblDataSet);
-			this.panel3.Controls.Add(this.btnLogFont);
-			this.panel3.Controls.Add(this.lblLogFont);
 			this.panel3.Location = new System.Drawing.Point(6, 6);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(778, 83);
@@ -530,26 +514,6 @@ namespace DutyContent.Tab
 			this.lblDataSet.Size = new System.Drawing.Size(39, 20);
 			this.lblDataSet.TabIndex = 10;
 			this.lblDataSet.Text = "304";
-			// 
-			// btnLogFont
-			// 
-			this.btnLogFont.Location = new System.Drawing.Point(427, 30);
-			this.btnLogFont.Name = "btnLogFont";
-			this.btnLogFont.Size = new System.Drawing.Size(273, 45);
-			this.btnLogFont.TabIndex = 3;
-			this.btnLogFont.Text = "--";
-			this.btnLogFont.UseVisualStyleBackColor = true;
-			this.btnLogFont.Click += new System.EventHandler(this.BtnLogFont_Click);
-			// 
-			// lblLogFont
-			// 
-			this.lblLogFont.AutoSize = true;
-			this.lblLogFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblLogFont.Location = new System.Drawing.Point(409, 7);
-			this.lblLogFont.Name = "lblLogFont";
-			this.lblLogFont.Size = new System.Drawing.Size(39, 20);
-			this.lblLogFont.TabIndex = 9;
-			this.lblLogFont.Text = "305";
 			// 
 			// panel2
 			// 
@@ -959,6 +923,17 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
 			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
 			// 
+			// lstContents
+			// 
+			this.lstContents.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstContents.HideSelection = false;
+			this.lstContents.Location = new System.Drawing.Point(0, 0);
+			this.lstContents.Name = "lstContents";
+			this.lstContents.Size = new System.Drawing.Size(520, 493);
+			this.lstContents.TabIndex = 0;
+			this.lstContents.UseCompatibleStateImageBehavior = false;
+			this.lstContents.View = System.Windows.Forms.View.Details;
+			// 
 			// DutyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1001,7 +976,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.ImageList ilTabContent;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TreeView treeFates;
-		private System.Windows.Forms.RichTextBox txtContentLog;
 		private System.Windows.Forms.RadioButton rdoFatePreset4;
 		private System.Windows.Forms.RadioButton rdoFatePreset3;
 		private System.Windows.Forms.RadioButton rdoFatePreset2;
@@ -1022,8 +996,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.Button btnSoundFindFate;
 		private System.Windows.Forms.Button btnSoundFindInstance;
 		private System.Windows.Forms.Panel panel3;
-		private System.Windows.Forms.Button btnLogFont;
-		private System.Windows.Forms.Label lblLogFont;
 		private System.Windows.Forms.ComboBox cboDataset;
 		private System.Windows.Forms.Label lblDataSet;
 		private System.Windows.Forms.Label lblCurrentDataSet;
@@ -1065,5 +1037,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.TextBox txtDiscowkUrl;
 		private System.Windows.Forms.CheckBox chkUseNotifyDiscowk;
 		private System.Windows.Forms.CheckBox chkDiscowkTts;
+		private System.Windows.Forms.ListView lstContents;
 	}
 }

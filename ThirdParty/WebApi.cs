@@ -33,8 +33,8 @@ namespace DutyContent
 			}
 			catch (Exception ex)
 			{
-				MesgLog.Ex(ex, 30);
-				MesgLog.L("URL: {0}", url);
+				Logger.Ex(ex, 30);
+				Logger.L("URL: {0}", url);
 			}
 
 			return null;

@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Threading;
 using System.Net.NetworkInformation;
-using DutyContent.Interface;
 using System.Net;
 
 namespace DutyContent.Tab
@@ -67,7 +61,7 @@ namespace DutyContent.Tab
 			catch
 			{
 				cboPingDefAddr.Items.Clear();
-				cboPingDefAddr.Items.Add(MesgLog.Text(27));
+				cboPingDefAddr.Items.Add(Locale.Text(27));
 				cboPingDefAddr.SelectedIndex = 0;
 			}
 
@@ -95,15 +89,15 @@ namespace DutyContent.Tab
 
 		public void UpdateUiLocale()
 		{
-			chkUsePing.Text = MesgLog.Text(328);
-			lblPingColors.Text = MesgLog.Text(329);
-			lblPingStat1.Text = MesgLog.Text(330);
-			lblPingStat2.Text = MesgLog.Text(331);
-			lblPingStat3.Text = MesgLog.Text(332);
-			lblPingStat4.Text = MesgLog.Text(333);
-			chkPingGraph.Text = MesgLog.Text(334);
-			lblPingDefAddr.Text = MesgLog.Text(335);
-			lblPingAddress.Text = MesgLog.Text(343);
+			chkUsePing.Text = Locale.Text(401);
+			lblPingColors.Text = Locale.Text(402);
+			lblPingStat1.Text = Locale.Text(403);
+			lblPingStat2.Text = Locale.Text(404);
+			lblPingStat3.Text = Locale.Text(405);
+			lblPingStat4.Text = Locale.Text(406);
+			chkPingGraph.Text = Locale.Text(407);
+			lblPingDefAddr.Text = Locale.Text(408);
+			lblPingAddress.Text = Locale.Text(409);
 		}
 
 		private void SaveConfig(int interval = 5000)
@@ -208,6 +202,15 @@ namespace DutyContent.Tab
 			SaveConfig();
 		}
 
+		private void LstPingAddress_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (lstPingAddress.SelectedIndices.Count != 1)
+				return;
+
+			var s = lstPingAddress.SelectedItem as string;
+			Clipboard.SetText(s);
+		}
+
 		//
 		private void PingOnce(bool check_plugin_enable = true)
 		{
@@ -305,17 +308,17 @@ namespace DutyContent.Tab
 			}
 			else
 			{
-				bool havetoupdate = false;
+				bool have_to_update_addrs = false;
 
 				if (lstPingAddress.Items.Count == 0)
-					havetoupdate = true;
+					have_to_update_addrs = true;
 				else
 				{
 					var i = lstPingAddress.Items[0] as string;
-					havetoupdate = !addrs.Contains(i);
+					have_to_update_addrs = !addrs.Contains(i);
 				}
 
-				if (havetoupdate)
+				if (have_to_update_addrs)
 				{
 					WorkerAct.Invoker(() =>
 					{
@@ -333,10 +336,10 @@ namespace DutyContent.Tab
 
 		private static readonly PingOptions _ping_options = new PingOptions { DontFragment = true };
 		private static readonly byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
-		private static readonly int _ping_timerout = 120;
+		private static readonly int _ping_timeout = 120;
 
 		//
-		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 6)
+		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 5)
 		{
 			var ps = new Ping();
 
@@ -345,7 +348,7 @@ namespace DutyContent.Tab
 
 			for (var i = 0; i < amount; i++)
 			{
-				PingReply pr = ps.Send(host, _ping_timerout, _ping_buffers, _ping_options);
+				PingReply pr = ps.Send(host, _ping_timeout, _ping_buffers, _ping_options);
 
 				if (pr.Status != IPStatus.Success)
 					failed++;
@@ -354,7 +357,9 @@ namespace DutyContent.Tab
 					rtt = pr.RoundtripTime;
 			}
 
-			double loss = (failed / amount) * 100;
+			//Logger.Write("핑: {0} / {1}", failed, amount);
+
+			double loss = failed == 0 ? 0 : (double)failed / amount * 100.0;
 
 			return (rtt, loss);
 		}
