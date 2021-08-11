@@ -99,6 +99,7 @@ LANG=English
 340=Test && Save Notifies
 341=Use TTS
 342=Invalid discord webhook URL
+343=Address
 
 10001="{0}" spawned!
 10002=Entry: {0}
