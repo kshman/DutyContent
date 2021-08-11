@@ -90,7 +90,7 @@ namespace DutyContent.Tab
 
 		public void RefreshLocale()
 		{
-			
+
 		}
 
 		public void UpdateUiLocale()
@@ -103,6 +103,7 @@ namespace DutyContent.Tab
 			lblPingStat4.Text = MesgLog.Text(333);
 			chkPingGraph.Text = MesgLog.Text(334);
 			lblPingDefAddr.Text = MesgLog.Text(335);
+			lblPingAddress.Text = MesgLog.Text(343);
 		}
 
 		private void SaveConfig(int interval = 5000)
@@ -220,10 +221,14 @@ namespace DutyContent.Tab
 			long rtt = 0;
 			double loss = 0;
 
+			List<string> addrs = new List<string>();
+
 			if (conns.Length > 0)
 			{
 				foreach (var row in conns)
 				{
+					addrs.Add(row.RemoteAddress.ToString());
+
 					var (r, l) = CalcPing(row.RemoteAddress);
 
 					if (rtt < r)
@@ -240,6 +245,8 @@ namespace DutyContent.Tab
 					Overlay.DutyOvForm.Self?.ResetStat();
 					return;
 				}
+
+				addrs.Add(DcConfig.Duty.PingDefAddr);
 
 				var defip = ThirdParty.Converter.ToIPAddressFromIPV4(DcConfig.Duty.PingDefAddr);
 
@@ -288,6 +295,37 @@ namespace DutyContent.Tab
 				_grpr.Enter();
 				_grpr.DrawValues(_kepts);
 				WorkerAct.Invoker(() => _grpr.Leave());
+			}
+
+			// 
+			if (addrs.Count == 0)
+			{
+				if (lstPingAddress.Items.Count != 0)
+					lstPingAddress.Items.Clear();
+			}
+			else
+			{
+				bool havetoupdate = false;
+
+				if (lstPingAddress.Items.Count == 0)
+					havetoupdate = true;
+				else
+				{
+					var i = lstPingAddress.Items[0] as string;
+					havetoupdate = !addrs.Contains(i);
+				}
+
+				if (havetoupdate)
+				{
+					WorkerAct.Invoker(() =>
+					{
+						lstPingAddress.BeginUpdate();
+						lstPingAddress.Items.Clear();
+						foreach (var i in addrs)
+							lstPingAddress.Items.Add(i);
+						lstPingAddress.EndUpdate();
+					});
+				}
 			}
 		}
 
