@@ -31,6 +31,8 @@ LANG=English
 32=Error while updating packet info
 33=Packet updated: {0} "{1}"
 34={0} ({1})
+35=Access clipboard failed!
+36=Window control error!
 
 99=DutyContent Plugin {0}
 

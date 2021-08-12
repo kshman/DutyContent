@@ -33,6 +33,7 @@ namespace DutyContent
 		public static int LastUpdatedPlugin { get; set; } = 0;
 		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
 		public static bool StatusBar { get; set; } = false;
+		public static bool DebugEnable { get; set; } = false;
 
 		//
 		public static string BuildDataFileName(string header, string context, string ext)
@@ -75,6 +76,7 @@ namespace DutyContent
 				sw.WriteLine("LastUpdatedPlugin={0}", LastUpdatedPlugin);
 				sw.WriteLine("UiFontFamily={0}", UiFontFamily);
 				sw.WriteLine("StatusBar={0}", StatusBar);
+				sw.WriteLine("DebugEnable={0}", DebugEnable);
 				sw.WriteLine();
 
 				Duty.InternalSaveStream(sw);
@@ -97,6 +99,7 @@ namespace DutyContent
 			LastUpdatedPlugin = ThirdParty.Converter.ToInt(db["LastUpdatedPlugin"]);
 			UiFontFamily = db.Get("UiFontFamily", UiFontFamily);
 			StatusBar = ThirdParty.Converter.ToBool(db["StatusBar"], StatusBar);
+			DebugEnable = ThirdParty.Converter.ToBool(db["DebugEnable"], DebugEnable);
 
 			Duty.InternalReadFromDb(db);
 		}

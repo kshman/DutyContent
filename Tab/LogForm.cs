@@ -43,12 +43,36 @@ namespace DutyContent.Tab
 
 		private void BtnLogCopy_Click(object sender, EventArgs e)
 		{
-			txtLogText.Copy();
+			try
+			{
+				if (txtLogText.SelectionLength != 0)
+					txtLogText.Copy();
+				else
+				{
+					txtLogText.SelectAll();
+
+					txtLogText.Copy();
+
+					txtLogText.SelectionStart = txtLogText.TextLength;
+					txtLogText.SelectionLength = 0;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.Ex(ex, 35);
+			}
 		}
 
 		private void BtnLogClear_Click(object sender, EventArgs e)
 		{
-			txtLogText.Clear();
+			try
+			{
+				txtLogText.Clear();
+			}
+			catch (Exception ex)
+			{
+				Logger.Ex(ex, 36);
+			}
 		}
 
 		private void InvokeLog(Color color, string mesg)

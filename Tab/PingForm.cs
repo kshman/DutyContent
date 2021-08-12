@@ -21,6 +21,12 @@ namespace DutyContent.Tab
 		private Libre.PingGrapher _grpr;
 		private List<int> _kepts = new List<int> { 0, 0 };
 
+		//
+		private const int PingInterval = 5000;
+		private const int PingAmount = 5;
+		private const int PingTimeout = PingInterval / (PingAmount + 1);
+
+		//
 		public PingForm()
 		{
 			_self = this;
@@ -66,7 +72,7 @@ namespace DutyContent.Tab
 			}
 
 			//
-			_timer = new System.Timers.Timer() { Interval = 5000 };
+			_timer = new System.Timers.Timer() { Interval = PingInterval };
 			_timer.Elapsed += (sender, e) => PingOnce();
 
 			if (DcConfig.Duty.UsePing)
@@ -232,7 +238,7 @@ namespace DutyContent.Tab
 				{
 					addrs.Add(row.RemoteAddress.ToString());
 
-					var (r, l) = CalcPing(row.RemoteAddress);
+					var (r, l) = CalcPing(row.RemoteAddress, PingTimeout, PingAmount);
 
 					if (rtt < r)
 						rtt = r;
@@ -259,7 +265,7 @@ namespace DutyContent.Tab
 					return;
 				}
 
-				var (r, l) = CalcPing(defip);
+				var (r, l) = CalcPing(defip, PingTimeout, PingAmount);
 
 				if (rtt < r)
 					rtt = r;
@@ -336,10 +342,9 @@ namespace DutyContent.Tab
 
 		private static readonly PingOptions _ping_options = new PingOptions { DontFragment = true };
 		private static readonly byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
-		private static readonly int _ping_timeout = 120;
 
 		//
-		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 5)
+		private (long Rtt, double Loss) CalcPing(IPAddress host, int timeout, int amount)
 		{
 			var ps = new Ping();
 
@@ -348,16 +353,23 @@ namespace DutyContent.Tab
 
 			for (var i = 0; i < amount; i++)
 			{
-				PingReply pr = ps.Send(host, _ping_timeout, _ping_buffers, _ping_options);
+				PingReply pr = ps.Send(host, timeout, _ping_buffers, _ping_options);
 
 				if (pr.Status != IPStatus.Success)
+				{
 					failed++;
+
+					if (DcConfig.DebugEnable)
+					{
+						Logger.WriteCategory(Color.Red, "Ping", "failed status: {0}, timeout: {1}, at: {2}/{3}", pr.Status, timeout, i + 1, amount);
+					}
+				}
 
 				if (rtt < pr.RoundtripTime)
 					rtt = pr.RoundtripTime;
 			}
 
-			//Logger.Write("핑: {0} / {1}", failed, amount);
+			//Logger.Write("Ping: {0} / {1}", failed, amount);
 
 			double loss = failed == 0 ? 0 : (double)failed / amount * 100.0;
 

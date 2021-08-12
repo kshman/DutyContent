@@ -59,6 +59,10 @@ namespace DutyContent.Tab
 			//
 			rdoStatusBarEnable.Checked = DcConfig.StatusBar;
 			rdoStatusBarDisable.Checked = !DcConfig.StatusBar;
+
+			//
+			rdoDebugEnable.Checked = DcConfig.DebugEnable;
+			rdoDebugDisable.Checked = !DcConfig.DebugEnable;
 		}
 
 		public void RefreshLocale()
@@ -86,6 +90,10 @@ namespace DutyContent.Tab
 			rdoStatusBarEnable.Text = Locale.Text(213);
 			rdoStatusBarDisable.Text = Locale.Text(214);
 			lblStatusBarNeedRestart.Text = Locale.Text(215);
+
+
+			rdoDebugEnable.Text = Locale.Text(213);
+			rdoDebugDisable.Text = Locale.Text(214);
 		}
 
 		public static List<string> MakeConfigLangList()
@@ -236,6 +244,30 @@ namespace DutyContent.Tab
 		private void RdoStatusBarDisable_CheckedChanged(object sender, EventArgs e)
 		{
 			InternalStatusBar(false);
+		}
+
+		private void InternalDebug(bool value)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (value && DcConfig.DebugEnable)
+				return;
+			if (!value && !DcConfig.DebugEnable)
+				return;
+
+			DcConfig.DebugEnable = value;
+			DcConfig.SaveConfig();
+		}
+
+		private void rdoDebugEnable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalDebug(true);
+		}
+
+		private void rdoDebugDisable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalDebug(false);
 		}
 	}
 }

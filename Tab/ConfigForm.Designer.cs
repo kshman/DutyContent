@@ -48,10 +48,15 @@ namespace DutyContent.Tab
 			this.cboDispLang = new System.Windows.Forms.ComboBox();
 			this.lblDispLang = new System.Windows.Forms.Label();
 			this.panelBase = new System.Windows.Forms.Panel();
+			this.lblUseDebug = new System.Windows.Forms.Label();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.rdoDebugEnable = new System.Windows.Forms.RadioButton();
+			this.rdoDebugDisable = new System.Windows.Forms.RadioButton();
 			this.pnlBase.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panelBase.SuspendLayout();
+			this.panel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pnlBase
@@ -60,6 +65,8 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlBase.AutoScroll = true;
 			this.pnlBase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlBase.Controls.Add(this.panel3);
+			this.pnlBase.Controls.Add(this.lblUseDebug);
 			this.pnlBase.Controls.Add(this.btnLogFont);
 			this.pnlBase.Controls.Add(this.lblLogFont);
 			this.pnlBase.Controls.Add(this.panel2);
@@ -74,7 +81,7 @@ namespace DutyContent.Tab
 			this.pnlBase.Controls.Add(this.lblDispLang);
 			this.pnlBase.Location = new System.Drawing.Point(12, 12);
 			this.pnlBase.Name = "pnlBase";
-			this.pnlBase.Size = new System.Drawing.Size(776, 322);
+			this.pnlBase.Size = new System.Drawing.Size(776, 397);
 			this.pnlBase.TabIndex = 0;
 			// 
 			// btnLogFont
@@ -265,6 +272,51 @@ namespace DutyContent.Tab
 			this.panelBase.Size = new System.Drawing.Size(800, 450);
 			this.panelBase.TabIndex = 1;
 			// 
+			// lblUseDebug
+			// 
+			this.lblUseDebug.AutoSize = true;
+			this.lblUseDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblUseDebug.Location = new System.Drawing.Point(12, 358);
+			this.lblUseDebug.Name = "lblUseDebug";
+			this.lblUseDebug.Size = new System.Drawing.Size(96, 20);
+			this.lblUseDebug.TabIndex = 18;
+			this.lblUseDebug.Text = "Use debug";
+			// 
+			// panel3
+			// 
+			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel3.Controls.Add(this.rdoDebugDisable);
+			this.panel3.Controls.Add(this.rdoDebugEnable);
+			this.panel3.Location = new System.Drawing.Point(251, 351);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(520, 38);
+			this.panel3.TabIndex = 19;
+			// 
+			// rdoDebugEnable
+			// 
+			this.rdoDebugEnable.AutoSize = true;
+			this.rdoDebugEnable.Location = new System.Drawing.Point(3, 10);
+			this.rdoDebugEnable.Name = "rdoDebugEnable";
+			this.rdoDebugEnable.Size = new System.Drawing.Size(43, 17);
+			this.rdoDebugEnable.TabIndex = 0;
+			this.rdoDebugEnable.Text = "213";
+			this.rdoDebugEnable.UseVisualStyleBackColor = true;
+			this.rdoDebugEnable.CheckedChanged += new System.EventHandler(this.rdoDebugEnable_CheckedChanged);
+			// 
+			// rdoDebugDisable
+			// 
+			this.rdoDebugDisable.AutoSize = true;
+			this.rdoDebugDisable.Checked = true;
+			this.rdoDebugDisable.Location = new System.Drawing.Point(105, 10);
+			this.rdoDebugDisable.Name = "rdoDebugDisable";
+			this.rdoDebugDisable.Size = new System.Drawing.Size(43, 17);
+			this.rdoDebugDisable.TabIndex = 1;
+			this.rdoDebugDisable.TabStop = true;
+			this.rdoDebugDisable.Text = "214";
+			this.rdoDebugDisable.UseVisualStyleBackColor = true;
+			this.rdoDebugDisable.CheckedChanged += new System.EventHandler(this.rdoDebugDisable_CheckedChanged);
+			// 
 			// ConfigForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,6 +333,8 @@ namespace DutyContent.Tab
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panelBase.ResumeLayout(false);
+			this.panel3.ResumeLayout(false);
+			this.panel3.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -306,5 +360,9 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.Label lblStatusBarNeedRestart;
 		private System.Windows.Forms.Button btnLogFont;
 		private System.Windows.Forms.Label lblLogFont;
+		private System.Windows.Forms.Panel panel3;
+		private System.Windows.Forms.RadioButton rdoDebugDisable;
+		private System.Windows.Forms.RadioButton rdoDebugEnable;
+		private System.Windows.Forms.Label lblUseDebug;
 	}
 }
