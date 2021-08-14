@@ -525,29 +525,32 @@ namespace DutyContent.Tab
 			if (withlog)
 				WriteLog(Color.Black, key, 10001, fate.Name);
 
-			lock (_lock_contents)
+			WorkerAct.Invoker(() =>
 			{
-				var sc = code.ToString();
-				var i = UnsafeFindContent(sc, out int nth);
-
-				if (i == null && progress >= 0)
+				lock (_lock_contents)
 				{
-					var li = new ThirdParty.EXListViewItem(sc);
-					var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[subs], "");
+					var sc = code.ToString();
+					var i = UnsafeFindContent(sc, out int nth);
 
-					li.SubItems.Add(si);
-					li.SubItems.Add(progress.ToString());
-					li.SubItems.Add(fate.Name);
-					lstContents.Items.Add(li);
+					if (i == null && progress >= 0)
+					{
+						var li = new ThirdParty.EXListViewItem(sc);
+						var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[subs], "");
+
+						li.SubItems.Add(si);
+						li.SubItems.Add(progress.ToString());
+						li.SubItems.Add(fate.Name);
+						lstContents.Items.Add(li);
+					}
+					else
+					{
+						if (progress >= 0)
+							i.SubItems[2].Text = progress.ToString();
+						else if (nth >= 0)
+							lstContents.Items.RemoveAt(nth);
+					}
 				}
-				else
-				{
-					if (progress >= 0)
-						i.SubItems[2].Text = progress.ToString();
-					else if (nth >= 0)
-						lstContents.Items.RemoveAt(nth);
-				}
-			}
+			});			
 		}
 
 		//
@@ -556,51 +559,57 @@ namespace DutyContent.Tab
 			if (withlog)
 				WriteLog(Color.Black, 25, 10001, fate.Name);
 
-			lock (_lock_contents)
+			WorkerAct.Invoker(() =>
 			{
-				var sc = code.ToString();
-				var i = UnsafeFindContent(sc, out int nth);
-
-				if (i == null && progress != null)
+				lock (_lock_contents)
 				{
-					var li = new ThirdParty.EXListViewItem(sc);
-					var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[5], "");
+					var sc = code.ToString();
+					var i = UnsafeFindContent(sc, out int nth);
 
-					li.SubItems.Add(si);
-					li.SubItems.Add(progress.ToString());
-					li.SubItems.Add(fate.Name);
-					lstContents.Items.Add(li);
-				}
-				else
-				{
-					if (progress == null)
-						lstContents.Items.RemoveAt(nth);
+					if (i == null && progress != null)
+					{
+						var li = new ThirdParty.EXListViewItem(sc);
+						var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[5], "");
+
+						li.SubItems.Add(si);
+						li.SubItems.Add(progress.ToString());
+						li.SubItems.Add(fate.Name);
+						lstContents.Items.Add(li);
+					}
 					else
-						i.SubItems[2].Text = progress;
+					{
+						if (progress == null)
+							lstContents.Items.RemoveAt(nth);
+						else
+							i.SubItems[2].Text = progress;
+					}
 				}
-			}
+			});
 		}
 
 		//
 		private void UpdateTraceInstance(string insname, int count, int imageindex)
 		{
-			lock (_lock_contents)
+			WorkerAct.Invoker(() =>
 			{
-				if (lstContents.Items.Count > 0)
+				lock (_lock_contents)
 				{
-					//lstContents.BeginUpdate();
+					if (lstContents.Items.Count > 0)
+					{
+						//lstContents.BeginUpdate();
 
-					var li = lstContents.Items[0];
+						var li = lstContents.Items[0];
 
-					var si = li.SubItems[1] as ThirdParty.EXImageListViewSubItem;
-					si.MyImage = _ilCategory.Images[imageindex];
+						var si = li.SubItems[1] as ThirdParty.EXImageListViewSubItem;
+						si.MyImage = _ilCategory.Images[imageindex];
 
-					li.SubItems[2].Text = count == 0 ? string.Empty : count.ToString();
-					li.SubItems[3].Text = insname;
+						li.SubItems[2].Text = count == 0 ? string.Empty : count.ToString();
+						li.SubItems[3].Text = insname;
 
-					//lstContents.EndUpdate();
+						//lstContents.EndUpdate();
+					}
 				}
-			}
+			});
 		}
 
 		//
@@ -1774,15 +1783,18 @@ namespace DutyContent.Tab
 
 		private void ResetContents()
 		{
-			lock (_lock_contents)
+			WorkerAct.Invoker(() =>
 			{
-				lstContents.BeginUpdate();
+				lock (_lock_contents)
+				{
+					lstContents.BeginUpdate();
 
-				for (var i = lstContents.Items.Count - 1; i > 0; i--)
-					lstContents.Items.RemoveAt(1);
+					for (var i = lstContents.Items.Count - 1; i > 0; i--)
+						lstContents.Items.RemoveAt(1);
 
-				lstContents.EndUpdate();
-			}
+					lstContents.EndUpdate();
+				}
+			});
 		}
 
 		private ListViewItem UnsafeFindContent(string code, out int nth)
@@ -1803,22 +1815,6 @@ namespace DutyContent.Tab
 			}
 
 			return null;
-		}
-
-		private void RemoveContent(string code)
-		{
-			if (lstContents.Items.Count <= 1)
-				return;
-
-			for (var i = 1; i < lstContents.Items.Count; i++)
-			{
-				var v = lstContents.Items[i];
-				if (v.Text.Equals(code))
-				{
-					lstContents.Items.RemoveAt(i);
-					break;
-				}
-			}
 		}
 	}
 }

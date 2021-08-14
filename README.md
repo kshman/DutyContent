@@ -4,6 +4,6 @@
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 ## New test version
-[Download Release 15 ](https://github.com/kshman/DutyContent/releases/tag/15)
+[Download Release 16 ](https://github.com/kshman/DutyContent/releases/tag/16)
 Please try & test new pre-release version!!! 🤗
 
