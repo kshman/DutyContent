@@ -198,6 +198,8 @@ namespace DutyContent
 			Tab.DutyForm.Self?.PluginInitialize();
 			Tab.PingForm.Self?.PluginInitialize();
 
+			tabMain.SelectedTab = tabPageDuty;
+
 			// 
 			if (DcConfig.DataRemoteUpdate)
 			{
