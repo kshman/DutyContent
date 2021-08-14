@@ -30,10 +30,10 @@ namespace DutyContent
 		private void InitializeComponent()
 		{
 			this.tabMain = new System.Windows.Forms.TabControl();
+			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.tabPageDuty = new System.Windows.Forms.TabPage();
 			this.tabPagePing = new System.Windows.Forms.TabPage();
 			this.tabPageConfig = new System.Windows.Forms.TabPage();
-			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.panelBase = new System.Windows.Forms.Panel();
 			this.lblStatusLeft = new System.Windows.Forms.Label();
 			this.tabMain.SuspendLayout();
@@ -51,31 +51,45 @@ namespace DutyContent
 			this.tabMain.Controls.Add(this.tabPagePing);
 			this.tabMain.Controls.Add(this.tabPageConfig);
 			this.tabMain.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+			this.tabMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabMain.ItemSize = new System.Drawing.Size(30, 100);
 			this.tabMain.Location = new System.Drawing.Point(0, 0);
+			this.tabMain.Margin = new System.Windows.Forms.Padding(4);
 			this.tabMain.Multiline = true;
 			this.tabMain.Name = "tabMain";
 			this.tabMain.SelectedIndex = 0;
-			this.tabMain.Size = new System.Drawing.Size(792, 537);
+			this.tabMain.Size = new System.Drawing.Size(820, 465);
 			this.tabMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabMain.TabIndex = 0;
 			this.tabMain.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabMain_DrawItem);
+			// 
+			// tabPageLog
+			// 
+			this.tabPageLog.Location = new System.Drawing.Point(104, 4);
+			this.tabPageLog.Margin = new System.Windows.Forms.Padding(4);
+			this.tabPageLog.Name = "tabPageLog";
+			this.tabPageLog.Size = new System.Drawing.Size(712, 457);
+			this.tabPageLog.TabIndex = 3;
+			this.tabPageLog.Text = "Log";
+			this.tabPageLog.UseVisualStyleBackColor = true;
 			// 
 			// tabPageDuty
 			// 
 			this.tabPageDuty.BackColor = System.Drawing.Color.Transparent;
 			this.tabPageDuty.Location = new System.Drawing.Point(104, 4);
+			this.tabPageDuty.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageDuty.Name = "tabPageDuty";
-			this.tabPageDuty.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageDuty.Size = new System.Drawing.Size(684, 529);
+			this.tabPageDuty.Padding = new System.Windows.Forms.Padding(4);
+			this.tabPageDuty.Size = new System.Drawing.Size(712, 441);
 			this.tabPageDuty.TabIndex = 0;
 			this.tabPageDuty.Text = "Duty";
 			// 
 			// tabPagePing
 			// 
 			this.tabPagePing.Location = new System.Drawing.Point(104, 4);
+			this.tabPagePing.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPagePing.Name = "tabPagePing";
-			this.tabPagePing.Size = new System.Drawing.Size(684, 529);
+			this.tabPagePing.Size = new System.Drawing.Size(712, 441);
 			this.tabPagePing.TabIndex = 2;
 			this.tabPagePing.Text = "Ping";
 			this.tabPagePing.UseVisualStyleBackColor = true;
@@ -83,21 +97,13 @@ namespace DutyContent
 			// tabPageConfig
 			// 
 			this.tabPageConfig.Location = new System.Drawing.Point(104, 4);
+			this.tabPageConfig.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageConfig.Name = "tabPageConfig";
-			this.tabPageConfig.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConfig.Size = new System.Drawing.Size(684, 529);
+			this.tabPageConfig.Padding = new System.Windows.Forms.Padding(4);
+			this.tabPageConfig.Size = new System.Drawing.Size(712, 441);
 			this.tabPageConfig.TabIndex = 1;
 			this.tabPageConfig.Text = "Config";
 			this.tabPageConfig.UseVisualStyleBackColor = true;
-			// 
-			// tabPageLog
-			// 
-			this.tabPageLog.Location = new System.Drawing.Point(104, 4);
-			this.tabPageLog.Name = "tabPageLog";
-			this.tabPageLog.Size = new System.Drawing.Size(684, 529);
-			this.tabPageLog.TabIndex = 3;
-			this.tabPageLog.Text = "Log";
-			this.tabPageLog.UseVisualStyleBackColor = true;
 			// 
 			// panelBase
 			// 
@@ -105,8 +111,9 @@ namespace DutyContent
 			this.panelBase.Controls.Add(this.lblStatusLeft);
 			this.panelBase.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelBase.Location = new System.Drawing.Point(0, 0);
+			this.panelBase.Margin = new System.Windows.Forms.Padding(4);
 			this.panelBase.Name = "panelBase";
-			this.panelBase.Size = new System.Drawing.Size(792, 567);
+			this.panelBase.Size = new System.Drawing.Size(820, 490);
 			this.panelBase.TabIndex = 1;
 			// 
 			// lblStatusLeft
@@ -116,9 +123,10 @@ namespace DutyContent
 			this.lblStatusLeft.BackColor = System.Drawing.Color.MidnightBlue;
 			this.lblStatusLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblStatusLeft.ForeColor = System.Drawing.Color.White;
-			this.lblStatusLeft.Location = new System.Drawing.Point(0, 540);
+			this.lblStatusLeft.Location = new System.Drawing.Point(0, 462);
+			this.lblStatusLeft.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblStatusLeft.Name = "lblStatusLeft";
-			this.lblStatusLeft.Size = new System.Drawing.Size(792, 27);
+			this.lblStatusLeft.Size = new System.Drawing.Size(820, 28);
 			this.lblStatusLeft.TabIndex = 1;
 			this.lblStatusLeft.Text = "99";
 			this.lblStatusLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -126,11 +134,13 @@ namespace DutyContent
 			// 
 			// DcControl
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panelBase);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "DcControl";
-			this.Size = new System.Drawing.Size(792, 567);
+			this.Size = new System.Drawing.Size(820, 490);
 			this.tabMain.ResumeLayout(false);
 			this.panelBase.ResumeLayout(false);
 			this.ResumeLayout(false);

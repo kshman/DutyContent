@@ -256,7 +256,7 @@ namespace DutyContent
 
 			if (tabMain.SelectedIndex == e.Index)
 			{
-				f = new Font(tabMain.Font.FontFamily, 12.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+				f = new Font(tabMain.Font.FontFamily, 14.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 #if false
 				b = new SolidBrush(Color.Black);
 				h = SystemBrushes.Window;
@@ -268,7 +268,7 @@ namespace DutyContent
 			//else if (p.col)
 			else
 			{
-				f = new Font(tabMain.Font.FontFamily, 12.0f, FontStyle.Regular, GraphicsUnit.Pixel);
+				f = new Font(tabMain.Font.FontFamily, 14.0f, FontStyle.Regular, GraphicsUnit.Pixel);
 				b = new SolidBrush(Color.DarkSlateGray);
 				h = SystemBrushes.Control;
 			}
@@ -322,7 +322,7 @@ namespace DutyContent
 				if (span.TotalSeconds > 2)
 				{
 					_game_connection_tick = now;
-					DcConfig.Connections.GetConnections(_game_process.Process);
+					DcConfig.Connections.BuildConnections(_game_process.Process);
 				}
 			}
 

@@ -56,7 +56,7 @@ LANG=English
 212=Status bar
 213=Enable
 214=Disable
-215=* Need restart plugin
+215=* Need plugin reload
 216=Log font
 
 300=Duty
@@ -101,8 +101,11 @@ LANG=English
 405=Normal
 406=Bad
 407=Show Graph
-408=Addresses when client doesn't have connections
+408=Default ping addresses
 409=Address
+410=Graph type
+411=Linear
+412=Curved
 
 500=Log
 501=Copy

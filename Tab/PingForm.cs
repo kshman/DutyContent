@@ -17,7 +17,9 @@ namespace DutyContent.Tab
 		//
 		private System.Timers.Timer _timer;
 		private long _last_ping;
+
 		private Color _color = Color.Transparent;
+
 		private Libre.PingGrapher _grpr;
 		private List<int> _kepts = new List<int> { 0, 0 };
 
@@ -44,6 +46,7 @@ namespace DutyContent.Tab
 			btnPingColor3.BackColor = DcConfig.Duty.PingColors[2];
 			btnPingColor4.BackColor = DcConfig.Duty.PingColors[3];
 			chkPingGraph.Checked = DcConfig.Duty.PingGraph;
+			cboPingGraphType.SelectedIndex = DcConfig.Duty.PingGraphType;
 
 			//
 			try
@@ -104,6 +107,7 @@ namespace DutyContent.Tab
 			chkPingGraph.Text = Locale.Text(407);
 			lblPingDefAddr.Text = Locale.Text(408);
 			lblPingAddress.Text = Locale.Text(409);
+			lblPingGraphType.Text = Locale.Text(410);
 		}
 
 		private void SaveConfig(int interval = 5000)
@@ -208,13 +212,32 @@ namespace DutyContent.Tab
 			SaveConfig();
 		}
 
+		private void CboPingGraphType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (cboPingGraphType.SelectedIndex>=0)
+			{
+				DcConfig.Duty.PingGraphType = cboPingGraphType.SelectedIndex;
+				SaveConfig();
+			}
+		}
+
 		private void LstPingAddress_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			if (lstPingAddress.SelectedIndices.Count != 1)
 				return;
 
-			var s = lstPingAddress.SelectedItem as string;
-			Clipboard.SetText(s);
+			try
+			{
+				var s = lstPingAddress.SelectedItem as string;
+				Clipboard.SetText(s);
+			}
+			catch (Exception ex)
+			{
+				Logger.Ex(ex, 35);
+			}
 		}
 
 		//
@@ -302,7 +325,7 @@ namespace DutyContent.Tab
 					_kepts.RemoveAt(0);
 
 				_grpr.Enter();
-				_grpr.DrawValues(_kepts);
+				_grpr.DrawValues(_kepts, (Libre.PingGrapher.DrawType)DcConfig.Duty.PingGraphType);
 				WorkerAct.Invoker(() => _grpr.Leave());
 			}
 
@@ -353,23 +376,30 @@ namespace DutyContent.Tab
 
 			for (var i = 0; i < amount; i++)
 			{
-				PingReply pr = ps.Send(host, timeout, _ping_buffers, _ping_options);
+				try
+				{
+					PingReply pr = ps.Send(host, timeout, _ping_buffers, _ping_options);
 
-				if (pr.Status != IPStatus.Success)
+					if (pr.Status != IPStatus.Success)
+					{
+						failed++;
+
+						if (DcConfig.DebugEnable)
+						{
+							Logger.WriteCategory(Color.Red, "Ping", "failed. status: {0} / duration: {1} / at: {2}/{3}", pr.Status, timeout, i + 1, amount);
+						}
+					}
+
+					if (rtt < pr.RoundtripTime)
+						rtt = pr.RoundtripTime;
+				}
+				catch
 				{
 					failed++;
-
-					if (DcConfig.DebugEnable)
-					{
-						Logger.WriteCategory(Color.Red, "Ping", "failed status: {0}, timeout: {1}, at: {2}/{3}", pr.Status, timeout, i + 1, amount);
-					}
 				}
 
-				if (rtt < pr.RoundtripTime)
-					rtt = pr.RoundtripTime;
+				System.Threading.Thread.Sleep(1);
 			}
-
-			//Logger.Write("Ping: {0} / {1}", failed, amount);
 
 			double loss = failed == 0 ? 0 : (double)failed / amount * 100.0;
 

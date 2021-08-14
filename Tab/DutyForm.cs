@@ -225,7 +225,7 @@ namespace DutyContent.Tab
 						_last_fate = fcode;
 					}
 				}
-				else if (chkShowDebug.Checked && data[0] == 62 && data[8] > 0)  // more than 0%
+				else if (DcConfig.DebugEnable && data[0] == 62 && data[8] > 0)  // more than 0%
 				{
 					var fcode = BitConverter.ToUInt16(data, 4);
 
@@ -395,7 +395,7 @@ namespace DutyContent.Tab
 #if false
 			LogInstance(10025, $"{zone_name} ({zone_id})");
 
-			if (chkShowDebug.Checked)
+			if (DcConfig.DebugEnable)
 				LogDebug("Zone: {0}", zone_id);
 #endif
 		}

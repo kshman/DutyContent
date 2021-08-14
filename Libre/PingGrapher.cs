@@ -89,7 +89,7 @@ namespace DutyContent.Libre
 			}
 		}
 
-		public void DrawValues(List<int> values)
+		public void DrawValues(List<int> values, DrawType drawtype = DrawType.Linear)
 		{
 			if (_bmp == null || values.Count < 2)
 				return;
@@ -136,7 +136,10 @@ namespace DutyContent.Libre
 					for (var i = 0; i < cd.Count - 1; i++, u += Step)
 						pts[i] = new PointF(u, height - cd.Values[i] * scale);
 
-					g.DrawCurve(pen, pts, 0.6f);
+					if (drawtype == DrawType.Linear)
+						g.DrawLines(pen, pts);
+					else if (drawtype == DrawType.Curved)
+						g.DrawCurve(pen, pts, 0.6f);
 				}
 #endif
 			}
@@ -147,6 +150,13 @@ namespace DutyContent.Libre
 		{
 			_pbx.Image = _bmp;
 			_pbx.Refresh();
+		}
+
+		//
+		public enum DrawType : int
+		{
+			Linear = 0,
+			Curved = 1
 		}
 	}
 }

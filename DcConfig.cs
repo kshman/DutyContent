@@ -317,6 +317,7 @@ namespace DutyContent
 			};
 			public bool PingGraph { get; set; }
 			public string PingDefAddr { get; set; }
+			public int PingGraphType { get; set; }
 
 			//
 			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram || UseNotifyDiscordWebhook;
@@ -372,6 +373,7 @@ namespace DutyContent
 				sw.WriteLine("DutyPingColor3={0:X}", PingColors[3].ToArgb());
 				sw.WriteLine("DutyPingGraph={0}", PingGraph);
 				sw.WriteLine("DutyPingDefAddr={0}", PingDefAddr);
+				sw.WriteLine("DutyPingGraphType={0}", PingGraphType);
 				sw.WriteLine();
 			}
 
@@ -417,6 +419,7 @@ namespace DutyContent
 				PingColors[3] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor3"], PingColors[3]);
 				PingGraph = ThirdParty.Converter.ToBool(db["DutyPingGraph"]);
 				PingDefAddr = db.Get("DutyPingDefAddr", string.Empty);
+				PingGraphType = ThirdParty.Converter.ToInt(db["PingGraphType"]);
 			}
 		}
 
@@ -454,19 +457,24 @@ namespace DutyContent
 		//
 		public class ConnectionList
 		{
-			public List<ThirdParty.NativeMethods.TcpRow> Conns = new List<ThirdParty.NativeMethods.TcpRow>();
+			public SortedSet<ThirdParty.NativeMethods.TcpRow> Conns = new SortedSet<ThirdParty.NativeMethods.TcpRow>();
+
+			public int Count => Conns.Count;
 
 			public ThirdParty.NativeMethods.TcpRow[] CopyConnection()
 			{
 				ThirdParty.NativeMethods.TcpRow[] ret;
 
 				lock (Conns)
-					ret = Conns.ToArray();
+				{
+					ret = new ThirdParty.NativeMethods.TcpRow[Conns.Count];
+					Conns.CopyTo(ret);
+				}
 
 				return ret;
 			}
 
-			public void GetConnections(Process process)
+			public void BuildConnections(Process process)
 			{
 				var size = 0;
 				ThirdParty.NativeMethods.GetExtendedTcpTable(IntPtr.Zero, ref size, true, AddressFamily.InterNetwork, 4);
