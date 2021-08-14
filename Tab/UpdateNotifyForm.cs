@@ -46,9 +46,9 @@ namespace DutyContent.Tab
 
 		public void UpdateUiLocale()
 		{
-			lblTitle.Text = MesgLog.Text(207, DcConfig.PluginTag, _newtag);
-			lblMesg.Text = MesgLog.Text(208);
-			lblLink.Text = MesgLog.Text(209);
+			lblTitle.Text = Locale.Text(207, DcConfig.PluginTag, _newtag);
+			lblMesg.Text = Locale.Text(208);
+			lblLink.Text = Locale.Text(209);
 		}
 
 		private void LblLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

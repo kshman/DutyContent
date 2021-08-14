@@ -65,6 +65,9 @@ namespace DutyContent
 
 			Tab.ConfigForm configform = new Tab.ConfigForm();
 			tabPageConfig.Controls.Add(configform.Controls[0]);
+
+			Tab.LogForm logform = new Tab.LogForm();
+			tabPageLog.Controls.Add(logform.Controls[0]);
 		}
 
 		//
@@ -89,7 +92,7 @@ namespace DutyContent
 				ActGlobals.oFormActMain.Shown += OFormActMain_Shown;
 
 			var actinfo = System.Reflection.Assembly.GetAssembly(typeof(ActGlobals));
-			MesgLog.I(5, actinfo.GetName().Version, actinfo.Location);
+			Logger.I(5, actinfo.GetName().Version);
 
 			if (_ffxiv_plugin_data == null)
 			{
@@ -101,7 +104,7 @@ namespace DutyContent
 			}
 
 			if (_ffxiv_plugin_data == null)
-				MesgLog.E(2);   // FFXIV plugin is missing!
+				Logger.E(2);   // FFXIV plugin is missing!
 			else
 			{
 				var ids = ((FFXIV_ACT_Plugin.FFXIV_ACT_Plugin)_ffxiv_plugin_data.pluginObj).DataSubscription;
@@ -110,7 +113,7 @@ namespace DutyContent
 				ids.ZoneChanged -= FFXIVPlugin_ZoneChanged;
 				ids.ZoneChanged += FFXIVPlugin_ZoneChanged;
 
-				MesgLog.I(6, System.Diagnostics.FileVersionInfo.GetVersionInfo(_ffxiv_plugin_data.pluginFile.FullName).FileVersion, _ffxiv_plugin_data.pluginFile.FullName);
+				Logger.I(6, System.Diagnostics.FileVersionInfo.GetVersionInfo(_ffxiv_plugin_data.pluginFile.FullName).FileVersion);
 			}
 
 			_save_timer = new System.Timers.Timer() { Interval = 5000 };
@@ -142,9 +145,8 @@ namespace DutyContent
 			Tab.PingForm.Self?.PluginDeinitialize();
 			Tab.DutyForm.Self?.PluginDeinitialize();
 			Tab.ConfigForm.Self?.PluginDeinitialize();
+			Tab.LogForm.Self?.PluginDeinitialize();
 			DcConfig.SaveConfig();
-
-			MesgLog.SetTextBox(null);
 
 			_act_tab = null;
 
@@ -171,10 +173,9 @@ namespace DutyContent
 			_act_label.Text = "Starting...";
 
 			//
-			MesgLog.SetTextBox(txtMesg);
-			MesgLog.Initialize(Properties.Resources.DefaultMessage);
+			Locale.Initialize(Properties.Resources.DefaultMessage);
 
-			MesgLog.C(Color.Aquamarine, 4, DcConfig.PluginVersion.ToString());
+			Logger.I(4, DcConfig.PluginVersion.ToString());
 
 			DcConfig.LoadConfig();
 			ShowStatusBarAsConfig(true);
@@ -185,16 +186,19 @@ namespace DutyContent
 
 			UpdateUiLocale();
 
-			lblStatusLeft.Text = MesgLog.Text(99, DcConfig.PluginVersion);  // once here
+			lblStatusLeft.Text = Locale.Text(99, DcConfig.PluginVersion);  // once here
 
 			//
 			Dock = DockStyle.Fill;
 			_act_tab.Controls.Add(this);
 
 			//
+			Tab.LogForm.Self?.PluginInitialize();
 			Tab.ConfigForm.Self?.PluginInitialize();
 			Tab.DutyForm.Self?.PluginInitialize();
 			Tab.PingForm.Self?.PluginInitialize();
+
+			tabMain.SelectedTab = tabPageDuty;
 
 			// 
 			if (DcConfig.DataRemoteUpdate)
@@ -206,7 +210,7 @@ namespace DutyContent
 					frm.PluginInitialize();
 					frm.UpdateUiLocale();
 
-					TabPage tp = new TabPage(MesgLog.Text(206));
+					TabPage tp = new TabPage(Locale.Text(206));
 					try
 					{
 						// why? sometimes trouble
@@ -214,7 +218,7 @@ namespace DutyContent
 					}
 					catch (Exception ex)
 					{
-						MesgLog.Ex(ex);
+						Logger.Ex(ex);
 					}
 
 					tabMain.TabPages.Add(tp);
@@ -227,7 +231,7 @@ namespace DutyContent
 						DcConfig.SaveConfig();
 					}
 
-					MesgLog.C(Color.Aquamarine, 207, DcConfig.PluginTag, tag);
+					Logger.C(Color.Aquamarine, 207, DcConfig.PluginTag, tag);
 				}
 			}
 
@@ -254,7 +258,7 @@ namespace DutyContent
 
 			if (tabMain.SelectedIndex == e.Index)
 			{
-				f = new Font(tabMain.Font.FontFamily, 12.0f, FontStyle.Bold, GraphicsUnit.Pixel);
+				f = new Font(tabMain.Font.FontFamily, 14.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 #if false
 				b = new SolidBrush(Color.Black);
 				h = SystemBrushes.Window;
@@ -266,7 +270,7 @@ namespace DutyContent
 			//else if (p.col)
 			else
 			{
-				f = new Font(tabMain.Font.FontFamily, 12.0f, FontStyle.Regular, GraphicsUnit.Pixel);
+				f = new Font(tabMain.Font.FontFamily, 14.0f, FontStyle.Regular, GraphicsUnit.Pixel);
 				b = new SolidBrush(Color.DarkSlateGray);
 				h = SystemBrushes.Control;
 			}
@@ -320,7 +324,7 @@ namespace DutyContent
 				if (span.TotalSeconds > 2)
 				{
 					_game_connection_tick = now;
-					DcConfig.Connections.GetConnections(_game_process.Process);
+					DcConfig.Connections.BuildConnections(_game_process.Process);
 				}
 			}
 
@@ -353,7 +357,7 @@ namespace DutyContent
 		{
 			Tab.DutyForm.Self?.ZoneChanged(zone_id, zone_name);
 
-			lblStatusLeft.Text = MesgLog.Text(34, zone_name, zone_id);
+			lblStatusLeft.Text = Locale.Text(34, zone_name, zone_id);
 		}
 
 		//
@@ -361,17 +365,20 @@ namespace DutyContent
 		{
 			ThirdParty.FontUtilities.SimpleChangeFont(this, DcConfig.UiFontFamily, true);
 
-			_act_label.Text = MesgLog.Text(1);  // Duty ready
-			_act_tab.Text = MesgLog.Text(0);    // FFXIV dc
+			_act_label.Text = Locale.Text(1);  // Duty ready
+			_act_tab.Text = Locale.Text(0);    // FFXIV dc
 
-			tabPageDuty.Text = MesgLog.Text(300);
+			tabPageDuty.Text = Locale.Text(300);
 			Tab.DutyForm.Self?.UpdateUiLocale();
 
-			tabPagePing.Text = MesgLog.Text(327);
+			tabPagePing.Text = Locale.Text(400);
 			Tab.PingForm.Self?.UpdateUiLocale();
 
-			tabPageConfig.Text = MesgLog.Text(200);
+			tabPageConfig.Text = Locale.Text(200);
 			Tab.ConfigForm.Self?.UpdateUiLocale();
+
+			tabPageLog.Text = Locale.Text(500);
+			Tab.LogForm.Self?.UpdateUiLocale();
 
 			Tab.UpdateNotifyForm.Self?.UpdateUiLocale();
 		}
@@ -383,7 +390,7 @@ namespace DutyContent
 			{
 				if (!lblStatusLeft.Visible || force)
 				{
-					spctBase.Dock = DockStyle.None;
+					tabMain.Dock = DockStyle.None;
 					lblStatusLeft.Visible = true;
 				}
 			}
@@ -392,7 +399,7 @@ namespace DutyContent
 				if (lblStatusLeft.Visible || force)
 				{
 					lblStatusLeft.Visible = false;
-					spctBase.Dock = DockStyle.Fill;
+					tabMain.Dock = DockStyle.Fill;
 				}
 			}
 		}

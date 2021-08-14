@@ -117,41 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultMessage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mesg.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="pix_annotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_annotation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_magnify" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_magnify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_play" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_rdrt_bline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_rdrt_bline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_rdrt_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_rdrt_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_rdrt_puple" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_rdrt_puple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_rdrt_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_rdrt_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_tab_content" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\pix_tab_content.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_tab_ping" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_tab_ping.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_tab_setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_tab_setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pix_tab_tool" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pix_tab_tool.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

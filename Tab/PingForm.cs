@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Threading;
 using System.Net.NetworkInformation;
-using DutyContent.Interface;
 using System.Net;
 
 namespace DutyContent.Tab
@@ -23,10 +17,18 @@ namespace DutyContent.Tab
 		//
 		private System.Timers.Timer _timer;
 		private long _last_ping;
+
 		private Color _color = Color.Transparent;
+
 		private Libre.PingGrapher _grpr;
 		private List<int> _kepts = new List<int> { 0, 0 };
 
+		//
+		private const int PingInterval = 5000;
+		private const int PingAmount = 5;
+		private const int PingTimeout = PingInterval / (PingAmount + 1);
+
+		//
 		public PingForm()
 		{
 			_self = this;
@@ -43,7 +45,9 @@ namespace DutyContent.Tab
 			btnPingColor2.BackColor = DcConfig.Duty.PingColors[1];
 			btnPingColor3.BackColor = DcConfig.Duty.PingColors[2];
 			btnPingColor4.BackColor = DcConfig.Duty.PingColors[3];
+			chkPingShowLoss.Checked = DcConfig.Duty.PingShowLoss;
 			chkPingGraph.Checked = DcConfig.Duty.PingGraph;
+			cboPingGraphType.SelectedIndex = DcConfig.Duty.PingGraphType;
 
 			//
 			try
@@ -67,12 +71,12 @@ namespace DutyContent.Tab
 			catch
 			{
 				cboPingDefAddr.Items.Clear();
-				cboPingDefAddr.Items.Add(MesgLog.Text(27));
+				cboPingDefAddr.Items.Add(Locale.Text(27));
 				cboPingDefAddr.SelectedIndex = 0;
 			}
 
 			//
-			_timer = new System.Timers.Timer() { Interval = 5000 };
+			_timer = new System.Timers.Timer() { Interval = PingInterval };
 			_timer.Elapsed += (sender, e) => PingOnce();
 
 			if (DcConfig.Duty.UsePing)
@@ -95,15 +99,17 @@ namespace DutyContent.Tab
 
 		public void UpdateUiLocale()
 		{
-			chkUsePing.Text = MesgLog.Text(328);
-			lblPingColors.Text = MesgLog.Text(329);
-			lblPingStat1.Text = MesgLog.Text(330);
-			lblPingStat2.Text = MesgLog.Text(331);
-			lblPingStat3.Text = MesgLog.Text(332);
-			lblPingStat4.Text = MesgLog.Text(333);
-			chkPingGraph.Text = MesgLog.Text(334);
-			lblPingDefAddr.Text = MesgLog.Text(335);
-			lblPingAddress.Text = MesgLog.Text(343);
+			chkUsePing.Text = Locale.Text(401);
+			lblPingColors.Text = Locale.Text(402);
+			lblPingStat1.Text = Locale.Text(403);
+			lblPingStat2.Text = Locale.Text(404);
+			lblPingStat3.Text = Locale.Text(405);
+			lblPingStat4.Text = Locale.Text(406);
+			chkPingGraph.Text = Locale.Text(407);
+			lblPingDefAddr.Text = Locale.Text(408);
+			lblPingAddress.Text = Locale.Text(409);
+			lblPingGraphType.Text = Locale.Text(410);
+			chkPingShowLoss.Text = Locale.Text(413);
 		}
 
 		private void SaveConfig(int interval = 5000)
@@ -173,6 +179,16 @@ namespace DutyContent.Tab
 			PingColorWorker(3, btnPingColor4);
 		}
 
+		private void ChkPingShowLoss_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.PingShowLoss = chkPingShowLoss.Checked;
+
+			SaveConfig();
+		}
+
 		private void ChkPingGraph_CheckedChanged(object sender, EventArgs e)
 		{
 			if (!DcConfig.PluginEnable)
@@ -208,6 +224,34 @@ namespace DutyContent.Tab
 			SaveConfig();
 		}
 
+		private void CboPingGraphType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (cboPingGraphType.SelectedIndex>=0)
+			{
+				DcConfig.Duty.PingGraphType = cboPingGraphType.SelectedIndex;
+				SaveConfig();
+			}
+		}
+
+		private void LstPingAddress_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (lstPingAddress.SelectedIndices.Count != 1)
+				return;
+
+			try
+			{
+				var s = lstPingAddress.SelectedItem as string;
+				Clipboard.SetText(s);
+			}
+			catch (Exception ex)
+			{
+				Logger.Ex(ex, 35);
+			}
+		}
+
 		//
 		private void PingOnce(bool check_plugin_enable = true)
 		{
@@ -229,7 +273,7 @@ namespace DutyContent.Tab
 				{
 					addrs.Add(row.RemoteAddress.ToString());
 
-					var (r, l) = CalcPing(row.RemoteAddress);
+					var (r, l) = CalcPing(row.RemoteAddress, PingTimeout, PingAmount);
 
 					if (rtt < r)
 						rtt = r;
@@ -256,7 +300,7 @@ namespace DutyContent.Tab
 					return;
 				}
 
-				var (r, l) = CalcPing(defip);
+				var (r, l) = CalcPing(defip, PingTimeout, PingAmount);
 
 				if (rtt < r)
 					rtt = r;
@@ -268,7 +312,7 @@ namespace DutyContent.Tab
 			//MesgLog.L("Ping: {0}, {1}%", rtt, loss);
 
 			Color color;
-			if (loss > 0.0 || rtt > 150)
+			if (rtt > 150)
 				color = DcConfig.Duty.PingColors[3];
 			else if (rtt > 100)
 				color = DcConfig.Duty.PingColors[2];
@@ -276,6 +320,9 @@ namespace DutyContent.Tab
 				color = DcConfig.Duty.PingColors[1];
 			else
 				color = DcConfig.Duty.PingColors[0];
+
+			if (!DcConfig.Duty.PingShowLoss)
+				loss = 0.0;
 
 			if (_last_ping != rtt || loss > 0.0 || _color != color)
 			{
@@ -293,7 +340,7 @@ namespace DutyContent.Tab
 					_kepts.RemoveAt(0);
 
 				_grpr.Enter();
-				_grpr.DrawValues(_kepts);
+				_grpr.DrawValues(_kepts, (Libre.PingGrapher.DrawType)DcConfig.Duty.PingGraphType);
 				WorkerAct.Invoker(() => _grpr.Leave());
 			}
 
@@ -305,17 +352,17 @@ namespace DutyContent.Tab
 			}
 			else
 			{
-				bool havetoupdate = false;
+				bool have_to_update_addrs = false;
 
 				if (lstPingAddress.Items.Count == 0)
-					havetoupdate = true;
+					have_to_update_addrs = true;
 				else
 				{
 					var i = lstPingAddress.Items[0] as string;
-					havetoupdate = !addrs.Contains(i);
+					have_to_update_addrs = !addrs.Contains(i);
 				}
 
-				if (havetoupdate)
+				if (have_to_update_addrs)
 				{
 					WorkerAct.Invoker(() =>
 					{
@@ -333,10 +380,9 @@ namespace DutyContent.Tab
 
 		private static readonly PingOptions _ping_options = new PingOptions { DontFragment = true };
 		private static readonly byte[] _ping_buffers = Encoding.ASCII.GetBytes("01234567890123456789012345678901");
-		private static readonly int _ping_timerout = 120;
 
 		//
-		private (long Rtt, double Loss) CalcPing(IPAddress host, int amount = 6)
+		private (long Rtt, double Loss) CalcPing(IPAddress host, int timeout, int amount)
 		{
 			var ps = new Ping();
 
@@ -345,16 +391,32 @@ namespace DutyContent.Tab
 
 			for (var i = 0; i < amount; i++)
 			{
-				PingReply pr = ps.Send(host, _ping_timerout, _ping_buffers, _ping_options);
+				try
+				{
+					PingReply pr = ps.Send(host, timeout, _ping_buffers, _ping_options);
 
-				if (pr.Status != IPStatus.Success)
+					if (pr.Status != IPStatus.Success)
+					{
+						failed++;
+
+						if (DcConfig.DebugEnable)
+						{
+							Logger.WriteCategory(Color.Red, "Ping", "failed. status: {0} / duration: {1} / at: {2}/{3}", pr.Status, timeout, i + 1, amount);
+						}
+					}
+
+					if (rtt < pr.RoundtripTime)
+						rtt = pr.RoundtripTime;
+				}
+				catch
+				{
 					failed++;
+				}
 
-				if (rtt < pr.RoundtripTime)
-					rtt = pr.RoundtripTime;
+				System.Threading.Thread.Sleep(1);
 			}
 
-			double loss = (failed / amount) * 100;
+			double loss = failed == 0 ? 0 : (double)failed / amount * 100.0;
 
 			return (rtt, loss);
 		}

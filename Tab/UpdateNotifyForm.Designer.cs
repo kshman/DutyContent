@@ -43,7 +43,8 @@ namespace DutyContent.Tab
 			// 
 			this.lblTitle.AutoSize = true;
 			this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTitle.Location = new System.Drawing.Point(46, 0);
+			this.lblTitle.Location = new System.Drawing.Point(69, 0);
+			this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblTitle.Name = "lblTitle";
 			this.lblTitle.Size = new System.Drawing.Size(62, 31);
 			this.lblTitle.TabIndex = 0;
@@ -52,9 +53,10 @@ namespace DutyContent.Tab
 			// lblMesg
 			// 
 			this.lblMesg.AutoSize = true;
-			this.lblMesg.Location = new System.Drawing.Point(3, 50);
+			this.lblMesg.Location = new System.Drawing.Point(4, 69);
+			this.lblMesg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblMesg.Name = "lblMesg";
-			this.lblMesg.Size = new System.Drawing.Size(25, 13);
+			this.lblMesg.Size = new System.Drawing.Size(32, 18);
 			this.lblMesg.TabIndex = 1;
 			this.lblMesg.Text = "208";
 			// 
@@ -62,7 +64,8 @@ namespace DutyContent.Tab
 			// 
 			this.lblLink.AutoSize = true;
 			this.lblLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblLink.Location = new System.Drawing.Point(3, 87);
+			this.lblLink.Location = new System.Drawing.Point(4, 120);
+			this.lblLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblLink.Name = "lblLink";
 			this.lblLink.Size = new System.Drawing.Size(32, 18);
 			this.lblLink.TabIndex = 2;
@@ -76,12 +79,13 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBody.BackColor = System.Drawing.Color.OldLace;
-			this.txtBody.Location = new System.Drawing.Point(16, 108);
+			this.txtBody.Location = new System.Drawing.Point(24, 150);
+			this.txtBody.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.txtBody.Multiline = true;
 			this.txtBody.Name = "txtBody";
 			this.txtBody.ReadOnly = true;
 			this.txtBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtBody.Size = new System.Drawing.Size(464, 296);
+			this.txtBody.Size = new System.Drawing.Size(584, 283);
 			this.txtBody.TabIndex = 3;
 			// 
 			// panel1
@@ -95,9 +99,10 @@ namespace DutyContent.Tab
 			this.panel1.Controls.Add(this.txtBody);
 			this.panel1.Controls.Add(this.lblMesg);
 			this.panel1.Controls.Add(this.lblLink);
-			this.panel1.Location = new System.Drawing.Point(12, 12);
+			this.panel1.Location = new System.Drawing.Point(4, 4);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(776, 426);
+			this.panel1.Size = new System.Drawing.Size(796, 443);
 			this.panel1.TabIndex = 4;
 			// 
 			// panelBase
@@ -106,17 +111,20 @@ namespace DutyContent.Tab
 			this.panelBase.Controls.Add(this.panel1);
 			this.panelBase.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelBase.Location = new System.Drawing.Point(0, 0);
+			this.panelBase.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panelBase.Name = "panelBase";
-			this.panelBase.Size = new System.Drawing.Size(800, 450);
+			this.panelBase.Size = new System.Drawing.Size(804, 451);
 			this.panelBase.TabIndex = 5;
 			// 
 			// UpdateNotifyForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.ClientSize = new System.Drawing.Size(804, 451);
 			this.Controls.Add(this.panelBase);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "UpdateNotifyForm";
 			this.Text = "Update";
 			this.panel1.ResumeLayout(false);

@@ -28,7 +28,7 @@ namespace DutyContent.Tab
 		public void PluginInitialize()
 		{
 			//
-			lblCurrentLang.Text = MesgLog.Text("LANG");
+			lblCurrentLang.Text = Locale.Text("LANG");
 
 			//
 			var lang = MakeConfigLangList();
@@ -59,6 +59,10 @@ namespace DutyContent.Tab
 			//
 			rdoStatusBarEnable.Checked = DcConfig.StatusBar;
 			rdoStatusBarDisable.Checked = !DcConfig.StatusBar;
+
+			//
+			rdoDebugEnable.Checked = DcConfig.DebugEnable;
+			rdoDebugDisable.Checked = !DcConfig.DebugEnable;
 		}
 
 		public void RefreshLocale()
@@ -68,28 +72,35 @@ namespace DutyContent.Tab
 
 		public void UpdateUiLocale()
 		{
-			lblDispLang.Text = MesgLog.Text(201);
+			lblDispLang.Text = Locale.Text(201);
 
-			lblDataUpdate.Text = MesgLog.Text(203);
-			rdoDataUpdateLocal.Text = MesgLog.Text(204);
-			rdoDataUpdateRemote.Text = MesgLog.Text(205);
+			lblDataUpdate.Text = Locale.Text(203);
+			rdoDataUpdateLocal.Text = Locale.Text(204);
+			rdoDataUpdateRemote.Text = Locale.Text(205);
 
-			lblUiFont.Text = MesgLog.Text(210);
+			lblUiFont.Text = Locale.Text(210);
 			btnUiFont.Text = DcConfig.UiFontFamily;
 
-			lblTag.Text = MesgLog.Text(211, DcConfig.PluginTag, DcConfig.PluginVersion);
+			lblLogFont.Text = Locale.Text(216);
+			btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
 
-			lblUseStatusBar.Text = MesgLog.Text(212);
-			rdoStatusBarEnable.Text = MesgLog.Text(213);
-			rdoStatusBarDisable.Text = MesgLog.Text(214);
-			lblStatusBarNeedRestart.Text = MesgLog.Text(215);
+			lblTag.Text = Locale.Text(211, DcConfig.PluginTag, DcConfig.PluginVersion);
+
+			lblUseStatusBar.Text = Locale.Text(212);
+			rdoStatusBarEnable.Text = Locale.Text(213);
+			rdoStatusBarDisable.Text = Locale.Text(214);
+			lblStatusBarNeedRestart.Text = Locale.Text(215);
+
+
+			rdoDebugEnable.Text = Locale.Text(213);
+			rdoDebugDisable.Text = Locale.Text(214);
 		}
 
 		public static List<string> MakeConfigLangList()
 		{
 			List<string> lst = new List<string>();
 
-			lst.Add($"<{MesgLog.Text(26)}>");
+			lst.Add($"<{Locale.Text(26)}>");
 
 			DirectoryInfo di = new DirectoryInfo(DcConfig.DataPath);
 
@@ -127,7 +138,7 @@ namespace DutyContent.Tab
 			DcControl.Self?.UpdateUiLocale();
 			DcConfig.SaveConfig();
 
-			lblCurrentLang.Text = MesgLog.Text("LANG");
+			lblCurrentLang.Text = Locale.Text("LANG");
 		}
 
 		private void InternalDataUpdate(bool value)
@@ -181,6 +192,34 @@ namespace DutyContent.Tab
 			}
 		}
 
+		private void BtnLogFont_Click(object sender, EventArgs e)
+		{
+			Font ret = (Font)WorkerAct.Invoker(new WorkerAct.ObjectReturnerDelegate(() =>
+			{
+				FontDialog dg = new FontDialog
+				{
+					Font = Tab.LogForm.Self?.LogFont,
+					FontMustExist = true,
+					AllowVerticalFonts = false
+				};
+
+				return (dg.ShowDialog() == DialogResult.OK) ? dg.Font : null;
+			}));
+
+			if (ret != null)
+			{
+				if (LogForm.Self != null)
+					LogForm.Self.LogFont = ret;
+
+				DcConfig.Duty.LogFontFamily = ret.Name;
+				DcConfig.Duty.LogFontSize = ret.Size;
+				DcConfig.SaveConfig();
+
+				btnLogFont.Font = ret;
+				btnLogFont.Text = $"{DcConfig.Duty.LogFontFamily}, {DcConfig.Duty.LogFontSize}";
+			}
+		}
+
 		private void InternalStatusBar(bool value)
 		{
 			if (!DcConfig.PluginEnable)
@@ -205,6 +244,30 @@ namespace DutyContent.Tab
 		private void RdoStatusBarDisable_CheckedChanged(object sender, EventArgs e)
 		{
 			InternalStatusBar(false);
+		}
+
+		private void InternalDebug(bool value)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			if (value && DcConfig.DebugEnable)
+				return;
+			if (!value && !DcConfig.DebugEnable)
+				return;
+
+			DcConfig.DebugEnable = value;
+			DcConfig.SaveConfig();
+		}
+
+		private void rdoDebugEnable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalDebug(true);
+		}
+
+		private void rdoDebugDisable_CheckedChanged(object sender, EventArgs e)
+		{
+			InternalDebug(false);
 		}
 	}
 }

@@ -73,6 +73,7 @@
       <DependentUpon>DcControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Libre\PingGrapher.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Tab\ConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +96,12 @@
     <Compile Include="Overlay\DutyOvForm.Designer.cs">
       <DependentUpon>DutyOvForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tab\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tab\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tab\PingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,16 +115,23 @@
       <DependentUpon>UpdateNotifyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ThirdParty\Converter.cs" />
+    <Compile Include="ThirdParty\EXComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThirdParty\EXListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ThirdParty\FontUtilities.cs" />
     <Compile Include="ThirdParty\LineDb.cs" />
     <Compile Include="ThirdParty\NativeMethods.cs" />
     <Compile Include="ThirdParty\ThreadWorker.cs" />
     <Compile Include="ThirdParty\WebApi.cs" />
+    <Compile Include="ThirdParty\WinFormSupp.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="WorkerAct.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MesgLog.cs" />
+    <Compile Include="Locale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -147,6 +161,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tab\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tab\PingForm.resx">
       <DependentUpon>PingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -159,7 +176,7 @@
     <None Include="Data\DcDuty-Korean.json" />
     <None Include="Data\DcPacket-Custom.config" />
     <None Include="Data\DcPacket-Global.config" />
-    <None Include="Data\DcPacket-LocalChina.config" />
+    <None Include="Data\DcPacketReserved-LocalChina.config" />
     <None Include="Data\DcPacket-LocalKorea.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -203,6 +220,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\DcLang-Korean%28Test%29.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_rdrt_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_rdrt_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_rdrt_puple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pix_rdrt_bline.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

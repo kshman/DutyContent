@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 14;
+		public static int PluginTag => 15;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -33,6 +33,7 @@ namespace DutyContent
 		public static int LastUpdatedPlugin { get; set; } = 0;
 		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
 		public static bool StatusBar { get; set; } = false;
+		public static bool DebugEnable { get; set; } = false;
 
 		//
 		public static string BuildDataFileName(string header, string context, string ext)
@@ -75,6 +76,7 @@ namespace DutyContent
 				sw.WriteLine("LastUpdatedPlugin={0}", LastUpdatedPlugin);
 				sw.WriteLine("UiFontFamily={0}", UiFontFamily);
 				sw.WriteLine("StatusBar={0}", StatusBar);
+				sw.WriteLine("DebugEnable={0}", DebugEnable);
 				sw.WriteLine();
 
 				Duty.InternalSaveStream(sw);
@@ -97,6 +99,7 @@ namespace DutyContent
 			LastUpdatedPlugin = ThirdParty.Converter.ToInt(db["LastUpdatedPlugin"]);
 			UiFontFamily = db.Get("UiFontFamily", UiFontFamily);
 			StatusBar = ThirdParty.Converter.ToBool(db["StatusBar"], StatusBar);
+			DebugEnable = ThirdParty.Converter.ToBool(db["DebugEnable"], DebugEnable);
 
 			Duty.InternalReadFromDb(db);
 		}
@@ -107,16 +110,16 @@ namespace DutyContent
 			if (string.IsNullOrWhiteSpace(Language))
 			{
 				if (!is_in_init)
-					MesgLog.Initialize(Properties.Resources.DefaultMessage);
+					Locale.Initialize(Properties.Resources.DefaultMessage);
 			}
 			else
 			{
 				string filename = BuildLangFileName(Language);
 
 				if (File.Exists(filename))
-					MesgLog.LoadFile(filename);
+					Locale.LoadFile(filename);
 				else
-					MesgLog.Initialize(Properties.Resources.DefaultMessage);
+					Locale.Initialize(Properties.Resources.DefaultMessage);
 			}
 		}
 
@@ -139,7 +142,7 @@ namespace DutyContent
 
 					if (!File.Exists(filename))
 					{
-						MesgLog.E(27, " ");
+						Logger.E(27, " ");
 						return false;
 					}
 				}
@@ -150,8 +153,7 @@ namespace DutyContent
 
 			// load. if file not exist, create new one with default value
 			Packet.Load(filename);
-
-			MesgLog.I(29, Packet.Version, Packet.Description, filename);
+			Logger.Write(Packet.GetInformation());
 
 			return true;
 		}
@@ -160,13 +162,13 @@ namespace DutyContent
 		public class PacketConfig
 		{
 			// Packet
-			public long Version { get; set; } = 2005551;
-			public string Description { get; set; } = "5.55 HotFix";
-			public ushort OpFate { get; set; } = 858;
-			public ushort OpDuty { get; set; } = 271;
-			public ushort OpMatch { get; set; } = 220;
-			public ushort OpInstance { get; set; } = 923;
-			public ushort OpSouthernBozja { get; set; } = 584;
+			public long Version { get; set; } = 2005580;
+			public string Description { get; set; } = "5.58 (JP/NA/EU/OC)";
+			public ushort OpFate { get; set; } = 788;
+			public ushort OpDuty { get; set; } = 676;
+			public ushort OpMatch { get; set; } = 428;
+			public ushort OpInstance { get; set; } = 234;
+			public ushort OpCe { get; set; } = 269;
 
 			// packet version structure
 			// 0 - Service area (1:Custom, 2:Global, 3:Korea)
@@ -197,7 +199,7 @@ namespace DutyContent
 					OpDuty = right.OpDuty;
 					OpMatch = right.OpMatch;
 					OpInstance = right.OpInstance;
-					OpSouthernBozja = right.OpSouthernBozja;
+					OpCe = right.OpCe;
 				}
 				else
 				{
@@ -205,8 +207,20 @@ namespace DutyContent
 					OpDuty = 0;
 					OpMatch = 0;
 					OpInstance = 0;
-					OpSouthernBozja = 0;
+					OpCe = 0;
 				}
+			}
+
+			//
+			public string GetInformation()
+			{
+				return Locale.Text(29, Version, Description);
+			}
+
+			//
+			public override string ToString()
+			{
+				return GetInformation();
 			}
 
 			// 
@@ -227,7 +241,7 @@ namespace DutyContent
 					sw.WriteLine("OpDuty={0}", OpDuty);
 					sw.WriteLine("OpMatch={0}", OpMatch);
 					sw.WriteLine("OpInstance={0}", OpInstance);
-					sw.WriteLine("OpSouthernBozja={0}", OpSouthernBozja);
+					sw.WriteLine("OpSouthernBozja={0}", OpCe);
 					sw.WriteLine();
 				}
 
@@ -242,7 +256,7 @@ namespace DutyContent
 				OpDuty = ThirdParty.Converter.ToUshort(db["OpDuty"], OpDuty);
 				OpMatch = ThirdParty.Converter.ToUshort(db["OpMatch"], OpMatch);
 				OpInstance = ThirdParty.Converter.ToUshort(db["OpInstance"], OpInstance);
-				OpSouthernBozja = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpSouthernBozja);
+				OpCe = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpCe);
 			}
 
 			//
@@ -302,7 +316,9 @@ namespace DutyContent
 				Color.FromArgb(0xFF, 0xDD, 0xA0, 0xDD),
 			};
 			public bool PingGraph { get; set; }
+			public bool PingShowLoss { get; set; }
 			public string PingDefAddr { get; set; }
+			public int PingGraphType { get; set; }
 
 			//
 			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram || UseNotifyDiscordWebhook;
@@ -356,8 +372,10 @@ namespace DutyContent
 				sw.WriteLine("DutyPingColor1={0:X}", PingColors[1].ToArgb());
 				sw.WriteLine("DutyPingColor2={0:X}", PingColors[2].ToArgb());
 				sw.WriteLine("DutyPingColor3={0:X}", PingColors[3].ToArgb());
+				sw.WriteLine("DutyPingShowLoss={0}", PingShowLoss);
 				sw.WriteLine("DutyPingGraph={0}", PingGraph);
 				sw.WriteLine("DutyPingDefAddr={0}", PingDefAddr);
+				sw.WriteLine("DutyPingGraphType={0}", PingGraphType);
 				sw.WriteLine();
 			}
 
@@ -401,8 +419,10 @@ namespace DutyContent
 				PingColors[1] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor1"], PingColors[1]);
 				PingColors[2] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor2"], PingColors[2]);
 				PingColors[3] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor3"], PingColors[3]);
+				PingShowLoss = ThirdParty.Converter.ToBool(db["DutyPingShowLoss"]);
 				PingGraph = ThirdParty.Converter.ToBool(db["DutyPingGraph"]);
 				PingDefAddr = db.Get("DutyPingDefAddr", string.Empty);
+				PingGraphType = ThirdParty.Converter.ToInt(db["PingGraphType"]);
 			}
 		}
 
@@ -440,19 +460,24 @@ namespace DutyContent
 		//
 		public class ConnectionList
 		{
-			public List<ThirdParty.NativeMethods.TcpRow> Conns = new List<ThirdParty.NativeMethods.TcpRow>();
+			public SortedSet<ThirdParty.NativeMethods.TcpRow> Conns = new SortedSet<ThirdParty.NativeMethods.TcpRow>();
+
+			public int Count => Conns.Count;
 
 			public ThirdParty.NativeMethods.TcpRow[] CopyConnection()
 			{
 				ThirdParty.NativeMethods.TcpRow[] ret;
 
 				lock (Conns)
-					ret = Conns.ToArray();
+				{
+					ret = new ThirdParty.NativeMethods.TcpRow[Conns.Count];
+					Conns.CopyTo(ret);
+				}
 
 				return ret;
 			}
 
-			public void GetConnections(Process process)
+			public void BuildConnections(Process process)
 			{
 				var size = 0;
 				ThirdParty.NativeMethods.GetExtendedTcpTable(IntPtr.Zero, ref size, true, AddressFamily.InterNetwork, 4);
