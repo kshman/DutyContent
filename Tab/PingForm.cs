@@ -45,6 +45,7 @@ namespace DutyContent.Tab
 			btnPingColor2.BackColor = DcConfig.Duty.PingColors[1];
 			btnPingColor3.BackColor = DcConfig.Duty.PingColors[2];
 			btnPingColor4.BackColor = DcConfig.Duty.PingColors[3];
+			chkPingShowLoss.Checked = DcConfig.Duty.PingShowLoss;
 			chkPingGraph.Checked = DcConfig.Duty.PingGraph;
 			cboPingGraphType.SelectedIndex = DcConfig.Duty.PingGraphType;
 
@@ -108,6 +109,7 @@ namespace DutyContent.Tab
 			lblPingDefAddr.Text = Locale.Text(408);
 			lblPingAddress.Text = Locale.Text(409);
 			lblPingGraphType.Text = Locale.Text(410);
+			chkPingShowLoss.Text = Locale.Text(413);
 		}
 
 		private void SaveConfig(int interval = 5000)
@@ -175,6 +177,16 @@ namespace DutyContent.Tab
 		private void BtnPingColor4_Click(object sender, EventArgs e)
 		{
 			PingColorWorker(3, btnPingColor4);
+		}
+
+		private void ChkPingShowLoss_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.PingShowLoss = chkPingShowLoss.Checked;
+
+			SaveConfig();
 		}
 
 		private void ChkPingGraph_CheckedChanged(object sender, EventArgs e)
@@ -300,7 +312,7 @@ namespace DutyContent.Tab
 			//MesgLog.L("Ping: {0}, {1}%", rtt, loss);
 
 			Color color;
-			if (loss > 0.0 || rtt > 150)
+			if (rtt > 150)
 				color = DcConfig.Duty.PingColors[3];
 			else if (rtt > 100)
 				color = DcConfig.Duty.PingColors[2];
@@ -308,6 +320,9 @@ namespace DutyContent.Tab
 				color = DcConfig.Duty.PingColors[1];
 			else
 				color = DcConfig.Duty.PingColors[0];
+
+			if (!DcConfig.Duty.PingShowLoss)
+				loss = 0.0;
 
 			if (_last_ping != rtt || loss > 0.0 || _color != color)
 			{

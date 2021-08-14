@@ -50,6 +50,7 @@ namespace DutyContent.Tab
 			this.lblPingColors = new System.Windows.Forms.Label();
 			this.chkUsePing = new System.Windows.Forms.CheckBox();
 			this.panelDock = new System.Windows.Forms.Panel();
+			this.chkPingShowLoss = new System.Windows.Forms.CheckBox();
 			this.panel6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbxPingGraph)).BeginInit();
 			this.tlpnPingColors.SuspendLayout();
@@ -62,6 +63,7 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel6.AutoScroll = true;
 			this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel6.Controls.Add(this.chkPingShowLoss);
 			this.panel6.Controls.Add(this.cboPingGraphType);
 			this.panel6.Controls.Add(this.lblPingGraphType);
 			this.panel6.Controls.Add(this.lstPingAddress);
@@ -332,6 +334,18 @@ namespace DutyContent.Tab
 			this.panelDock.Size = new System.Drawing.Size(804, 381);
 			this.panelDock.TabIndex = 3;
 			// 
+			// chkPingShowLoss
+			// 
+			this.chkPingShowLoss.AutoSize = true;
+			this.chkPingShowLoss.Location = new System.Drawing.Point(37, 140);
+			this.chkPingShowLoss.Margin = new System.Windows.Forms.Padding(4);
+			this.chkPingShowLoss.Name = "chkPingShowLoss";
+			this.chkPingShowLoss.Size = new System.Drawing.Size(51, 22);
+			this.chkPingShowLoss.TabIndex = 20;
+			this.chkPingShowLoss.Text = "413";
+			this.chkPingShowLoss.UseVisualStyleBackColor = true;
+			this.chkPingShowLoss.CheckedChanged += new System.EventHandler(this.ChkPingShowLoss_CheckedChanged);
+			// 
 			// PingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -377,5 +391,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.ListBox lstPingAddress;
 		private System.Windows.Forms.ComboBox cboPingGraphType;
 		private System.Windows.Forms.Label lblPingGraphType;
+		private System.Windows.Forms.CheckBox chkPingShowLoss;
 	}
 }

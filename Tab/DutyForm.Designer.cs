@@ -30,27 +30,27 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Duty",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Match",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Instance",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Bozja",
             "",
             "",
@@ -64,7 +64,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset2 = new System.Windows.Forms.RadioButton();
 			this.rdoFatePreset1 = new System.Windows.Forms.RadioButton();
 			this.treeFates = new System.Windows.Forms.TreeView();
-			this.lstContents = new System.Windows.Forms.ListView();
+			this.lstContents = new DutyContent.ThirdParty.EXListView();
 			this.tabPageSetting = new System.Windows.Forms.TabPage();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.chkDiscowkTts = new System.Windows.Forms.CheckBox();
@@ -147,7 +147,7 @@ namespace DutyContent.Tab
 			this.tabContent.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabContent.ImageList = this.ilTabContent;
 			this.tabContent.Location = new System.Drawing.Point(0, 0);
-			this.tabContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabContent.Margin = new System.Windows.Forms.Padding(4);
 			this.tabContent.Name = "tabContent";
 			this.tabContent.SelectedIndex = 0;
 			this.tabContent.Size = new System.Drawing.Size(804, 561);
@@ -158,9 +158,9 @@ namespace DutyContent.Tab
 			this.tabPageContent.Controls.Add(this.splitContainer1);
 			this.tabPageContent.ImageIndex = 0;
 			this.tabPageContent.Location = new System.Drawing.Point(4, 39);
-			this.tabPageContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabPageContent.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageContent.Name = "tabPageContent";
-			this.tabPageContent.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabPageContent.Padding = new System.Windows.Forms.Padding(4);
 			this.tabPageContent.Size = new System.Drawing.Size(796, 518);
 			this.tabPageContent.TabIndex = 0;
 			this.tabPageContent.Text = "301";
@@ -170,7 +170,7 @@ namespace DutyContent.Tab
 			// 
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer1.Location = new System.Drawing.Point(4, 4);
-			this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
 			this.splitContainer1.Name = "splitContainer1";
 			// 
 			// splitContainer1.Panel1
@@ -194,7 +194,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset4.AutoSize = true;
 			this.rdoFatePreset4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rdoFatePreset4.Location = new System.Drawing.Point(125, 0);
-			this.rdoFatePreset4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.rdoFatePreset4.Margin = new System.Windows.Forms.Padding(4);
 			this.rdoFatePreset4.Name = "rdoFatePreset4";
 			this.rdoFatePreset4.Size = new System.Drawing.Size(32, 19);
 			this.rdoFatePreset4.TabIndex = 4;
@@ -209,7 +209,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset3.AutoSize = true;
 			this.rdoFatePreset3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rdoFatePreset3.Location = new System.Drawing.Point(85, 0);
-			this.rdoFatePreset3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.rdoFatePreset3.Margin = new System.Windows.Forms.Padding(4);
 			this.rdoFatePreset3.Name = "rdoFatePreset3";
 			this.rdoFatePreset3.Size = new System.Drawing.Size(32, 19);
 			this.rdoFatePreset3.TabIndex = 3;
@@ -224,7 +224,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset2.AutoSize = true;
 			this.rdoFatePreset2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rdoFatePreset2.Location = new System.Drawing.Point(45, 0);
-			this.rdoFatePreset2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.rdoFatePreset2.Margin = new System.Windows.Forms.Padding(4);
 			this.rdoFatePreset2.Name = "rdoFatePreset2";
 			this.rdoFatePreset2.Size = new System.Drawing.Size(32, 19);
 			this.rdoFatePreset2.TabIndex = 2;
@@ -240,7 +240,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset1.Checked = true;
 			this.rdoFatePreset1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rdoFatePreset1.Location = new System.Drawing.Point(5, 0);
-			this.rdoFatePreset1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.rdoFatePreset1.Margin = new System.Windows.Forms.Padding(4);
 			this.rdoFatePreset1.Name = "rdoFatePreset1";
 			this.rdoFatePreset1.Size = new System.Drawing.Size(32, 19);
 			this.rdoFatePreset1.TabIndex = 1;
@@ -258,7 +258,7 @@ namespace DutyContent.Tab
 			this.treeFates.CheckBoxes = true;
 			this.treeFates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.treeFates.Location = new System.Drawing.Point(0, 27);
-			this.treeFates.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.treeFates.Margin = new System.Windows.Forms.Padding(4);
 			this.treeFates.Name = "treeFates";
 			this.treeFates.Size = new System.Drawing.Size(235, 481);
 			this.treeFates.TabIndex = 0;
@@ -266,15 +266,18 @@ namespace DutyContent.Tab
 			// 
 			// lstContents
 			// 
+			this.lstContents.ControlPadding = 4;
 			this.lstContents.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstContents.FullRowSelect = true;
 			this.lstContents.HideSelection = false;
 			this.lstContents.Location = new System.Drawing.Point(0, 0);
-			this.lstContents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.lstContents.Name = "lstContents";
+			this.lstContents.OwnerDraw = true;
 			this.lstContents.Size = new System.Drawing.Size(542, 510);
 			this.lstContents.TabIndex = 0;
 			this.lstContents.UseCompatibleStateImageBehavior = false;
 			this.lstContents.View = System.Windows.Forms.View.Details;
+			this.lstContents.Resize += new System.EventHandler(this.LstContents_Resize);
 			// 
 			// tabPageSetting
 			// 
@@ -285,9 +288,9 @@ namespace DutyContent.Tab
 			this.tabPageSetting.Controls.Add(this.panel1);
 			this.tabPageSetting.ImageIndex = 1;
 			this.tabPageSetting.Location = new System.Drawing.Point(4, 39);
-			this.tabPageSetting.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabPageSetting.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageSetting.Name = "tabPageSetting";
-			this.tabPageSetting.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabPageSetting.Padding = new System.Windows.Forms.Padding(4);
 			this.tabPageSetting.Size = new System.Drawing.Size(796, 518);
 			this.tabPageSetting.TabIndex = 1;
 			this.tabPageSetting.Text = "302";
@@ -313,7 +316,7 @@ namespace DutyContent.Tab
 			this.panel4.Controls.Add(this.txtLineToken);
 			this.panel4.Controls.Add(this.chkUseNotifyLine);
 			this.panel4.Location = new System.Drawing.Point(0, 267);
-			this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel4.Margin = new System.Windows.Forms.Padding(4);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(792, 228);
 			this.panel4.TabIndex = 3;
@@ -323,7 +326,7 @@ namespace DutyContent.Tab
 			this.chkDiscowkTts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkDiscowkTts.AutoSize = true;
 			this.chkDiscowkTts.Location = new System.Drawing.Point(543, 168);
-			this.chkDiscowkTts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkDiscowkTts.Margin = new System.Windows.Forms.Padding(4);
 			this.chkDiscowkTts.Name = "chkDiscowkTts";
 			this.chkDiscowkTts.Size = new System.Drawing.Size(51, 22);
 			this.chkDiscowkTts.TabIndex = 5;
@@ -346,7 +349,7 @@ namespace DutyContent.Tab
 			this.txtDiscowkUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtDiscowkUrl.Location = new System.Drawing.Point(160, 194);
-			this.txtDiscowkUrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtDiscowkUrl.Margin = new System.Windows.Forms.Padding(4);
 			this.txtDiscowkUrl.Name = "txtDiscowkUrl";
 			this.txtDiscowkUrl.Size = new System.Drawing.Size(434, 24);
 			this.txtDiscowkUrl.TabIndex = 17;
@@ -357,7 +360,7 @@ namespace DutyContent.Tab
 			this.chkUseNotifyDiscowk.AutoSize = true;
 			this.chkUseNotifyDiscowk.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.chkUseNotifyDiscowk.Location = new System.Drawing.Point(4, 166);
-			this.chkUseNotifyDiscowk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkUseNotifyDiscowk.Margin = new System.Windows.Forms.Padding(4);
 			this.chkUseNotifyDiscowk.Name = "chkUseNotifyDiscowk";
 			this.chkUseNotifyDiscowk.Size = new System.Drawing.Size(58, 24);
 			this.chkUseNotifyDiscowk.TabIndex = 16;
@@ -380,7 +383,7 @@ namespace DutyContent.Tab
 			this.txtTelegramToken.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtTelegramToken.Location = new System.Drawing.Point(160, 126);
-			this.txtTelegramToken.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtTelegramToken.Margin = new System.Windows.Forms.Padding(4);
 			this.txtTelegramToken.Name = "txtTelegramToken";
 			this.txtTelegramToken.Size = new System.Drawing.Size(434, 24);
 			this.txtTelegramToken.TabIndex = 14;
@@ -399,7 +402,7 @@ namespace DutyContent.Tab
 			// txtTelegramId
 			// 
 			this.txtTelegramId.Location = new System.Drawing.Point(160, 94);
-			this.txtTelegramId.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtTelegramId.Margin = new System.Windows.Forms.Padding(4);
 			this.txtTelegramId.Name = "txtTelegramId";
 			this.txtTelegramId.Size = new System.Drawing.Size(173, 24);
 			this.txtTelegramId.TabIndex = 12;
@@ -410,7 +413,7 @@ namespace DutyContent.Tab
 			this.chkUseNotifyTelegram.AutoSize = true;
 			this.chkUseNotifyTelegram.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.chkUseNotifyTelegram.Location = new System.Drawing.Point(4, 69);
-			this.chkUseNotifyTelegram.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkUseNotifyTelegram.Margin = new System.Windows.Forms.Padding(4);
 			this.chkUseNotifyTelegram.Name = "chkUseNotifyTelegram";
 			this.chkUseNotifyTelegram.Size = new System.Drawing.Size(58, 24);
 			this.chkUseNotifyTelegram.TabIndex = 11;
@@ -424,7 +427,7 @@ namespace DutyContent.Tab
 			this.btnTestNotify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.btnTestNotify.Enabled = false;
 			this.btnTestNotify.Location = new System.Drawing.Point(624, 129);
-			this.btnTestNotify.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnTestNotify.Margin = new System.Windows.Forms.Padding(4);
 			this.btnTestNotify.Name = "btnTestNotify";
 			this.btnTestNotify.Size = new System.Drawing.Size(162, 92);
 			this.btnTestNotify.TabIndex = 4;
@@ -460,7 +463,7 @@ namespace DutyContent.Tab
 			this.txtLineToken.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtLineToken.Location = new System.Drawing.Point(160, 29);
-			this.txtLineToken.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtLineToken.Margin = new System.Windows.Forms.Padding(4);
 			this.txtLineToken.Name = "txtLineToken";
 			this.txtLineToken.Size = new System.Drawing.Size(434, 24);
 			this.txtLineToken.TabIndex = 1;
@@ -471,7 +474,7 @@ namespace DutyContent.Tab
 			this.chkUseNotifyLine.AutoSize = true;
 			this.chkUseNotifyLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.chkUseNotifyLine.Location = new System.Drawing.Point(4, 4);
-			this.chkUseNotifyLine.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkUseNotifyLine.Margin = new System.Windows.Forms.Padding(4);
 			this.chkUseNotifyLine.Name = "chkUseNotifyLine";
 			this.chkUseNotifyLine.Size = new System.Drawing.Size(58, 24);
 			this.chkUseNotifyLine.TabIndex = 0;
@@ -490,7 +493,7 @@ namespace DutyContent.Tab
 			this.panel3.Controls.Add(this.cboDataset);
 			this.panel3.Controls.Add(this.lblDataSet);
 			this.panel3.Location = new System.Drawing.Point(0, 8);
-			this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel3.Margin = new System.Windows.Forms.Padding(4);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(792, 77);
 			this.panel3.TabIndex = 2;
@@ -500,7 +503,7 @@ namespace DutyContent.Tab
 			this.cboPacketset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboPacketset.FormattingEnabled = true;
 			this.cboPacketset.Location = new System.Drawing.Point(160, 42);
-			this.cboPacketset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.cboPacketset.Margin = new System.Windows.Forms.Padding(4);
 			this.cboPacketset.Name = "cboPacketset";
 			this.cboPacketset.Size = new System.Drawing.Size(362, 26);
 			this.cboPacketset.TabIndex = 13;
@@ -532,7 +535,7 @@ namespace DutyContent.Tab
 			this.cboDataset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboDataset.FormattingEnabled = true;
 			this.cboDataset.Location = new System.Drawing.Point(160, 8);
-			this.cboDataset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.cboDataset.Margin = new System.Windows.Forms.Padding(4);
 			this.cboDataset.Name = "cboDataset";
 			this.cboDataset.Size = new System.Drawing.Size(250, 26);
 			this.cboDataset.TabIndex = 11;
@@ -564,7 +567,7 @@ namespace DutyContent.Tab
 			this.panel2.Controls.Add(this.chkEnableSound);
 			this.panel2.Controls.Add(this.lblSoundInstance);
 			this.panel2.Location = new System.Drawing.Point(0, 161);
-			this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel2.Margin = new System.Windows.Forms.Padding(4);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(792, 98);
 			this.panel2.TabIndex = 1;
@@ -575,7 +578,7 @@ namespace DutyContent.Tab
 			this.btnSoundPlayFate.Enabled = false;
 			this.btnSoundPlayFate.Image = global::DutyContent.Properties.Resources.pix_play;
 			this.btnSoundPlayFate.Location = new System.Drawing.Point(756, 62);
-			this.btnSoundPlayFate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnSoundPlayFate.Margin = new System.Windows.Forms.Padding(4);
 			this.btnSoundPlayFate.Name = "btnSoundPlayFate";
 			this.btnSoundPlayFate.Size = new System.Drawing.Size(30, 30);
 			this.btnSoundPlayFate.TabIndex = 8;
@@ -588,7 +591,7 @@ namespace DutyContent.Tab
 			this.btnSoundPlayInstance.Enabled = false;
 			this.btnSoundPlayInstance.Image = global::DutyContent.Properties.Resources.pix_play;
 			this.btnSoundPlayInstance.Location = new System.Drawing.Point(756, 24);
-			this.btnSoundPlayInstance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnSoundPlayInstance.Margin = new System.Windows.Forms.Padding(4);
 			this.btnSoundPlayInstance.Name = "btnSoundPlayInstance";
 			this.btnSoundPlayInstance.Size = new System.Drawing.Size(30, 30);
 			this.btnSoundPlayInstance.TabIndex = 7;
@@ -601,7 +604,7 @@ namespace DutyContent.Tab
 			this.btnSoundFindFate.Enabled = false;
 			this.btnSoundFindFate.Image = global::DutyContent.Properties.Resources.pix_magnify;
 			this.btnSoundFindFate.Location = new System.Drawing.Point(718, 62);
-			this.btnSoundFindFate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnSoundFindFate.Margin = new System.Windows.Forms.Padding(4);
 			this.btnSoundFindFate.Name = "btnSoundFindFate";
 			this.btnSoundFindFate.Size = new System.Drawing.Size(30, 30);
 			this.btnSoundFindFate.TabIndex = 6;
@@ -614,7 +617,7 @@ namespace DutyContent.Tab
 			this.btnSoundFindInstance.Enabled = false;
 			this.btnSoundFindInstance.Image = global::DutyContent.Properties.Resources.pix_magnify;
 			this.btnSoundFindInstance.Location = new System.Drawing.Point(718, 24);
-			this.btnSoundFindInstance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnSoundFindInstance.Margin = new System.Windows.Forms.Padding(4);
 			this.btnSoundFindInstance.Name = "btnSoundFindInstance";
 			this.btnSoundFindInstance.Size = new System.Drawing.Size(30, 30);
 			this.btnSoundFindInstance.TabIndex = 2;
@@ -637,7 +640,7 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSoundFate.Enabled = false;
 			this.txtSoundFate.Location = new System.Drawing.Point(160, 62);
-			this.txtSoundFate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtSoundFate.Margin = new System.Windows.Forms.Padding(4);
 			this.txtSoundFate.Name = "txtSoundFate";
 			this.txtSoundFate.ReadOnly = true;
 			this.txtSoundFate.Size = new System.Drawing.Size(550, 24);
@@ -649,7 +652,7 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSoundInstance.Enabled = false;
 			this.txtSoundInstance.Location = new System.Drawing.Point(160, 30);
-			this.txtSoundInstance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtSoundInstance.Margin = new System.Windows.Forms.Padding(4);
 			this.txtSoundInstance.Name = "txtSoundInstance";
 			this.txtSoundInstance.ReadOnly = true;
 			this.txtSoundInstance.Size = new System.Drawing.Size(550, 24);
@@ -660,7 +663,7 @@ namespace DutyContent.Tab
 			this.chkEnableSound.AutoSize = true;
 			this.chkEnableSound.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.chkEnableSound.Location = new System.Drawing.Point(8, 4);
-			this.chkEnableSound.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkEnableSound.Margin = new System.Windows.Forms.Padding(4);
 			this.chkEnableSound.Name = "chkEnableSound";
 			this.chkEnableSound.Size = new System.Drawing.Size(58, 24);
 			this.chkEnableSound.TabIndex = 4;
@@ -689,7 +692,7 @@ namespace DutyContent.Tab
 			this.panel1.Controls.Add(this.lblOverlayTransparent);
 			this.panel1.Controls.Add(this.chkEnableOverlay);
 			this.panel1.Location = new System.Drawing.Point(0, 93);
-			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(792, 60);
 			this.panel1.TabIndex = 0;
@@ -699,7 +702,7 @@ namespace DutyContent.Tab
 			this.chkOverlayClickThru.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkOverlayClickThru.AutoSize = true;
 			this.chkOverlayClickThru.Location = new System.Drawing.Point(681, 6);
-			this.chkOverlayClickThru.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkOverlayClickThru.Margin = new System.Windows.Forms.Padding(4);
 			this.chkOverlayClickThru.Name = "chkOverlayClickThru";
 			this.chkOverlayClickThru.Size = new System.Drawing.Size(51, 22);
 			this.chkOverlayClickThru.TabIndex = 4;
@@ -712,7 +715,7 @@ namespace DutyContent.Tab
 			// 
 			this.progbOverlayTransparent.Enabled = false;
 			this.progbOverlayTransparent.Location = new System.Drawing.Point(160, 18);
-			this.progbOverlayTransparent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.progbOverlayTransparent.Margin = new System.Windows.Forms.Padding(4);
 			this.progbOverlayTransparent.Maximum = 255;
 			this.progbOverlayTransparent.Name = "progbOverlayTransparent";
 			this.progbOverlayTransparent.Size = new System.Drawing.Size(364, 32);
@@ -726,7 +729,7 @@ namespace DutyContent.Tab
 			this.btnOverlayDimming.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.btnOverlayDimming.Enabled = false;
 			this.btnOverlayDimming.Location = new System.Drawing.Point(740, 4);
-			this.btnOverlayDimming.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnOverlayDimming.Margin = new System.Windows.Forms.Padding(4);
 			this.btnOverlayDimming.Name = "btnOverlayDimming";
 			this.btnOverlayDimming.Size = new System.Drawing.Size(46, 46);
 			this.btnOverlayDimming.TabIndex = 3;
@@ -749,7 +752,7 @@ namespace DutyContent.Tab
 			this.chkEnableOverlay.AutoSize = true;
 			this.chkEnableOverlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.chkEnableOverlay.Location = new System.Drawing.Point(4, 4);
-			this.chkEnableOverlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.chkEnableOverlay.Margin = new System.Windows.Forms.Padding(4);
 			this.chkEnableOverlay.Name = "chkEnableOverlay";
 			this.chkEnableOverlay.Size = new System.Drawing.Size(58, 24);
 			this.chkEnableOverlay.TabIndex = 0;
@@ -763,9 +766,9 @@ namespace DutyContent.Tab
 			this.tabPagePacket.Controls.Add(this.panel5);
 			this.tabPagePacket.ImageIndex = 2;
 			this.tabPagePacket.Location = new System.Drawing.Point(4, 39);
-			this.tabPagePacket.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabPagePacket.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPagePacket.Name = "tabPagePacket";
-			this.tabPagePacket.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tabPagePacket.Padding = new System.Windows.Forms.Padding(4);
 			this.tabPagePacket.Size = new System.Drawing.Size(796, 518);
 			this.tabPagePacket.TabIndex = 2;
 			this.tabPagePacket.Text = "337";
@@ -787,7 +790,7 @@ namespace DutyContent.Tab
 			this.panel5.Controls.Add(this.lstPacketInfo);
 			this.panel5.Controls.Add(this.lblPacketFinder);
 			this.panel5.Location = new System.Drawing.Point(0, 0);
-			this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel5.Margin = new System.Windows.Forms.Padding(4);
 			this.panel5.Name = "panel5";
 			this.panel5.Size = new System.Drawing.Size(792, 361);
 			this.panel5.TabIndex = 0;
@@ -809,7 +812,7 @@ namespace DutyContent.Tab
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPacketDescription.Enabled = false;
 			this.txtPacketDescription.Location = new System.Drawing.Point(340, 80);
-			this.txtPacketDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtPacketDescription.Margin = new System.Windows.Forms.Padding(4);
 			this.txtPacketDescription.Name = "txtPacketDescription";
 			this.txtPacketDescription.Size = new System.Drawing.Size(443, 24);
 			this.txtPacketDescription.TabIndex = 8;
@@ -829,7 +832,7 @@ namespace DutyContent.Tab
 			this.btnPacketApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPacketApply.Enabled = false;
 			this.btnPacketApply.Location = new System.Drawing.Point(601, 4);
-			this.btnPacketApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnPacketApply.Margin = new System.Windows.Forms.Padding(4);
 			this.btnPacketApply.Name = "btnPacketApply";
 			this.btnPacketApply.Size = new System.Drawing.Size(184, 42);
 			this.btnPacketApply.TabIndex = 6;
@@ -842,7 +845,7 @@ namespace DutyContent.Tab
 			// 
 			this.btnPacketStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPacketStart.Location = new System.Drawing.Point(407, 4);
-			this.btnPacketStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnPacketStart.Margin = new System.Windows.Forms.Padding(4);
 			this.btnPacketStart.Name = "btnPacketStart";
 			this.btnPacketStart.Size = new System.Drawing.Size(184, 42);
 			this.btnPacketStart.TabIndex = 5;
@@ -865,7 +868,7 @@ namespace DutyContent.Tab
 			this.lstBozjaInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstBozjaInfo.HideSelection = false;
 			this.lstBozjaInfo.Location = new System.Drawing.Point(340, 148);
-			this.lstBozjaInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.lstBozjaInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.lstBozjaInfo.MultiSelect = false;
 			this.lstBozjaInfo.Name = "lstBozjaInfo";
 			this.lstBozjaInfo.Size = new System.Drawing.Size(444, 203);
@@ -911,7 +914,7 @@ namespace DutyContent.Tab
 			this.txtPacketInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtPacketInfo.Enabled = false;
 			this.txtPacketInfo.Location = new System.Drawing.Point(4, 206);
-			this.txtPacketInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtPacketInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.txtPacketInfo.Multiline = true;
 			this.txtPacketInfo.Name = "txtPacketInfo";
 			this.txtPacketInfo.ReadOnly = true;
@@ -931,13 +934,13 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstPacketInfo.HideSelection = false;
 			this.lstPacketInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14,
-            listViewItem15});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
 			this.lstPacketInfo.Location = new System.Drawing.Point(4, 58);
-			this.lstPacketInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.lstPacketInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.lstPacketInfo.MultiSelect = false;
 			this.lstPacketInfo.Name = "lstPacketInfo";
 			this.lstPacketInfo.Size = new System.Drawing.Size(328, 140);
@@ -995,8 +998,8 @@ namespace DutyContent.Tab
 			this.ClientSize = new System.Drawing.Size(804, 561);
 			this.Controls.Add(this.tabContent);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.MinimumSize = new System.Drawing.Size(820, 0);
+			this.Margin = new System.Windows.Forms.Padding(4);
+			this.MinimumSize = new System.Drawing.Size(820, 39);
 			this.Name = "DutyForm";
 			this.Text = "Duty";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DutyTabForm_FormClosing);
@@ -1092,6 +1095,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.TextBox txtDiscowkUrl;
 		private System.Windows.Forms.CheckBox chkUseNotifyDiscowk;
 		private System.Windows.Forms.CheckBox chkDiscowkTts;
-		private System.Windows.Forms.ListView lstContents;
+		private ThirdParty.EXListView lstContents;
 	}
 }

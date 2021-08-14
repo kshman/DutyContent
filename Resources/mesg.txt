@@ -33,6 +33,9 @@ LANG=English
 34={0} ({1})
 35=Access clipboard failed!
 36=Window control error!
+37=Debug
+38=Match
+39=Entry
 
 99=DutyContent Plugin {0}
 
@@ -106,6 +109,7 @@ LANG=English
 410=Graph type
 411=Linear
 412=Curved
+413=Show loss rate
 
 500=Log
 501=Copy

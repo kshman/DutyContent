@@ -162,13 +162,13 @@ namespace DutyContent
 		public class PacketConfig
 		{
 			// Packet
-			public long Version { get; set; } = 2005551;
-			public string Description { get; set; } = "5.55 HotFix";
-			public ushort OpFate { get; set; } = 858;
-			public ushort OpDuty { get; set; } = 271;
-			public ushort OpMatch { get; set; } = 220;
-			public ushort OpInstance { get; set; } = 923;
-			public ushort OpSouthernBozja { get; set; } = 584;
+			public long Version { get; set; } = 2005580;
+			public string Description { get; set; } = "5.58 (JP/NA/EU/OC)";
+			public ushort OpFate { get; set; } = 788;
+			public ushort OpDuty { get; set; } = 676;
+			public ushort OpMatch { get; set; } = 428;
+			public ushort OpInstance { get; set; } = 234;
+			public ushort OpCe { get; set; } = 269;
 
 			// packet version structure
 			// 0 - Service area (1:Custom, 2:Global, 3:Korea)
@@ -199,7 +199,7 @@ namespace DutyContent
 					OpDuty = right.OpDuty;
 					OpMatch = right.OpMatch;
 					OpInstance = right.OpInstance;
-					OpSouthernBozja = right.OpSouthernBozja;
+					OpCe = right.OpCe;
 				}
 				else
 				{
@@ -207,7 +207,7 @@ namespace DutyContent
 					OpDuty = 0;
 					OpMatch = 0;
 					OpInstance = 0;
-					OpSouthernBozja = 0;
+					OpCe = 0;
 				}
 			}
 
@@ -241,7 +241,7 @@ namespace DutyContent
 					sw.WriteLine("OpDuty={0}", OpDuty);
 					sw.WriteLine("OpMatch={0}", OpMatch);
 					sw.WriteLine("OpInstance={0}", OpInstance);
-					sw.WriteLine("OpSouthernBozja={0}", OpSouthernBozja);
+					sw.WriteLine("OpSouthernBozja={0}", OpCe);
 					sw.WriteLine();
 				}
 
@@ -256,7 +256,7 @@ namespace DutyContent
 				OpDuty = ThirdParty.Converter.ToUshort(db["OpDuty"], OpDuty);
 				OpMatch = ThirdParty.Converter.ToUshort(db["OpMatch"], OpMatch);
 				OpInstance = ThirdParty.Converter.ToUshort(db["OpInstance"], OpInstance);
-				OpSouthernBozja = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpSouthernBozja);
+				OpCe = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpCe);
 			}
 
 			//
@@ -316,6 +316,7 @@ namespace DutyContent
 				Color.FromArgb(0xFF, 0xDD, 0xA0, 0xDD),
 			};
 			public bool PingGraph { get; set; }
+			public bool PingShowLoss { get; set; }
 			public string PingDefAddr { get; set; }
 			public int PingGraphType { get; set; }
 
@@ -371,6 +372,7 @@ namespace DutyContent
 				sw.WriteLine("DutyPingColor1={0:X}", PingColors[1].ToArgb());
 				sw.WriteLine("DutyPingColor2={0:X}", PingColors[2].ToArgb());
 				sw.WriteLine("DutyPingColor3={0:X}", PingColors[3].ToArgb());
+				sw.WriteLine("DutyPingShowLoss={0}", PingShowLoss);
 				sw.WriteLine("DutyPingGraph={0}", PingGraph);
 				sw.WriteLine("DutyPingDefAddr={0}", PingDefAddr);
 				sw.WriteLine("DutyPingGraphType={0}", PingGraphType);
@@ -417,6 +419,7 @@ namespace DutyContent
 				PingColors[1] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor1"], PingColors[1]);
 				PingColors[2] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor2"], PingColors[2]);
 				PingColors[3] = ThirdParty.Converter.ToColorArgb(db["DutyPingColor3"], PingColors[3]);
+				PingShowLoss = ThirdParty.Converter.ToBool(db["DutyPingShowLoss"]);
 				PingGraph = ThirdParty.Converter.ToBool(db["DutyPingGraph"]);
 				PingDefAddr = db.Get("DutyPingDefAddr", string.Empty);
 				PingGraphType = ThirdParty.Converter.ToInt(db["PingGraphType"]);

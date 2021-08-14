@@ -33,6 +33,11 @@ namespace DutyContent.Tab
 		//
 		private Overlay.DutyOvForm _overlay;
 
+		//
+		private object _lock_contents = new object();
+		private ImageList _ilCategory;
+
+		//
 		public DutyForm()
 		{
 			_self = this;
@@ -40,6 +45,17 @@ namespace DutyContent.Tab
 			InitializeComponent();
 
 			_overlay = new Overlay.DutyOvForm();
+
+			//
+			ImageList ildmy = new ImageList() { ImageSize = new Size(1, 40) };
+			lstContents.SmallImageList = ildmy;
+
+			lstContents.MySortBrush = SystemBrushes.ControlLight;
+			lstContents.MyHighlightBrush = Brushes.LightGoldenrodYellow;
+			lstContents.GridLines = true;
+			lstContents.ControlPadding = 1;
+
+			ThirdParty.WinFormSupp.DoubleBuffered(lstContents, true);
 		}
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -181,6 +197,76 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = Locale.Text(10007);
 			btnPacketApply.Text = Locale.Text(10009);
+
+			// content reset
+			lock (_lock_contents)
+			{
+				lstContents.Items.Clear();
+				lstContents.Columns.Clear();
+
+				Image im_r = Properties.Resources.pix_rdrt_red;
+				Image im_g = Properties.Resources.pix_rdrt_green;
+				Image im_p = Properties.Resources.pix_rdrt_puple;
+				Image im_b = Properties.Resources.pix_rdrt_bline;
+
+				_ilCategory = new ImageList()
+				{
+					ColorDepth = ColorDepth.Depth32Bit,
+					ImageSize = new Size(96, 32),
+				};
+				_ilCategory.Images.Add(CreateCategoryImage(im_b, Locale.Text(27), Brushes.Black));  // none
+				_ilCategory.Images.Add(CreateCategoryImage(im_g, Locale.Text(21)));  // roulette
+				_ilCategory.Images.Add(CreateCategoryImage(im_g, Locale.Text(22)));  // instance
+				_ilCategory.Images.Add(CreateCategoryImage(im_r, Locale.Text(23)));  // FATE
+				_ilCategory.Images.Add(CreateCategoryImage(im_r, Locale.Text(24)));  // skirmish
+				_ilCategory.Images.Add(CreateCategoryImage(im_p, Locale.Text(25)));  // CE
+				_ilCategory.Images.Add(CreateCategoryImage(im_p, Locale.Text(38)));  // Match
+				_ilCategory.Images.Add(CreateCategoryImage(im_g, Locale.Text(39)));  // Entry
+
+				ThirdParty.EXComboBox excbCat = new ThirdParty.EXComboBox();
+				excbCat.DropDownStyle = ComboBoxStyle.DropDownList;
+				excbCat.MyHighlightBrush = Brushes.Goldenrod;
+				excbCat.ItemHeight = 38;
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[0], "0"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[1], "1"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[2], "2"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[3], "3"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[4], "4"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[5], "5"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[6], "6"));
+				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[7], "7"));
+
+				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("ID", 50));
+				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("Type", 100));
+				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("%", 40));
+				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("Name", 300));
+
+				lstContents.BeginUpdate();
+
+				ThirdParty.EXListViewItem li = new ThirdParty.EXListViewItem("");
+				li.SubItems.Add(new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[0], ""));
+				li.SubItems.Add("");
+				li.SubItems.Add(Locale.Text(27));
+				lstContents.Items.Add(li);
+
+				lstContents.EndUpdate();
+			}
+		}
+
+		private Image CreateCategoryImage(Image img, string value, Brush brush = null)
+		{
+			Bitmap bmp = new Bitmap(img);
+			RectangleF rt = new RectangleF(0.0f, 7.0f, 96.0f, 16.0f);
+			StringFormat fmt = new StringFormat() { Alignment = StringAlignment.Center };
+			Font fnt = new Font(Font.FontFamily, 14.0f, FontStyle.Regular, GraphicsUnit.Pixel);
+
+			if (brush == null)
+				brush = Brushes.White;
+
+			using (var g = Graphics.FromImage(bmp))
+				g.DrawString(value, fnt, brush, rt, fmt);
+
+			return bmp;
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -194,7 +280,7 @@ namespace DutyContent.Tab
 				opcode != DcConfig.Packet.OpDuty &&
 				opcode != DcConfig.Packet.OpMatch &&
 				opcode != DcConfig.Packet.OpInstance &&
-				opcode != DcConfig.Packet.OpSouthernBozja)
+				opcode != DcConfig.Packet.OpCe)
 				return;
 
 			var data = message.Skip(32).ToArray();
@@ -202,18 +288,15 @@ namespace DutyContent.Tab
 			// FATE
 			if (opcode == DcConfig.Packet.OpFate)
 			{
-				// 53=begin, 54=end, 62=progress
-				if (data[0] == 53)
-				{
-					var fcode = BitConverter.ToUInt16(data, 4);
+				var fcode = BitConverter.ToUInt16(data, 4);
 
-					if (fcode > 100)
+				if (fcode > 100)
+				{
+					// 53=begin, 54=end, 62=progress
+					if (data[0] == 53)
 					{
 						var fate = DcContent.GetFate(fcode);
-						if (_stq_type != DcContent.SaveTheQueenType.No || IsSkirmishFate(fcode))
-							LogSkirmish(10001, fate.Name);
-						else
-							LogFate(10001, fate.Name);
+						TraceFate(fcode, true, fate, 0);
 
 						if (DcConfig.Duty.Fates[DcConfig.Duty.ActiveFate].Selected.Contains(fcode))
 						{
@@ -224,18 +307,27 @@ namespace DutyContent.Tab
 
 						_last_fate = fcode;
 					}
-				}
-				else if (DcConfig.DebugEnable && data[0] == 62 && data[8] > 0)  // more than 0%
-				{
-					var fcode = BitConverter.ToUInt16(data, 4);
-
-					if (fcode > 100)
+					else if (data[0] == 62 && data[8] > 0)  // more than 0%
 					{
 						var fate = DcContent.TryFate(fcode);
-						if (fate == null)
-							LogDebug("unknown fate {0}% \"{1}\"", data[8], fcode);
 
-						_last_fate = fcode;
+						if (fate != null)
+							TraceFate(fcode, false, fate, data[8]);
+						else
+						{
+							if (DcConfig.DebugEnable)
+							{
+								WriteLog(Color.Magenta, 37, 12, fcode);
+								_last_fate = fcode;
+							}
+						}
+					}
+					else if (data[0] == 54)
+					{
+						var fate = DcContent.TryFate(fcode);
+
+						if (fate != null)
+							TraceFate(fcode, false, fate);
 					}
 				}
 			}
@@ -248,11 +340,12 @@ namespace DutyContent.Tab
 				if (rcode != 0)
 				{
 					var roulette = DcContent.GetRoulette(rcode);
-					LogRoulette(10002, roulette.Name);
+					TraceEntryRoulette(roulette);
 					_overlay.PlayQueue(roulette.Name);
 				}
 				else
 				{
+					// TODO: is this working?
 					var insts = new List<int>();
 					for (var i = 0; i < 5; i++)
 					{
@@ -263,12 +356,13 @@ namespace DutyContent.Tab
 
 					if (insts.Any())
 					{
-						LogInstance(10002, string.Join("/", insts.ToArray()));
+						TraceEntryInstance(insts);
 						_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
 					}
 				}
 
 				DcContent.Missions.Clear();
+				ResetContents();
 			}
 
 			// match
@@ -281,13 +375,13 @@ namespace DutyContent.Tab
 				if (icode == 0 && rcode != 0)
 				{
 					var roulette = DcContent.GetRoulette(rcode);
-					LogRoulette(10003, roulette.Name);
+					TraceMatchRoulette(roulette);
 					name = roulette.Name;
 				}
 				else if (icode != 0)
 				{
 					var instance = DcContent.GetInstance(icode);
-					LogInstance(10003, instance.Name);
+					TraceMatchInstance(instance);
 					name = instance.Name;
 				}
 				else
@@ -312,7 +406,7 @@ namespace DutyContent.Tab
 				{
 					var icode = BitConverter.ToUInt16(data, 0);
 					var instance = DcContent.GetInstance(icode);
-					LogInstance(10004, instance.Name);
+					TraceEnterInstance(instance);
 					_overlay.PlayMatch(Locale.Text(10004, instance.Name));
 
 					DcContent.Missions.Clear();
@@ -323,8 +417,8 @@ namespace DutyContent.Tab
 				}
 			}
 
-			// southen bozja front critical engagement
-			else if (opcode == DcConfig.Packet.OpSouthernBozja)
+			// save the queen critical engagement
+			else if (opcode == DcConfig.Packet.OpCe)
 			{
 				//  0[4] timestamp
 				//  4[2] mmss
@@ -346,20 +440,23 @@ namespace DutyContent.Tab
 
 				var ce = data[8] + DcContent.SaveTheQueenTypeToCeBase(_stq_type);
 				var stat = data[10];
+				var fate = DcContent.GetFate(ce);
 
 				if (stat == 0 /* || data[10] == 3 */)
 				{
 					if (DcContent.Missions.ContainsKey(ce))
 						DcContent.Missions.Remove(ce);
+
+					TraceCe(ce, false, fate);
 				}
 				else if (stat == 1 || stat == 2)
 				{
+					var withlog = false;
+
 					if (!DcContent.Missions.ContainsKey(ce))
 					{
+						withlog = true;
 						DcContent.Missions.Add(ce, 0);
-
-						var fate = DcContent.GetFate(ce);
-						LogCe(10001, fate.Name);
 
 						if (DcConfig.Duty.Fates[DcConfig.Duty.ActiveFate].Selected.Contains(ce))
 						{
@@ -368,16 +465,15 @@ namespace DutyContent.Tab
 							_overlay.PlayFate(fate);
 						}
 					}
+
+					TraceCe(ce, withlog, fate, stat == 1 ? "R" : "E");
 				}
 				else if (stat == 3)
 				{
-					if (DcContent.Missions.ContainsKey(ce))
-					{
+					if (!DcContent.Missions.ContainsKey(ce))
 						DcContent.Missions.Add(ce, 0);
 
-						var fate = DcContent.GetFate(ce);
-						LogCe(10001, fate.Name);
-					}
+					TraceCe(ce, false, fate, data[12].ToString());
 				}
 			}
 		}
@@ -398,6 +494,8 @@ namespace DutyContent.Tab
 			if (DcConfig.DebugEnable)
 				LogDebug("Zone: {0}", zone_id);
 #endif
+
+			ResetContents();
 		}
 
 		//
@@ -409,39 +507,142 @@ namespace DutyContent.Tab
 		}
 
 		//
-		private void LogDebug(string msg, params object[] prms)
+		private void TraceFate(ushort code, bool withlog, DcContent.Fate fate, int progress = -1)
 		{
-			Logger.WriteCategory(Color.Red, "Debug", msg, prms);
+			int key, subs;
+
+			if (_stq_type != DcContent.SaveTheQueenType.No || IsSkirmishFate(code))
+			{
+				key = 24;
+				subs = 4;
+			}
+			else
+			{
+				key = 23;
+				subs = 3;
+			}
+
+			if (withlog)
+				WriteLog(Color.Black, key, 10001, fate.Name);
+
+			lock (_lock_contents)
+			{
+				var sc = code.ToString();
+				var i = UnsafeFindContent(sc, out int nth);
+
+				if (i == null && progress >= 0)
+				{
+					var li = new ThirdParty.EXListViewItem(sc);
+					var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[subs], "");
+
+					li.SubItems.Add(si);
+					li.SubItems.Add(progress.ToString());
+					li.SubItems.Add(fate.Name);
+					lstContents.Items.Add(li);
+				}
+				else
+				{
+					if (progress >= 0)
+						i.SubItems[2].Text = progress.ToString();
+					else if (nth >= 0)
+						lstContents.Items.RemoveAt(nth);
+				}
+			}
 		}
 
 		//
-		private void LogRoulette(int key, params object[] prms)
+		private void TraceCe(int code, bool withlog, DcContent.Fate fate, string progress = null)
 		{
-			WriteLog(Color.Black, 21, key, prms);
+			if (withlog)
+				WriteLog(Color.Black, 25, 10001, fate.Name);
+
+			lock (_lock_contents)
+			{
+				var sc = code.ToString();
+				var i = UnsafeFindContent(sc, out int nth);
+
+				if (i == null && progress != null)
+				{
+					var li = new ThirdParty.EXListViewItem(sc);
+					var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[5], "");
+
+					li.SubItems.Add(si);
+					li.SubItems.Add(progress.ToString());
+					li.SubItems.Add(fate.Name);
+					lstContents.Items.Add(li);
+				}
+				else
+				{
+					if (progress == null)
+						lstContents.Items.RemoveAt(nth);
+					else
+						i.SubItems[2].Text = progress;
+				}
+			}
 		}
 
 		//
-		private void LogInstance(int key, params object[] prms)
+		private void UpdateTraceInstance(string insname, int count, int imageindex)
 		{
-			WriteLog(Color.Black, 22, key, prms);
+			lock (_lock_contents)
+			{
+				if (lstContents.Items.Count > 0)
+				{
+					//lstContents.BeginUpdate();
+
+					var li = lstContents.Items[0];
+
+					var si = li.SubItems[1] as ThirdParty.EXImageListViewSubItem;
+					si.MyImage = _ilCategory.Images[imageindex];
+
+					li.SubItems[2].Text = count == 0 ? string.Empty : count.ToString();
+					li.SubItems[3].Text = insname;
+
+					//lstContents.EndUpdate();
+				}
+			}
 		}
 
 		//
-		private void LogFate(int key, params object[] prms)
+		private void TraceMatchInstance(DcContent.Instance instance)
 		{
-			WriteLog(Color.Black, 23, key, prms);
+			WriteLog(Color.Black, 22, 10003, instance.Name);
+
+			UpdateTraceInstance(instance.Name, 0, 6);
 		}
 
 		//
-		private void LogSkirmish(int key, params object[] prms)
+		private void TraceEnterInstance(DcContent.Instance instance)
 		{
-			WriteLog(Color.Black, 24, key, prms);
+			WriteLog(Color.Black, 22, 10004, instance.Name);
+
+			UpdateTraceInstance(instance.Name, 0, 2);
 		}
 
 		//
-		private void LogCe(int key, params object[] prms)
+		private void TraceEntryInstance(List<int> instances)
 		{
-			WriteLog(Color.Black, 25, key, prms);
+			var ins = string.Join("/", instances.ToArray());
+
+			WriteLog(Color.Black, 22, 10002, ins);
+
+			UpdateTraceInstance(ins, instances.Count, 7);
+		}
+
+		//
+		private void TraceMatchRoulette(DcContent.Roulette roulette)
+		{
+			WriteLog(Color.Black, 22, 10003, roulette.Name);
+
+			UpdateTraceInstance(roulette.Name, 0, 6);
+		}
+
+		//
+		private void TraceEntryRoulette(DcContent.Roulette roulette)
+		{
+			WriteLog(Color.Black, 22, 10002, roulette.Name);
+
+			UpdateTraceInstance(roulette.Name, 0, 1);
 		}
 
 		//
@@ -1122,9 +1323,9 @@ namespace DutyContent.Tab
 			lstPacketInfo.Items[3].SubItems[3].Text = newpk.OpInstance.ToString();
 
 			// Bozja
-			lstPacketInfo.Items[4].SubItems[1].Text = DcConfig.Packet.OpSouthernBozja.ToString();
+			lstPacketInfo.Items[4].SubItems[1].Text = DcConfig.Packet.OpCe.ToString();
 			lstPacketInfo.Items[4].SubItems[2].Text = "";
-			lstPacketInfo.Items[4].SubItems[3].Text = newpk.OpSouthernBozja.ToString();
+			lstPacketInfo.Items[4].SubItems[3].Text = newpk.OpCe.ToString();
 		}
 
 		private void BtnPacketStart_Click(object sender, EventArgs e)
@@ -1209,7 +1410,7 @@ namespace DutyContent.Tab
 					break;
 
 				case 4:
-					v = _new_packet.OpSouthernBozja = DcConfig.Packet.OpSouthernBozja;
+					v = _new_packet.OpCe = DcConfig.Packet.OpCe;
 					break;
 			}
 
@@ -1227,10 +1428,10 @@ namespace DutyContent.Tab
 
 			ushort opcode = (ushort)lstBozjaInfo.SelectedItems[0].Tag;
 
-			_new_packet.OpSouthernBozja = opcode;
+			_new_packet.OpCe = opcode;
 
 			lstPacketInfo.Items[4].SubItems[2].Text = Locale.Text(10023);
-			lstPacketInfo.Items[4].SubItems[3].Text = _new_packet.OpSouthernBozja.ToString();
+			lstPacketInfo.Items[4].SubItems[3].Text = _new_packet.OpCe.ToString();
 		}
 
 		private void LstBozjaInfo_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1488,7 +1689,7 @@ namespace DutyContent.Tab
 					DcConfig.Packet.OpDuty = pk.OpDuty;
 					DcConfig.Packet.OpMatch = pk.OpMatch;
 					DcConfig.Packet.OpInstance = pk.OpInstance;
-					DcConfig.Packet.OpSouthernBozja = pk.OpSouthernBozja;
+					DcConfig.Packet.OpCe = pk.OpCe;
 
 					var nfn = DcConfig.BuildPacketFileName(name);
 					pk.Save(nfn);
@@ -1557,6 +1758,66 @@ namespace DutyContent.Tab
 
 				if (i.Key.Equals(DcConfig.Duty.PacketSet))
 					cboPacketset.SelectedIndex = n;
+			}
+		}
+
+		private void LstContents_Resize(object sender, EventArgs e)
+		{
+			lock (_lock_contents)
+			{
+				if (lstContents.Columns.Count > 0)
+				{
+					lstContents.Columns[lstContents.Columns.Count - 1].Width = -2;
+				}
+			}
+		}
+
+		private void ResetContents()
+		{
+			lock (_lock_contents)
+			{
+				lstContents.BeginUpdate();
+
+				for (var i = lstContents.Items.Count - 1; i > 0; i--)
+					lstContents.Items.RemoveAt(1);
+
+				lstContents.EndUpdate();
+			}
+		}
+
+		private ListViewItem UnsafeFindContent(string code, out int nth)
+		{
+			nth = -1;
+
+			if (lstContents.Items.Count <= 1)
+				return null;
+
+			for (var i = 1; i < lstContents.Items.Count; i++)
+			{
+				var v = lstContents.Items[i];
+				if (v.Text.Equals(code))
+				{
+					nth = i;
+					return v;
+				}
+			}
+
+			return null;
+		}
+
+		private void RemoveContent(string code)
+		{
+			if (lstContents.Items.Count <= 1)
+				return;
+
+			for (var i = 1; i < lstContents.Items.Count; i++)
+			{
+				var v = lstContents.Items[i];
+				if (v.Text.Equals(code))
+				{
+					lstContents.Items.RemoveAt(i);
+					break;
+				}
 			}
 		}
 	}

@@ -61,16 +61,16 @@ namespace DutyContent.Properties {
         }
         
         /// <summary>
-        ///   # Default English message
+        ///   Looks up a localized string similar to # Default English message
         ///LANG=English
         ///
-        ///0=FFXIV dc
+        ///0=DutyCon
         ///1=Duty ready
         ///2=FFXIV plugin is missing!
         ///3=FFXIV plugin found!
-        ///4=FFXIV Duty Content starting!
-        ///5=ACT info: {0} ({1})
-        ///6=FFXIV plugin info {0} ({1})
+        ///4=FFXIV Duty Content: {0}
+        ///5=ACT info: {0}
+        ///6=FFXIV plugin info: {0}
         ///7=Invalid data: {0}
         ///8=Parsing error
         ///9=Unknown roulette: {0}
@@ -79,12 +79,14 @@ namespace DutyContent.Properties {
         ///12=Unknown FATE: {0}
         ///13=Data reading failed!
         ///14=Data file not found! {0}
-        ///20=Duty contents info: {1}({0}) / A:{2} / R:{3} / I:{4} / F:{5} ({6})
+        ///20=Duty contents info: {1}({0}) / A:{2} / R:{3} / I:{4} / F:{5}
         ///21=Roulette
         ///22=Instance
         ///23=FATE
         ///24=Skirmish
-        ///   Looks up a localized string similar to this is city life
+        ///25=CE
+        ///26=Default
+        ///27=N [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DefaultMessage {
             get {
@@ -118,6 +120,46 @@ namespace DutyContent.Properties {
         internal static System.Drawing.Bitmap pix_play {
             get {
                 object obj = ResourceManager.GetObject("pix_play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pix_rdrt_bline {
+            get {
+                object obj = ResourceManager.GetObject("pix_rdrt_bline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pix_rdrt_green {
+            get {
+                object obj = ResourceManager.GetObject("pix_rdrt_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pix_rdrt_puple {
+            get {
+                object obj = ResourceManager.GetObject("pix_rdrt_puple", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pix_rdrt_red {
+            get {
+                object obj = ResourceManager.GetObject("pix_rdrt_red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
