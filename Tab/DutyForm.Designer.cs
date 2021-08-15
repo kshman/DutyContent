@@ -30,6 +30,8 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Drawing.StringFormat stringFormat1 = new System.Drawing.StringFormat();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DutyForm));
 			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
@@ -55,7 +57,6 @@ namespace DutyContent.Tab
             "",
             "",
             ""}, -1);
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DutyForm));
 			this.tabContent = new System.Windows.Forms.TabControl();
 			this.tabPageContent = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -64,7 +65,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset2 = new System.Windows.Forms.RadioButton();
 			this.rdoFatePreset1 = new System.Windows.Forms.RadioButton();
 			this.treeFates = new System.Windows.Forms.TreeView();
-			this.lstContents = new DutyContent.ThirdParty.EXListView();
+			this.lstContents = new DutyContent.Libre.ContentListView();
 			this.tabPageSetting = new System.Windows.Forms.TabPage();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.chkDiscowkTts = new System.Windows.Forms.CheckBox();
@@ -124,6 +125,7 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
+			this.btnResetContentList = new System.Windows.Forms.Button();
 			this.tabContent.SuspendLayout();
 			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -266,10 +268,19 @@ namespace DutyContent.Tab
 			// 
 			// lstContents
 			// 
+			this.lstContents.CategoryTextFont = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			stringFormat1.Alignment = System.Drawing.StringAlignment.Center;
+			stringFormat1.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
+			stringFormat1.LineAlignment = System.Drawing.StringAlignment.Near;
+			stringFormat1.Trimming = System.Drawing.StringTrimming.Character;
+			this.lstContents.CategoryTextFormat = stringFormat1;
+			this.lstContents.CategoryTextRegion = ((System.Drawing.RectangleF)(resources.GetObject("lstContents.CategoryTextRegion")));
 			this.lstContents.ControlPadding = 4;
 			this.lstContents.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstContents.FullRowSelect = true;
+			this.lstContents.GridLines = true;
 			this.lstContents.HideSelection = false;
+			this.lstContents.ItemHeight = 40;
 			this.lstContents.Location = new System.Drawing.Point(0, 0);
 			this.lstContents.Name = "lstContents";
 			this.lstContents.OwnerDraw = true;
@@ -277,7 +288,6 @@ namespace DutyContent.Tab
 			this.lstContents.TabIndex = 0;
 			this.lstContents.UseCompatibleStateImageBehavior = false;
 			this.lstContents.View = System.Windows.Forms.View.Details;
-			this.lstContents.Resize += new System.EventHandler(this.LstContents_Resize);
 			// 
 			// tabPageSetting
 			// 
@@ -487,6 +497,7 @@ namespace DutyContent.Tab
 			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel3.Controls.Add(this.btnResetContentList);
 			this.panel3.Controls.Add(this.cboPacketset);
 			this.panel3.Controls.Add(this.lblPacketSet);
 			this.panel3.Controls.Add(this.lblCurrentDataSet);
@@ -990,6 +1001,16 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
 			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
 			// 
+			// btnResetContentList
+			// 
+			this.btnResetContentList.Location = new System.Drawing.Point(624, 3);
+			this.btnResetContentList.Name = "btnResetContentList";
+			this.btnResetContentList.Size = new System.Drawing.Size(162, 69);
+			this.btnResetContentList.TabIndex = 14;
+			this.btnResetContentList.Text = "347";
+			this.btnResetContentList.UseVisualStyleBackColor = true;
+			this.btnResetContentList.Click += new System.EventHandler(this.BtnResetContentList_Click);
+			// 
 			// DutyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -1095,6 +1116,7 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.TextBox txtDiscowkUrl;
 		private System.Windows.Forms.CheckBox chkUseNotifyDiscowk;
 		private System.Windows.Forms.CheckBox chkDiscowkTts;
-		private ThirdParty.EXListView lstContents;
+		private Libre.ContentListView lstContents;
+		private System.Windows.Forms.Button btnResetContentList;
 	}
 }

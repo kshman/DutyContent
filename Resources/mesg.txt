@@ -36,6 +36,8 @@ LANG=English
 37=Debug
 38=Match
 39=Entry
+40=Reset
+41=Delete
 
 99=DutyContent Plugin {0}
 
@@ -95,6 +97,11 @@ LANG=English
 340=Test && Save Notifies
 341=Use TTS
 342=Invalid discord webhook URL
+343=ID
+344=Type
+345=%
+346=Name
+347=Reset content list
 
 400=Ping
 401=Use ping

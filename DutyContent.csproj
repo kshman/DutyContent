@@ -72,6 +72,9 @@
     <Compile Include="DcControl.Designer.cs">
       <DependentUpon>DcControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Libre\ContentListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Libre\PingGrapher.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Tab\ConfigForm.cs">
