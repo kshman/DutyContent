@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections;
+using System.ComponentModel;
 
 namespace DutyContent.ThirdParty
 {
@@ -120,18 +121,24 @@ namespace DutyContent.ThirdParty
 			}
 		}
 
+		[Category("EXListView")]
+		[DisplayName("Control Padding")]
 		public int ControlPadding
 		{
 			get { return _cpadding; }
 			set { _cpadding = value; }
 		}
 
+		[Category("EXListView")]
+		[DisplayName("Sort Brush")]
 		public Brush MySortBrush
 		{
 			get { return _sortcolbrush; }
 			set { _sortcolbrush = value; }
 		}
 
+		[Category("EXListView")]
+		[DisplayName("Highlight Brush")]
 		public Brush MyHighlightBrush
 		{
 			get { return _highlightbrush; }
@@ -398,6 +405,7 @@ namespace DutyContent.ThirdParty
 
 		private void SelfColumnClick(object sender, ColumnClickEventArgs e)
 		{
+#if false
 			if (this.Items.Count == 0) return;
 			for (int i = 0; i < this.Columns.Count; i++)
 			{
@@ -454,6 +462,7 @@ namespace DutyContent.ThirdParty
 					this.ListViewItemSorter = new ListViewSubItemComparerValue(e.Column, this.Sorting);
 				}
 			}
+#endif
 		}
 
 		class ListViewSubItemComparerText : System.Collections.IComparer

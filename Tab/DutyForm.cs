@@ -19,7 +19,6 @@ namespace DutyContent.Tab
 
 		//
 		private bool _is_lock_fate;
-
 		private ushort _last_fate = 0;
 
 		//
@@ -34,10 +33,6 @@ namespace DutyContent.Tab
 		private Overlay.DutyOvForm _overlay;
 
 		//
-		private object _lock_contents = new object();
-		private ImageList _ilCategory;
-
-		//
 		public DutyForm()
 		{
 			_self = this;
@@ -45,17 +40,6 @@ namespace DutyContent.Tab
 			InitializeComponent();
 
 			_overlay = new Overlay.DutyOvForm();
-
-			//
-			ImageList ildmy = new ImageList() { ImageSize = new Size(1, 40) };
-			lstContents.SmallImageList = ildmy;
-
-			lstContents.MySortBrush = SystemBrushes.ControlLight;
-			lstContents.MyHighlightBrush = Brushes.LightGoldenrodYellow;
-			lstContents.GridLines = true;
-			lstContents.ControlPadding = 1;
-
-			ThirdParty.WinFormSupp.DoubleBuffered(lstContents, true);
 		}
 
 		private void DutyTabForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -159,6 +143,7 @@ namespace DutyContent.Tab
 
 			lblDataSet.Text = Locale.Text(304);
 			lblPacketSet.Text = Locale.Text(336);
+			btnResetContentList.Text = Locale.Text(347);
 
 			chkEnableOverlay.Text = Locale.Text(306);
 			lblOverlayTransparent.Text = Locale.Text(307);
@@ -199,74 +184,28 @@ namespace DutyContent.Tab
 			btnPacketApply.Text = Locale.Text(10009);
 
 			// content reset
-			lock (_lock_contents)
-			{
-				lstContents.Items.Clear();
-				lstContents.Columns.Clear();
+			lstContents.InitializeContentList(
+				Locale.Text(343),   // ID
+				Locale.Text(344),   // Type
+				Locale.Text(345),   // %
+				Locale.Text(346));  // Name
 
-				Image im_r = Properties.Resources.pix_rdrt_red;
-				Image im_g = Properties.Resources.pix_rdrt_green;
-				Image im_p = Properties.Resources.pix_rdrt_puple;
-				Image im_b = Properties.Resources.pix_rdrt_bline;
+			Image im_r = Properties.Resources.pix_rdrt_red;
+			Image im_g = Properties.Resources.pix_rdrt_green;
+			Image im_p = Properties.Resources.pix_rdrt_puple;
+			Image im_b = Properties.Resources.pix_rdrt_bline;
 
-				_ilCategory = new ImageList()
-				{
-					ColorDepth = ColorDepth.Depth32Bit,
-					ImageSize = new Size(96, 32),
-				};
-				_ilCategory.Images.Add(CreateCategoryImage(im_b, Locale.Text(27), Brushes.Black));  // none
-				_ilCategory.Images.Add(CreateCategoryImage(im_g, Locale.Text(21)));  // roulette
-				_ilCategory.Images.Add(CreateCategoryImage(im_g, Locale.Text(22)));  // instance
-				_ilCategory.Images.Add(CreateCategoryImage(im_r, Locale.Text(23)));  // FATE
-				_ilCategory.Images.Add(CreateCategoryImage(im_r, Locale.Text(24)));  // skirmish
-				_ilCategory.Images.Add(CreateCategoryImage(im_p, Locale.Text(25)));  // CE
-				_ilCategory.Images.Add(CreateCategoryImage(im_p, Locale.Text(38)));  // Match
-				_ilCategory.Images.Add(CreateCategoryImage(im_g, Locale.Text(39)));  // Entry
+			lstContents.ClearImages();
+			lstContents.AddCategoryImage(im_b, Locale.Text(27), Brushes.Black); // 0, none
+			lstContents.AddCategoryImage(im_g, Locale.Text(21));                // 1, roulette
+			lstContents.AddCategoryImage(im_g, Locale.Text(22));                // 2, instance
+			lstContents.AddCategoryImage(im_r, Locale.Text(23));                // 3, FATE
+			lstContents.AddCategoryImage(im_r, Locale.Text(24));                // 4, skirmish
+			lstContents.AddCategoryImage(im_p, Locale.Text(25));                // 5, CE
+			lstContents.AddCategoryImage(im_p, Locale.Text(38));                // 6, Match
+			lstContents.AddCategoryImage(im_g, Locale.Text(39));                // 7, Entry
 
-				ThirdParty.EXComboBox excbCat = new ThirdParty.EXComboBox();
-				excbCat.DropDownStyle = ComboBoxStyle.DropDownList;
-				excbCat.MyHighlightBrush = Brushes.Goldenrod;
-				excbCat.ItemHeight = 38;
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[0], "0"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[1], "1"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[2], "2"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[3], "3"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[4], "4"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[5], "5"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[6], "6"));
-				excbCat.Items.Add(new ThirdParty.EXComboBox.EXImageItem(_ilCategory.Images[7], "7"));
-
-				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("ID", 50));
-				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("Type", 100));
-				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("%", 40));
-				lstContents.Columns.Add(new ThirdParty.EXColumnHeader("Name", 300));
-
-				lstContents.BeginUpdate();
-
-				ThirdParty.EXListViewItem li = new ThirdParty.EXListViewItem("");
-				li.SubItems.Add(new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[0], ""));
-				li.SubItems.Add("");
-				li.SubItems.Add(Locale.Text(27));
-				lstContents.Items.Add(li);
-
-				lstContents.EndUpdate();
-			}
-		}
-
-		private Image CreateCategoryImage(Image img, string value, Brush brush = null)
-		{
-			Bitmap bmp = new Bitmap(img);
-			RectangleF rt = new RectangleF(0.0f, 7.0f, 96.0f, 16.0f);
-			StringFormat fmt = new StringFormat() { Alignment = StringAlignment.Center };
-			Font fnt = new Font(Font.FontFamily, 14.0f, FontStyle.Regular, GraphicsUnit.Pixel);
-
-			if (brush == null)
-				brush = Brushes.White;
-
-			using (var g = Graphics.FromImage(bmp))
-				g.DrawString(value, fnt, brush, rt, fmt);
-
-			return bmp;
+			lstContents.AddContentItem(0, Locale.Text(27));
 		}
 
 		public void PacketHandler(string pid, byte[] message)
@@ -362,7 +301,6 @@ namespace DutyContent.Tab
 				}
 
 				DcContent.Missions.Clear();
-				ResetContents();
 			}
 
 			// match
@@ -410,6 +348,7 @@ namespace DutyContent.Tab
 					_overlay.PlayMatch(Locale.Text(10004, instance.Name));
 
 					DcContent.Missions.Clear();
+					WorkerAct.Invoker(() => lstContents.ResetContentItems());
 				}
 				else if (data[4] != 4)
 				{
@@ -495,7 +434,9 @@ namespace DutyContent.Tab
 				LogDebug("Zone: {0}", zone_id);
 #endif
 
-			ResetContents();
+			// Probably receive FATE auto end command before changing zone
+			// No end data found: logout, critical engagement -> have to reset
+			WorkerAct.Invoker(() => lstContents.ResetContentItems());
 		}
 
 		//
@@ -509,6 +450,8 @@ namespace DutyContent.Tab
 		//
 		private void TraceFate(ushort code, bool withlog, DcContent.Fate fate, int progress = -1)
 		{
+			// TODO: check area
+
 			int key, subs;
 
 			if (_stq_type != DcContent.SaveTheQueenType.No || IsSkirmishFate(code))
@@ -525,32 +468,7 @@ namespace DutyContent.Tab
 			if (withlog)
 				WriteLog(Color.Black, key, 10001, fate.Name);
 
-			WorkerAct.Invoker(() =>
-			{
-				lock (_lock_contents)
-				{
-					var sc = code.ToString();
-					var i = UnsafeFindContent(sc, out int nth);
-
-					if (i == null && progress >= 0)
-					{
-						var li = new ThirdParty.EXListViewItem(sc);
-						var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[subs], "");
-
-						li.SubItems.Add(si);
-						li.SubItems.Add(progress.ToString());
-						li.SubItems.Add(fate.Name);
-						lstContents.Items.Add(li);
-					}
-					else
-					{
-						if (progress >= 0)
-							i.SubItems[2].Text = progress.ToString();
-						else if (nth >= 0)
-							lstContents.Items.RemoveAt(nth);
-					}
-				}
-			});			
+			WorkerAct.Invoker(() => lstContents.TreatItemFate(code, subs, progress, fate.Name));
 		}
 
 		//
@@ -559,57 +477,13 @@ namespace DutyContent.Tab
 			if (withlog)
 				WriteLog(Color.Black, 25, 10001, fate.Name);
 
-			WorkerAct.Invoker(() =>
-			{
-				lock (_lock_contents)
-				{
-					var sc = code.ToString();
-					var i = UnsafeFindContent(sc, out int nth);
-
-					if (i == null && progress != null)
-					{
-						var li = new ThirdParty.EXListViewItem(sc);
-						var si = new ThirdParty.EXImageListViewSubItem(_ilCategory.Images[5], "");
-
-						li.SubItems.Add(si);
-						li.SubItems.Add(progress.ToString());
-						li.SubItems.Add(fate.Name);
-						lstContents.Items.Add(li);
-					}
-					else
-					{
-						if (progress == null)
-							lstContents.Items.RemoveAt(nth);
-						else
-							i.SubItems[2].Text = progress;
-					}
-				}
-			});
+			WorkerAct.Invoker(() => lstContents.TreatItemCe(code, 5, progress, fate.Name));
 		}
 
 		//
-		private void UpdateTraceInstance(string insname, int count, int imageindex)
+		private void UpdateTraceInstance(int imageindex, int count, string insname)
 		{
-			WorkerAct.Invoker(() =>
-			{
-				lock (_lock_contents)
-				{
-					if (lstContents.Items.Count > 0)
-					{
-						//lstContents.BeginUpdate();
-
-						var li = lstContents.Items[0];
-
-						var si = li.SubItems[1] as ThirdParty.EXImageListViewSubItem;
-						si.MyImage = _ilCategory.Images[imageindex];
-
-						li.SubItems[2].Text = count == 0 ? string.Empty : count.ToString();
-						li.SubItems[3].Text = insname;
-
-						//lstContents.EndUpdate();
-					}
-				}
-			});
+			WorkerAct.Invoker(() => lstContents.TreatItemInstance(imageindex, count, insname));
 		}
 
 		//
@@ -617,7 +491,7 @@ namespace DutyContent.Tab
 		{
 			WriteLog(Color.Black, 22, 10003, instance.Name);
 
-			UpdateTraceInstance(instance.Name, 0, 6);
+			UpdateTraceInstance(6, 0, instance.Name);
 		}
 
 		//
@@ -625,17 +499,17 @@ namespace DutyContent.Tab
 		{
 			WriteLog(Color.Black, 22, 10004, instance.Name);
 
-			UpdateTraceInstance(instance.Name, 0, 2);
+			UpdateTraceInstance(2, 0, instance.Name);
 		}
 
 		//
 		private void TraceEntryInstance(List<int> instances)
 		{
-			var ins = string.Join("/", instances.ToArray());
+			var insnames = string.Join("/", instances.ToArray());
 
-			WriteLog(Color.Black, 22, 10002, ins);
+			WriteLog(Color.Black, 22, 10002, insnames);
 
-			UpdateTraceInstance(ins, instances.Count, 7);
+			UpdateTraceInstance(7, instances.Count, insnames);
 		}
 
 		//
@@ -643,7 +517,7 @@ namespace DutyContent.Tab
 		{
 			WriteLog(Color.Black, 22, 10003, roulette.Name);
 
-			UpdateTraceInstance(roulette.Name, 0, 6);
+			UpdateTraceInstance(6, 0, roulette.Name);
 		}
 
 		//
@@ -651,7 +525,7 @@ namespace DutyContent.Tab
 		{
 			WriteLog(Color.Black, 22, 10002, roulette.Name);
 
-			UpdateTraceInstance(roulette.Name, 0, 1);
+			UpdateTraceInstance(1, 0, roulette.Name);
 		}
 
 		//
@@ -1770,51 +1644,9 @@ namespace DutyContent.Tab
 			}
 		}
 
-		private void LstContents_Resize(object sender, EventArgs e)
+		private void BtnResetContentList_Click(object sender, EventArgs e)
 		{
-			lock (_lock_contents)
-			{
-				if (lstContents.Columns.Count > 0)
-				{
-					lstContents.Columns[lstContents.Columns.Count - 1].Width = -2;
-				}
-			}
-		}
-
-		private void ResetContents()
-		{
-			WorkerAct.Invoker(() =>
-			{
-				lock (_lock_contents)
-				{
-					lstContents.BeginUpdate();
-
-					for (var i = lstContents.Items.Count - 1; i > 0; i--)
-						lstContents.Items.RemoveAt(1);
-
-					lstContents.EndUpdate();
-				}
-			});
-		}
-
-		private ListViewItem UnsafeFindContent(string code, out int nth)
-		{
-			nth = -1;
-
-			if (lstContents.Items.Count <= 1)
-				return null;
-
-			for (var i = 1; i < lstContents.Items.Count; i++)
-			{
-				var v = lstContents.Items[i];
-				if (v.Text.Equals(code))
-				{
-					nth = i;
-					return v;
-				}
-			}
-
-			return null;
+			lstContents.ResetContentItems();
 		}
 	}
 }
