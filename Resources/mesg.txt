@@ -30,7 +30,7 @@ LANG=English
 31=Error while updating duty/FATE Data
 32=Error while updating packet info
 33=Packet updated: {0} "{1}"
-34={0} ({1})
+34={0}/{1}
 35=Access clipboard failed!
 36=Window control error!
 37=Debug
@@ -38,6 +38,8 @@ LANG=English
 39=Entry
 40=Reset
 41=Delete
+42=Network detected: {0}
+43=Closed
 
 99=DutyContent Plugin {0}
 
@@ -148,3 +150,4 @@ LANG=English
 10023=Selected
 10024=Copied
 10025=Area: {0}
+10026=Enter "Middle La Noscea" or Teleport to "Summerford farms"
