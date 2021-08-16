@@ -73,7 +73,7 @@ namespace DutyContent.ThirdParty
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-		public struct TcpRow : IEquatable<TcpRow>
+		public struct TcpRow : IEquatable<TcpRow>, IComparable<TcpRow>
 		{
 			public TcpState state;
 			public uint __localAddr;
@@ -89,6 +89,12 @@ namespace DutyContent.ThirdParty
 
 			public IPAddress RemoteAddress => new IPAddress(__remoteAddr);
 			public ushort RemotePort => BitConverter.ToUInt16(new byte[2] { __remotePort[1], __remotePort[0] }, 0);
+
+			public int CompareTo(TcpRow other)
+			{
+				// just sorting by remote address for this project
+				return __remoteAddr.CompareTo(other.__remoteAddr);
+			}
 
 			public bool Equals(TcpRow right)
 			{

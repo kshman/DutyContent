@@ -219,6 +219,7 @@ namespace DutyContent.Tab
 				opcode != DcConfig.Packet.OpDuty &&
 				opcode != DcConfig.Packet.OpMatch &&
 				opcode != DcConfig.Packet.OpInstance &&
+				opcode != DcConfig.Packet.OpZone &&
 				opcode != DcConfig.Packet.OpCe)
 				return;
 
@@ -334,7 +335,7 @@ namespace DutyContent.Tab
 			}
 
 			// instance
-			else if (opcode == DcConfig.Packet.OpInstance && DcConfig.Packet.OpInstance != 0)
+			else if (DcConfig.Packet.OpInstance != 0 && opcode == DcConfig.Packet.OpInstance)
 			{
 				// 0[2] instance number
 				// 2[2] ?
@@ -348,12 +349,20 @@ namespace DutyContent.Tab
 					_overlay.PlayMatch(Locale.Text(10004, instance.Name));
 
 					DcContent.Missions.Clear();
-					WorkerAct.Invoker(() => lstContents.ResetContentItems());
+					ResetContentItems();    // frankly no meaning to here
 				}
 				else if (data[4] != 4)
 				{
 					_overlay.PlayNone();
 				}
+			}
+
+			// zone
+			else if (DcConfig.Packet.OpZone != 0 && opcode == DcConfig.Packet.OpZone)
+			{
+				var zone = BitConverter.ToUInt16(data, 4);
+
+				ResetContentItems();
 			}
 
 			// save the queen critical engagement
@@ -436,7 +445,8 @@ namespace DutyContent.Tab
 
 			// Probably receive FATE auto end command before changing zone
 			// No end data found: logout, critical engagement -> have to reset
-			WorkerAct.Invoker(() => lstContents.ResetContentItems());
+			if (DcConfig.Packet.OpZone == 0)
+				ResetContentItems();
 		}
 
 		//
@@ -1205,10 +1215,15 @@ namespace DutyContent.Tab
 			lstPacketInfo.Items[3].SubItems[2].Text = "";
 			lstPacketInfo.Items[3].SubItems[3].Text = newpk.OpInstance.ToString();
 
-			// Bozja
-			lstPacketInfo.Items[4].SubItems[1].Text = DcConfig.Packet.OpCe.ToString();
+			// Zone
+			lstPacketInfo.Items[4].SubItems[1].Text = DcConfig.Packet.OpZone.ToString();
 			lstPacketInfo.Items[4].SubItems[2].Text = "";
-			lstPacketInfo.Items[4].SubItems[3].Text = newpk.OpCe.ToString();
+			lstPacketInfo.Items[4].SubItems[3].Text = newpk.OpZone.ToString();
+
+			// Bozja
+			lstPacketInfo.Items[5].SubItems[1].Text = DcConfig.Packet.OpCe.ToString();
+			lstPacketInfo.Items[5].SubItems[2].Text = "";
+			lstPacketInfo.Items[5].SubItems[3].Text = newpk.OpCe.ToString();
 		}
 
 		private void BtnPacketStart_Click(object sender, EventArgs e)
@@ -1260,7 +1275,8 @@ namespace DutyContent.Tab
 				case 1: m = 10011; break;
 				case 2: m = 10011; break;
 				case 3: m = 10011; break;
-				case 4: m = 10014; break;
+				case 4: m = 10026; break;
+				case 5: m = 10014; break;
 				default: m = 10015; break;
 			}
 
@@ -1293,6 +1309,10 @@ namespace DutyContent.Tab
 					break;
 
 				case 4:
+					v = _new_packet.OpZone = DcConfig.Packet.OpZone;
+					break;
+
+				case 5:
 					v = _new_packet.OpCe = DcConfig.Packet.OpCe;
 					break;
 			}
@@ -1313,8 +1333,8 @@ namespace DutyContent.Tab
 
 			_new_packet.OpCe = opcode;
 
-			lstPacketInfo.Items[4].SubItems[2].Text = Locale.Text(10023);
-			lstPacketInfo.Items[4].SubItems[3].Text = _new_packet.OpCe.ToString();
+			lstPacketInfo.Items[5].SubItems[2].Text = Locale.Text(10023);
+			lstPacketInfo.Items[5].SubItems[3].Text = _new_packet.OpCe.ToString();
 		}
 
 		private void LstBozjaInfo_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1468,6 +1488,26 @@ namespace DutyContent.Tab
 				}
 			}
 
+			// zone
+			if (_new_packet.OpZone == 0 && data.Length == 16)
+			{
+				// Middle La Noscea (134)
+				var h = BitConverter.ToUInt32(data, 0);
+				var z = BitConverter.ToUInt16(data, 4);
+				if (h == 0 && z == 134 && data[11] == 1 && data[12] == 1 && data[13] == 8)
+				{
+					_new_packet.OpZone = opcode;
+
+					WorkerAct.Invoker(() =>
+					{
+						lstPacketInfo.Items[4].SubItems[2].Text = Locale.Text(10016);
+						lstPacketInfo.Items[4].SubItems[3].Text = _new_packet.OpZone.ToString();
+					});
+
+					return;
+				}
+			}
+
 			// critical engagement
 			if (data.Length >= 12 && _stq_type != DcContent.SaveTheQueenType.No)
 			{
@@ -1572,6 +1612,7 @@ namespace DutyContent.Tab
 					DcConfig.Packet.OpDuty = pk.OpDuty;
 					DcConfig.Packet.OpMatch = pk.OpMatch;
 					DcConfig.Packet.OpInstance = pk.OpInstance;
+					DcConfig.Packet.OpZone = pk.OpZone;
 					DcConfig.Packet.OpCe = pk.OpCe;
 
 					var nfn = DcConfig.BuildPacketFileName(name);
@@ -1647,6 +1688,11 @@ namespace DutyContent.Tab
 		private void BtnResetContentList_Click(object sender, EventArgs e)
 		{
 			lstContents.ResetContentItems();
+		}
+
+		public void ResetContentItems()
+		{
+			WorkerAct.Invoker(() => lstContents.ResetContentItems());
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 17;
+		public static int PluginTag => 18;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -168,6 +168,7 @@ namespace DutyContent
 			public ushort OpDuty { get; set; } = 676;
 			public ushort OpMatch { get; set; } = 428;
 			public ushort OpInstance { get; set; } = 234;
+			public ushort OpZone { get; set; } = 369;
 			public ushort OpCe { get; set; } = 269;
 
 			// packet version structure
@@ -199,6 +200,7 @@ namespace DutyContent
 					OpDuty = right.OpDuty;
 					OpMatch = right.OpMatch;
 					OpInstance = right.OpInstance;
+					OpZone = right.OpZone;
 					OpCe = right.OpCe;
 				}
 				else
@@ -207,6 +209,7 @@ namespace DutyContent
 					OpDuty = 0;
 					OpMatch = 0;
 					OpInstance = 0;
+					OpZone = 0;
 					OpCe = 0;
 				}
 			}
@@ -241,6 +244,7 @@ namespace DutyContent
 					sw.WriteLine("OpDuty={0}", OpDuty);
 					sw.WriteLine("OpMatch={0}", OpMatch);
 					sw.WriteLine("OpInstance={0}", OpInstance);
+					sw.WriteLine("OpZone={0}", OpZone);
 					sw.WriteLine("OpSouthernBozja={0}", OpCe);
 					sw.WriteLine();
 				}
@@ -256,6 +260,7 @@ namespace DutyContent
 				OpDuty = ThirdParty.Converter.ToUshort(db["OpDuty"], OpDuty);
 				OpMatch = ThirdParty.Converter.ToUshort(db["OpMatch"], OpMatch);
 				OpInstance = ThirdParty.Converter.ToUshort(db["OpInstance"], OpInstance);
+				OpZone = ThirdParty.Converter.ToUshort(db["OpZone"], OpZone);
 				OpCe = ThirdParty.Converter.ToUshort(db["OpSouthernBozja"], OpCe);
 			}
 
@@ -477,7 +482,7 @@ namespace DutyContent
 				return ret;
 			}
 
-			public void BuildConnections(Process process)
+			public void BuildConnections(Process process, out IPAddress retaddr)
 			{
 				var size = 0;
 				ThirdParty.NativeMethods.GetExtendedTcpTable(IntPtr.Zero, ref size, true, AddressFamily.InterNetwork, 4);
@@ -509,14 +514,24 @@ namespace DutyContent
 						lock (Conns)
 						{
 							Conns.Clear();
-							for (var i = 0; i < rcnt; i++)
-								Conns.Add(rows[i]);
+
+							if (rcnt == 0)
+								retaddr = IPAddress.None;
+							else
+							{
+								for (var i = 0; i < rcnt; i++)
+									Conns.Add(rows[i]);
+
+								retaddr = rows[0].RemoteAddress;
+							}
 						}
 					}
 					else
 					{
 						lock (Conns)
 							Conns.Clear();
+
+						retaddr = IPAddress.None;
 					}
 				}
 				finally

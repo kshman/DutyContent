@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 
 namespace DutyContent
@@ -31,6 +32,7 @@ namespace DutyContent
 		private bool _game_exist;
 		private bool _game_active;
 		private string _game_zone;
+		private IPAddress _game_ipaddr = IPAddress.None;
 
 		//
 		private const int IntervalGameActive = 50;
@@ -324,23 +326,24 @@ namespace DutyContent
 				if (span.TotalSeconds > 2)
 				{
 					_game_connection_tick = now;
-					DcConfig.Connections.BuildConnections(_game_process.Process);
+					DcConfig.Connections.BuildConnections(_game_process.Process, out var retaddr);
+
+					if (!_game_ipaddr.Equals(retaddr))
+					{
+						if (!retaddr.Equals(IPAddress.None))
+							Logger.I(42, retaddr);
+						else
+							Logger.I(42, Locale.Text(43));
+
+						_game_ipaddr = retaddr;
+						Tab.DutyForm.Self?.ResetContentItems();
+					}
 				}
 			}
 
 			var zone = ActGlobals.oFormActMain.CurrentZone;
 			if (_game_zone == null || !zone.Equals(_game_zone))
-			{
-#if false
-				if (_game_zone != null)
-					MesgLog.I(1008, _game_zone);
-
 				_game_zone = zone;
-				MesgLog.I(1007, zone);
-#else
-				_game_zone = zone;
-#endif
-			}
 		}
 
 		//
@@ -384,7 +387,7 @@ namespace DutyContent
 		}
 
 		//
-		public void ShowStatusBarAsConfig(bool force=false)
+		public void ShowStatusBarAsConfig(bool force = false)
 		{
 			if (DcConfig.StatusBar)
 			{
