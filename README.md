@@ -4,8 +4,8 @@
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 ## 6.0 
-* FATE/Duty/MAtch/Instance working
-* Zone/Bozja don't working
+* FATE/Duty/Match/Instance **working**
+* Zone/Bozja ***not** working*
 
 ---
 
