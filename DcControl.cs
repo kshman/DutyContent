@@ -99,8 +99,9 @@ namespace DutyContent
 			if (_ffxiv_plugin_data == null)
 			{
 				_ffxiv_plugin_data = ActGlobals.oFormActMain.ActPlugins.Where(x =>
-						x.pluginFile.Name.ToUpper().Contains("FFXIV_ACT_PLUGIN") &&
-						x.lblPluginStatus.Text.ToUpper().Contains("FFXIV PLUGIN STARTED."))
+						x.pluginFile.Name.ToUpper().StartsWith("FFXIV_ACT_PLUGIN") &&
+						(x.lblPluginStatus.Text.ToUpper().StartsWith("FFXIV PLUGIN STARTED.") ||
+						x.lblPluginStatus.Text.ToUpper().StartsWith("FFXIV_ACT_PLUGIN STARTED.")))
 					.Select(x => x)
 					.FirstOrDefault();
 			}
