@@ -5,7 +5,7 @@
 
 ## 6.0 
 * FATE/Duty/Match/Instance **working**
-* Zone/Bozja ***not** working*
+* Critical Engagement/Zone ***not** working*
 
 ---
 
