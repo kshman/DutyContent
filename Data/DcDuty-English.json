@@ -1,16 +1,16 @@
 ﻿{
-  "version": "202111021",
+  "version": "202112051",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
     "1": "Leveling",
-    "2": "Level 50/60/70 Dungeons",
+    "2": "Level 50/60/70/80 Dungeons",
     "3": "Main Scenario",
     "4": "Guildhests",
     "5": "Expert",
     "6": "Trials",
     "7": "Frontline",
-    "8": "Level 80 Dungeons",
+    "8": "Level 90 Dungeons",
     "9": "Mentor",
     "10": "The Feast (Training)",
     "11": "The Feast (Training)",
@@ -555,7 +555,17 @@
     "778": "Zadnor",
     "779": "the Tower at Paradigm's Breach",
     "781": "The Cloud Deck",
-    "782": "The Cloud Deck (Extreme)"
+    "782": "The Cloud Deck (Extreme)",
+    "783": "The Tower of Zot",
+    "784": "The Tower of Babil",
+    "785": "The Tower of Babil",
+    "786": "The Aitiascope",
+    "787": "Ktisis Hyperboreia",
+    "789": "Vanaspati",
+    "790": "The Mothercrystal",
+    "792": "The Dead Ends",
+    "796": "The Final Day",
+    "802": "The Dark Inside"
   },
   "areas": {
     "134": {
@@ -1646,6 +1656,42 @@
         "1714": "Shear-a-Yak",
         "1715": "Toy Hunter",
         "1716": "Presents of Mind"
+      }
+    },
+    "956": {
+      "name": "Labyrinthos",
+      "fates": {
+        "1748": "unknown 1748"
+      }
+    },
+    "957": {
+      "name": "Thavnair",
+      "fates": {
+        "1768": "unknown 1768"
+      }
+    },
+    "958": {
+      "name": "Garlemald",
+      "fates": {
+        "1792": "unknown 1792"
+      }
+    },
+    "959": {
+      "name": "Mare Lamentorum",
+      "fates": {
+        "1808": "unknown 1808"
+      }
+    },
+    "960": {
+      "name": "Ultima Thule",
+      "fates": {
+        "1850": "unknown 1850"
+      }
+    },
+    "961": {
+      "name": "Elpis",
+      "fates": {
+        "1823": "unknown 1823"
       }
     },
     "996": {
