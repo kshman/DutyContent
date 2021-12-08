@@ -1494,7 +1494,7 @@ namespace DutyContent.Tab
 				// Middle La Noscea (134)
 				var h = BitConverter.ToUInt32(data, 0);
 				var z = BitConverter.ToUInt16(data, 4);
-				if (h == 0 && z == 134 && data[11] == 1 && data[12] == 1 && data[13] == 8)
+				if (h == 0 && z == 134)
 				{
 					_new_packet.OpZone = opcode;
 
