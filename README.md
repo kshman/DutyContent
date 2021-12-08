@@ -4,8 +4,8 @@
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 ## 6.0 
-* FATE/Duty/Match/Instance **working**
-* Critical Engagement/Zone ***not** working*
+* FATE/Duty/Match/Instance/Zone **working**
+* Critical Engagement ***not** working*
 
 ---
 
