@@ -1,16 +1,16 @@
 {
-  "version": "202111021",
+  "version": "202112121",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
     "1": "Stufensteigerung",
-    "2": "Stufe 50/60/70 Dungeons",
+    "2": "Stufe 50/60/70/80 Dungeons",
     "3": "Hauptszenario",
     "4": "Gildengeheiß",
     "5": "Experte",
     "6": "Prüfung",
     "7": "PvP-Front",
-    "8": "Stufe 80 Dungeons",
+    "8": "Stufe 90 Dungeons",
     "9": "Mentor",
     "10": "The Feast (Übungskampf)",
     "11": "The Feast (Übungskampf)",
@@ -555,7 +555,20 @@
     "778": "Zadnor-Hochebene",
     "779": "Der Turm, Paradigmenbrecher",
     "781": "Diamantblitz - Entfesselung",
-    "782": "Diamantblitz - Trauma"
+    "782": "Diamantblitz - Trauma",
+    "783": "Der Turm von Zot",
+    "784": "Stigma-Holometrie",
+    "785": "Der Turm von Babil",
+    "786": "Das Aitiaskop",
+    "787": "Ktisis Hyperboreia",
+    "789": "Vanaspati",
+    "790": "Prophetie - Hydaelyn",
+    "791": "Eschatos - Hydaelyn",
+    "792": "Das Sternengrab",
+    "794": "Smileton",
+    "796": "Prophetie - Endsängerin",
+    "802": "Prophetie - Zodiark",
+    "803": "Eschatos - Zodiark"
   },
   "areas": {
     "134": {
