@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 20;
+		public static int PluginTag => 21;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
