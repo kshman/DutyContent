@@ -1,11 +1,11 @@
+
 # Duty Content for FFXIV
 
 * Duty finding codes from https://github.com/purutu/ACT.DFAssist
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 ## For 6.0(EndWalker) update 
-* Critical Engament alert is not working correctly
-* Progress visible in new area's FATEs is not shown correctly
+* New area's FATEs progress is not working correctly
 * Most of instace dungeons are added. but, need more time to add FATEs (Actually I don't know how to gather FATEs information 😱)
 
 ---
