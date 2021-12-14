@@ -1661,6 +1661,129 @@
         "1716": "Presents of Mind"
       }
     },
+    "956": {
+      "name": "Labyrinthos",
+      "fates": {
+        "1743": "Lagebericht: Keimlinge auf der Flucht",
+        "1744": "Lagebericht: Der Keimling wächst nicht weit vom Stamm",
+        "1745": "Die Heimkehr der Spinnen",
+        "1746": "Knuddeliges Grünzeug",
+        "1747": "Fressen statt gefressen werden",
+        "1748": "Bergkröten auf der Flucht",
+        "1749": "Eiskalte Attentäterin",
+        "1750": "Schaumkraut bleibt Schaumkraut",
+        "1751": "Lagebericht: Kristalline Gefahr",
+        "1752": "Lagebericht: Mutierter Kristall",
+        "1753": "Gestalt gewordener Äther",
+        "1754": "Natürliches Feuchtigkeitsmittel",
+        "1755": "Gallertartige Umweltverschmutzer",
+        "1756": "Äther-Nesthocker",
+        "1757": "Nimmersatte Fraelissa",
+        "1758": "Vom Sturm verweht"
+      }
+    },
+    "957": {
+      "name": "Thavnair",
+      "fates": {
+        "1763": "Im Dienste der Mrga: Blasphemie",
+        "1764": "Der Duft der Alchemie: Gefahr im Blumenbeet",
+        "1765": "Die Gaja sind Gaga!",
+        "1766": "Ich bin ein Vaalaras!",
+        "1767": "Zitterpartie",
+        "1768": "Gift und Galle",
+        "1769": "Kanabhuti, der Fluch des Dschungels",
+        "1770": "Der kleine Junge und das Meer",
+        "1771": "Der Duft der Alchemie: Gefahrvoller Heimweg",
+        "1772": "Im Dienste der Mrga: Pilger in Not",
+        "1773": "Giftiges Spiel",
+        "1774": "Hinter dem Schleier lauert der Tod",
+        "1775": "Das Wunder vom Ksiroda",
+        "1776": "Wenn das Abendessen davonfliegt",
+        "1777": "Valin der Tyrann",
+        "1778": "Geifernde Affenbande",
+        "1779": "Im Dienste der Mrga: Stoßgebet"
+      }
+    },
+    "958": {
+      "name": "Garlemald",
+      "fates": {
+        "1783": "Reinwaschung eines Ingenieurs: Gefangen in der Todesmaschine",
+        "1784": "Reinwaschung eines Ingenieurs: Nieder mit den Maschinen",
+        "1785": "Gleich vergess ich mich",
+        "1786": "Brennstoffsicherung",
+        "1787": "Die Alma-Affenmänner",
+        "1788": "Eine eisige Falle",
+        "1789": "Der rosige Tod Heliogabalus",
+        "1790": "Riesen im Nebel",
+        "1791": "Reinwaschung eines Ingenieurs: Auto-Gabriels",
+        "1792": "Reinwaschung eines Ingenieurs: Metatron",
+        "1793": "Rotulas auf Abwegen",
+        "1794": "Hunde, die bellen, beißen auch",
+        "1795": "Das Morden ist des Wand'rers Lust",
+        "1796": "Folgen des Krieges",
+        "1797": "Der goldene Riese Seneca",
+        "1798": "Hilfe bei der Reparatur"
+      }
+    },
+    "959": {
+      "name": "Mare Lamentorum",
+      "fates": {
+        "1803": "Langohren des Mondes: Explosive Eindringlinge",
+        "1804": "Langohren des Mondes: Reiniger-Rabatz",
+        "1805": "Langohren des Mondes: Reif für die Tonne",
+        "1806": "Sicheln aus dem Zwielicht",
+        "1807": "Keine Freude für die Fungi",
+        "1808": "Lunatender-Liebe",
+        "1809": "Angriff der Droiden",
+        "1810": "Weißer Gigant",
+        "1811": "Besuch von der dunklen Seite",
+        "1812": "Unverlässlicher Support",
+        "1813": "Harsches Mondhabitat",
+        "1814": "Garantiezeitraum abgelaufen",
+        "1815": "Wertlose Wärter",
+        "1816": "Der Plan des Schmarotzers",
+        "1817": "Sauer macht süchtig"
+      }
+    },
+    "960": {
+      "name": "Ultima Thule",
+      "fates": {
+        "1843": "Aus dem Speicher von Omicron: Aufrüstung des Kommunikators",
+        "1844": "Aus dem Speicher von Omicron: Gefahrenabwehr",
+        "1845": "Eine Spirale der Gewalt",
+        "1846": "Vom Winde verlassen",
+        "1847": "Ahl Eins vergangener Ruhm",
+        "1848": "Das Ende der Ewigkeit",
+        "1849": "Than Oskhs Rache",
+        "1850": "Kinder der Traurigkeit",
+        "1851": "Verlorene Existenzen",
+        "1852": "Vom Himmel gefallene Lichter",
+        "1853": "Leere Blicke",
+        "1854": "Ausgeburt finsterer Ver zweiflung",
+        "1855": "Aus dem Speicher von Omicron: Zerstörung"
+      }
+    },
+    "961": {
+      "name": "Elpis",
+      "fates": {
+        "1823": "Beobachtung: Aigokeros",
+        "1824": "Beobachtung: Io",
+        "1825": "Gefährdetes Gleichgewicht",
+        "1826": "Die schwebenden Bäume",
+        "1827": "Schmetterlinge schmettern",
+        "1828": "Eine Lektion fürs Leben",
+        "1829": "Himmeldonnerwetter!",
+        "1830": "Fliegende Fressfeinde",
+        "1831": "Entsorgung: Das bekannte Unbekannte",
+        "1832": "Entsorgung: Ur-Kyklops",
+        "1833": "Adel verpflichtet - eigentlich",
+        "1834": "Ruhet in Frieden",
+        "1835": "Alles hat seinen Platz",
+        "1836": "Bitte nicht trinken",
+        "1837": "Schlechten Appetit!",
+        "1838": "Sokles' Zorn"
+      }
+    },
     "996": {
       "name": "Hydatos",
       "fates": {
