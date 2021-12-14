@@ -5,8 +5,8 @@
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 ## For 6.0(EndWalker) update 
-* New area's FATEs progress is not working correctly
-* Most of instace dungeons are added. but, need more time to add FATEs (Actually I don't know how to gather FATEs information 😱)
+* All contents Ok!
+* Please let me know if you found missing :)
 
 ---
 
