@@ -20,6 +20,7 @@ namespace DutyContent.Tab
 		//
 		private bool _is_lock_fate;
 		private ushort _last_fate = 0;
+		private ushort _last_zone = 0;
 
 		//
 		private bool _is_packet_finder;
@@ -362,17 +363,21 @@ namespace DutyContent.Tab
 			{
 				var zone = BitConverter.ToUInt16(data, 4);
 
-				ResetContentItems();
+				if (zone != _last_zone)
+				{
+					_last_zone = zone;
+					ResetContentItems();
+				}
 			}
 
 			// save the queen critical engagement
-			else if (opcode == DcConfig.Packet.OpCe)
+			else if (DcConfig.Packet.OpCe != 0 && opcode == DcConfig.Packet.OpCe)
 			{
 				//  0[4] timestamp
 				//  4[2] mmss
 				//  6[2] ?
 				//  8[1] code
-				//  9[1] ?
+				//  9[1] members
 				// 10[1] status 0=end, 1=register, 2=entry, 3=progress
 				// 12[1] progress percentage
 
@@ -1527,10 +1532,10 @@ namespace DutyContent.Tab
 					return;
 				}
 
+				var ok = false;
+				var mem = data[9];
 				var stat = data[10];
 				var prg = data[12];
-				var mem = data[9];
-				var ok = false;
 
 				/*
 				if (stat == 0)
