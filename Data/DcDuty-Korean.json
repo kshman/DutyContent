@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202112141",
+  "version": "202112211",
   "language": "Korean",
   "displayLanguage": "한국말",
   "roulettes": {
@@ -544,8 +544,12 @@
     "792": "렘넌트",
     "794": "스마일튼",
     "796": "최후의 싸움",
+    "800": "Asphodelos: The Fourth Circle",
     "802": "조디아크 토멸전",
-    "803": "극 조디아크 토멸전"
+    "803": "극 조디아크 토멸전",
+    "806": "Asphodelos: The Third Circle",
+    "808": "Asphodelos: The First Circle",
+    "810": "Asphodelos: The Second Circle"
   },
   "areas": {
     "134": {
