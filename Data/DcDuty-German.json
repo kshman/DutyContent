@@ -1,5 +1,5 @@
 {
-  "version": "202112121",
+  "version": "202112211",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -567,8 +567,12 @@
     "792": "Das Sternengrab",
     "794": "Smileton",
     "796": "Prophetie - Endsängerin",
+    "800": "Asphodelos: The Fourth Circle",
     "802": "Prophetie - Zodiark",
-    "803": "Eschatos - Zodiark"
+    "803": "Eschatos - Zodiark",
+    "806": "Asphodelos: The Third Circle",
+    "808": "Asphodelos: The First Circle",
+    "810": "Asphodelos: The Second Circle"
   },
   "areas": {
     "134": {

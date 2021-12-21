@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202112121",
+  "version": "202112211",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -567,8 +567,12 @@
     "792": "The Dead Ends",
     "794": "Smileton",
     "796": "The Final Day",
+    "800": "Asphodelos: The Fourth Circle",
     "802": "The Dark Inside",
-    "803": "The Minstrel's Ballad: Zodiark's Fall"
+    "803": "The Minstrel's Ballad: Zodiark's Fall",
+    "806": "Asphodelos: The Third Circle",
+    "808": "Asphodelos: The First Circle",
+    "810": "Asphodelos: The Second Circle"
   },
   "areas": {
     "134": {
