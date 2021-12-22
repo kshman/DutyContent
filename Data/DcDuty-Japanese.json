@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202112211",
+  "version": "202112221",
   "language": "Japanese",
   "displayLanguage": "日本語",
   "roulettes": {
@@ -567,12 +567,12 @@
     "792": "最終幻想 レムナント",
     "794": "楽園都市 スマイルトン",
     "796": "終焉の戦い",
-    "800": "Asphodelos: The Fourth Circle",
+    "800": "万魔殿パンデモニウム：辺獄編4",
     "802": "ゾディアーク討滅戦",
     "803": "極ゾディアーク討滅戦",
-    "806": "Asphodelos: The Third Circle",
-    "808": "Asphodelos: The First Circle",
-    "810": "Asphodelos: The Second Circle"
+    "806": "万魔殿パンデモニウム：辺獄編3",
+    "808": "万魔殿パンデモニウム：辺獄編1",
+    "810": "万魔殿パンデモニウム：辺獄編2"
   },
   "areas": {
     "134": {
