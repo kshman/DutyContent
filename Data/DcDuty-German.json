@@ -568,11 +568,15 @@
     "794": "Smileton",
     "796": "Prophetie - Endsängerin",
     "800": "Asphodelos - Vierter Kreis",
+    "801": "Asphodelos - Vierter Kreis (episch)",
     "802": "Prophetie - Zodiark",
     "803": "Eschatos - Zodiark",
     "806": "Asphodelos - Dritter Kreis",
+    "807": "Asphodelos - Dritter Kreis (episch)",
     "808": "Asphodelos - Erster Kreis",
-    "810": "Asphodelos - Zweiter Kreis"
+    "809": "Asphodelos - Erster Kreis (episch)",
+    "810": "Asphodelos - Zweiter Kreis",
+    "811": "Asphodelos - Zweiter Kreis (episch)"
   },
   "areas": {
     "134": {
