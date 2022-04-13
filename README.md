@@ -5,7 +5,7 @@
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
 ## For 6.1 update 
-* So many instances ID changes (actually added)
+* So many instances ID changed (actually added)
 * It will be updated step by step
 
 ---
