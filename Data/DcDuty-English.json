@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202112221",
+  "version": "202204131",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -577,7 +577,11 @@
     "808": "Asphodelos: The First Circle",
     "809": "Asphodelos: The First Circle (Savage)",
     "810": "Asphodelos: The Second Circle",
-    "811": "Asphodelos: The Second Circle (Savage)"
+    "811": "Asphodelos: The Second Circle (Savage)",
+    "821": "Ultima's Bane (Unreal)",
+    "830": "The Porta Decumana",
+    "844": "Alzadaal's Legacy",
+    "846": "The Minstrel's Ballad: Endsinger's Aria"
   },
   "areas": {
     "134": {
@@ -897,7 +901,8 @@
         "673": "Brick by Stone Brick",
         "697": "Stay Frosty",
         "707": "What`s Yours Is Mine",
-        "1325": "-----"
+        "1325": "-----",
+        "1856": "Happiness Is a Warm Bunny"
       }
     },
     "152": {
