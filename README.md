@@ -4,9 +4,9 @@
 * Duty finding codes from https://github.com/purutu/ACT.DFAssist
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
-## For 6.0(EndWalker) update 
-* All contents Ok!
-* Please let me know if you found missing :)
+## For 6.1 update 
+* So many instances ID changes (actually added)
+* It will be updated step by step
 
 ---
 
