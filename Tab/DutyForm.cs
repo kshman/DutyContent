@@ -63,6 +63,7 @@ namespace DutyContent.Tab
 			progbOverlayTransparent.Enabled = DcConfig.Duty.EnableOverlay;
 			btnOverlayDimming.Enabled = DcConfig.Duty.EnableOverlay;
 			chkOverlayClickThru.Checked = DcConfig.Duty.OverlayClickThru;
+			chkOverlayAutoHide.Checked = DcConfig.Duty.OverlayAutoHide;
 
 			//
 			_overlay.SetText(Locale.Text(99, DcConfig.PluginVersion.ToString()));
@@ -149,6 +150,7 @@ namespace DutyContent.Tab
 			chkEnableOverlay.Text = Locale.Text(306);
 			lblOverlayTransparent.Text = Locale.Text(307);
 			chkOverlayClickThru.Text = Locale.Text(104);
+			chkOverlayAutoHide.Text = Locale.Text(105);
 
 			chkEnableSound.Text = Locale.Text(308);
 			lblSoundInstance.Text = Locale.Text(309);
@@ -748,6 +750,7 @@ namespace DutyContent.Tab
 
 		private void BtnOverlayDimming_Click(object sender, EventArgs e)
 		{
+			_overlay.ResetAutoHide();
 			_overlay.StartBlink();
 		}
 
@@ -758,6 +761,16 @@ namespace DutyContent.Tab
 
 			DcConfig.Duty.OverlayClickThru = chkOverlayClickThru.Checked;
 			_overlay.SetClickThruStatus(chkOverlayClickThru.Checked);
+
+			SaveConfig();
+		}
+
+		private void ChkOverlayAutoHide_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.OverlayAutoHide = chkOverlayAutoHide.Checked;
 
 			SaveConfig();
 		}
@@ -1433,9 +1446,9 @@ namespace DutyContent.Tab
 				var rcode = data[8];
 				if (rcode == 0)
 				{
-					// The Steps of Fath (83)
+					// Urth's Found (82)
 					short m = BitConverter.ToInt16(data, 12);
-					if (m == 83 && _new_packet.OpDuty != opcode)
+					if (m == 82 && _new_packet.OpDuty != opcode)
 					{
 						_new_packet.OpDuty = opcode;
 
