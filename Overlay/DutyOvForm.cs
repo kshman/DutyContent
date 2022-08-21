@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace DutyContent.Overlay
@@ -9,17 +10,20 @@ namespace DutyContent.Overlay
 		private static DutyOvForm _self;
 		public static DutyOvForm Self => _self;
 
-		private const int BlinkTime = 300;
-		private const int BlinkCount = 20;
+		private const int BlinkElapse = 300;
+		private const int BlinkTotalCount = 20;
 
 		private static readonly Color ColorFate = Color.DarkOrange;
 		private static readonly Color ColorMatch = Color.Red;
 		private static readonly Color ColorNone = Color.Black;
+		private static readonly Color ColorHide = Color.Transparent;
 
 		//
-		private Timer _timer;
-		private int _blink;
+		private Timer _blink_timer;
+		private int _blink_count;
 		private Color _accent;
+
+		private Timer _hide_timer;
 
 		//
 		public DutyOvForm()
@@ -30,17 +34,24 @@ namespace DutyContent.Overlay
 
 			Location = DcConfig.Duty.OverlayLocation;
 
-			_timer = new Timer { Interval = BlinkTime };
-			_timer.Tick += (sender, e) =>
+			_blink_timer = new Timer { Interval = BlinkElapse };
+			_blink_timer.Tick += (sender, e) =>
 			{
-				if (++_blink > BlinkCount)
+				if (++_blink_count > BlinkTotalCount)
 				{
 					StopBlink();
 				}
 				else
 				{
-					BackColor = (BackColor == ColorNone) ? _accent : ColorNone;
+					//BackColor = (BackColor == ColorNone) ? _accent : ColorNone;
+					BackColor = (BackColor == _accent) ? ColorNone : _accent;
 				}
+			};
+
+			_hide_timer = new Timer { Interval = DcConfig.Duty.OverlayAutoElapse };
+			_hide_timer.Tick += (sender, e) =>
+			{
+				Visible = false;
 			};
 		}
 
@@ -92,26 +103,52 @@ namespace DutyContent.Overlay
 			ThirdParty.NativeMethods.SetWindowLong(Handle, -20, (IntPtr)value);
 		}
 
-		public void SetText(string text)
+		public void SetText(string text, bool hidenow = false)
 		{
 			lblText.Text = text;
+
+			if (DcConfig.Duty.OverlayAutoHide)
+			{
+				if (hidenow)
+					Visible = false;
+				else
+				{
+					Visible = true;
+					_hide_timer.Enabled = false;
+					_hide_timer.Interval = DcConfig.Duty.OverlayAutoElapse;
+					_hide_timer.Start();
+				}
+			}
+		}
+
+		public void ResetAutoHide()
+		{
+			if (DcConfig.Duty.OverlayAutoHide)
+			{
+				Visible = true;
+				_hide_timer.Enabled = false;
+				_hide_timer.Interval = DcConfig.Duty.OverlayAutoElapse;
+				_hide_timer.Start();
+			}
 		}
 
 		public void StartBlink()
 		{
-			_blink = 0;
-			_timer.Enabled = false;
-			_timer.Start();
+			_blink_count = 0;
+			_blink_timer.Enabled = false;
+			_blink_timer.Start();
 		}
 
 		public void StopBlink()
 		{
-			_timer.Stop();
+			_blink_timer.Stop();
 
 			BackColor = ColorNone;
 
 			_accent = ColorNone;
-			lblText.Text = string.Empty;
+
+			if (!DcConfig.Duty.OverlayAutoHide)
+				lblText.Text = string.Empty;
 		}
 
 		public void PlayNone()
@@ -119,7 +156,7 @@ namespace DutyContent.Overlay
 			Invoke((MethodInvoker)(() =>
 			{
 				_accent = ColorNone;
-				lblText.Text = string.Empty;
+				SetText(string.Empty, true);
 				StopBlink();
 			}));
 		}
@@ -129,7 +166,7 @@ namespace DutyContent.Overlay
 			Invoke((MethodInvoker)(() =>
 			{
 				_accent = ColorFate;
-				lblText.Text = f.Name;
+				SetText(f.Name);
 				StartBlink();
 			}));
 		}
@@ -139,7 +176,7 @@ namespace DutyContent.Overlay
 			Invoke((MethodInvoker)(() =>
 			{
 				_accent = ColorNone;
-				lblText.Text = name;
+				SetText(name);
 			}));
 		}
 
@@ -148,7 +185,7 @@ namespace DutyContent.Overlay
 			Invoke((MethodInvoker)(() =>
 			{
 				_accent = ColorMatch;
-				lblText.Text = name;
+				SetText(name);
 				if (blink)
 					StartBlink();
 			}));
@@ -157,7 +194,7 @@ namespace DutyContent.Overlay
 		public void ResetStat()
 		{
 			lblStat.BackColor = Color.Transparent;
-			lblStat.Text = string.Empty;
+			SetText(string.Empty, true);
 		}
 
 		public void SetStatPing(Color color, long rtt, double loss)

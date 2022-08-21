@@ -30,38 +30,38 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Drawing.StringFormat stringFormat2 = new System.Drawing.StringFormat();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DutyForm));
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "Duty",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "Match",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "Instance",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
             "Zone",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
             "Bozja",
             "",
             "",
             ""}, -1);
-			System.Drawing.StringFormat stringFormat1 = new System.Drawing.StringFormat();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DutyForm));
 			this.tabContent = new System.Windows.Forms.TabControl();
 			this.tabPageContent = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -70,6 +70,7 @@ namespace DutyContent.Tab
 			this.rdoFatePreset2 = new System.Windows.Forms.RadioButton();
 			this.rdoFatePreset1 = new System.Windows.Forms.RadioButton();
 			this.treeFates = new System.Windows.Forms.TreeView();
+			this.lstContents = new DutyContent.Libre.ContentListView();
 			this.tabPageSetting = new System.Windows.Forms.TabPage();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.chkDiscowkTts = new System.Windows.Forms.CheckBox();
@@ -104,6 +105,7 @@ namespace DutyContent.Tab
 			this.chkEnableSound = new System.Windows.Forms.CheckBox();
 			this.lblSoundInstance = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.chkOverlayAutoHide = new System.Windows.Forms.CheckBox();
 			this.chkOverlayClickThru = new System.Windows.Forms.CheckBox();
 			this.progbOverlayTransparent = new System.Windows.Forms.ProgressBar();
 			this.btnOverlayDimming = new System.Windows.Forms.Button();
@@ -130,7 +132,6 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
-			this.lstContents = new DutyContent.Libre.ContentListView();
 			this.tabContent.SuspendLayout();
 			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -273,6 +274,29 @@ namespace DutyContent.Tab
 			this.treeFates.Size = new System.Drawing.Size(235, 481);
 			this.treeFates.TabIndex = 0;
 			this.treeFates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeFates_AfterCheck);
+			// 
+			// lstContents
+			// 
+			this.lstContents.CategoryTextFont = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			stringFormat2.Alignment = System.Drawing.StringAlignment.Center;
+			stringFormat2.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
+			stringFormat2.LineAlignment = System.Drawing.StringAlignment.Near;
+			stringFormat2.Trimming = System.Drawing.StringTrimming.Character;
+			this.lstContents.CategoryTextFormat = stringFormat2;
+			this.lstContents.CategoryTextRegion = ((System.Drawing.RectangleF)(resources.GetObject("lstContents.CategoryTextRegion")));
+			this.lstContents.ControlPadding = 4;
+			this.lstContents.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstContents.FullRowSelect = true;
+			this.lstContents.GridLines = true;
+			this.lstContents.HideSelection = false;
+			this.lstContents.ItemHeight = 40;
+			this.lstContents.Location = new System.Drawing.Point(0, 0);
+			this.lstContents.Name = "lstContents";
+			this.lstContents.OwnerDraw = true;
+			this.lstContents.Size = new System.Drawing.Size(542, 510);
+			this.lstContents.TabIndex = 0;
+			this.lstContents.UseCompatibleStateImageBehavior = false;
+			this.lstContents.View = System.Windows.Forms.View.Details;
 			// 
 			// tabPageSetting
 			// 
@@ -693,6 +717,7 @@ namespace DutyContent.Tab
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel1.Controls.Add(this.chkOverlayAutoHide);
 			this.panel1.Controls.Add(this.chkOverlayClickThru);
 			this.panel1.Controls.Add(this.progbOverlayTransparent);
 			this.panel1.Controls.Add(this.btnOverlayDimming);
@@ -704,11 +729,25 @@ namespace DutyContent.Tab
 			this.panel1.Size = new System.Drawing.Size(792, 60);
 			this.panel1.TabIndex = 0;
 			// 
+			// chkOverlayAutoHide
+			// 
+			this.chkOverlayAutoHide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkOverlayAutoHide.AutoSize = true;
+			this.chkOverlayAutoHide.Location = new System.Drawing.Point(681, 33);
+			this.chkOverlayAutoHide.Margin = new System.Windows.Forms.Padding(4);
+			this.chkOverlayAutoHide.Name = "chkOverlayAutoHide";
+			this.chkOverlayAutoHide.Size = new System.Drawing.Size(51, 22);
+			this.chkOverlayAutoHide.TabIndex = 5;
+			this.chkOverlayAutoHide.Text = "105";
+			this.chkOverlayAutoHide.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.chkOverlayAutoHide.UseVisualStyleBackColor = true;
+			this.chkOverlayAutoHide.CheckedChanged += new System.EventHandler(this.ChkOverlayAutoHide_CheckedChanged);
+			// 
 			// chkOverlayClickThru
 			// 
 			this.chkOverlayClickThru.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkOverlayClickThru.AutoSize = true;
-			this.chkOverlayClickThru.Location = new System.Drawing.Point(681, 6);
+			this.chkOverlayClickThru.Location = new System.Drawing.Point(681, 3);
 			this.chkOverlayClickThru.Margin = new System.Windows.Forms.Padding(4);
 			this.chkOverlayClickThru.Name = "chkOverlayClickThru";
 			this.chkOverlayClickThru.Size = new System.Drawing.Size(51, 22);
@@ -941,12 +980,12 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstPacketInfo.HideSelection = false;
 			this.lstPacketInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.lstPacketInfo.Location = new System.Drawing.Point(4, 58);
 			this.lstPacketInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.lstPacketInfo.MultiSelect = false;
@@ -997,29 +1036,6 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(1, "pix_tab_setting.png");
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
 			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
-			// 
-			// lstContents
-			// 
-			this.lstContents.CategoryTextFont = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-			stringFormat1.Alignment = System.Drawing.StringAlignment.Center;
-			stringFormat1.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
-			stringFormat1.LineAlignment = System.Drawing.StringAlignment.Near;
-			stringFormat1.Trimming = System.Drawing.StringTrimming.Character;
-			this.lstContents.CategoryTextFormat = stringFormat1;
-			this.lstContents.CategoryTextRegion = ((System.Drawing.RectangleF)(resources.GetObject("lstContents.CategoryTextRegion")));
-			this.lstContents.ControlPadding = 4;
-			this.lstContents.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstContents.FullRowSelect = true;
-			this.lstContents.GridLines = true;
-			this.lstContents.HideSelection = false;
-			this.lstContents.ItemHeight = 40;
-			this.lstContents.Location = new System.Drawing.Point(0, 0);
-			this.lstContents.Name = "lstContents";
-			this.lstContents.OwnerDraw = true;
-			this.lstContents.Size = new System.Drawing.Size(542, 510);
-			this.lstContents.TabIndex = 0;
-			this.lstContents.UseCompatibleStateImageBehavior = false;
-			this.lstContents.View = System.Windows.Forms.View.Details;
 			// 
 			// DutyForm
 			// 
@@ -1128,5 +1144,6 @@ namespace DutyContent.Tab
 		private System.Windows.Forms.CheckBox chkDiscowkTts;
 		private Libre.ContentListView lstContents;
 		private System.Windows.Forms.Button btnResetContentList;
+		private System.Windows.Forms.CheckBox chkOverlayAutoHide;
 	}
 }

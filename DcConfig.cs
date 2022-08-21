@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 23;
+		public static int PluginTag => 24;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -296,6 +296,8 @@ namespace DutyContent
 			public bool EnableOverlay { get; set; }
 			public Point OverlayLocation { get; set; } = new Point(0, 0);
 			public bool OverlayClickThru { get; set; }
+			public bool OverlayAutoHide { get; set; }
+			public int OverlayAutoElapse { get; set; } = 20000;	// 20x1000
 
 			public bool EnableSound { get; set; }
 			public string SoundInstanceFile { get; set; }
@@ -356,6 +358,7 @@ namespace DutyContent
 				sw.WriteLine("DutyOverlayLocationX={0}", OverlayLocation.X);
 				sw.WriteLine("DutyOverlayLocationY={0}", OverlayLocation.Y);
 				sw.WriteLine("DutyOverlayClickThru={0}", OverlayClickThru);
+				sw.WriteLine("DutyOverlayAutoHide={0}", OverlayAutoHide);
 
 				sw.WriteLine("DutyEnableSound={0}", EnableSound);
 				sw.WriteLine("DutySoundInstanceFile={0}", SoundInstanceFile);
@@ -403,6 +406,7 @@ namespace DutyContent
 					ThirdParty.Converter.ToInt(db["DutyOverlayLocationX"]),
 					ThirdParty.Converter.ToInt(db["DutyOverlayLocationY"]));
 				OverlayClickThru = ThirdParty.Converter.ToBool(db["DutyOverlayClickThru"]);
+				OverlayAutoHide = ThirdParty.Converter.ToBool(db["DutyOverlayAutoHide"]);
 
 				EnableSound = ThirdParty.Converter.ToBool(db["DutyEnableSound"]);
 				SoundInstanceFile = db["DutySoundInstanceFile"];
