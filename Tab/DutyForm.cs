@@ -1446,9 +1446,9 @@ namespace DutyContent.Tab
 				var rcode = data[8];
 				if (rcode == 0)
 				{
-					// Urth's Found (82)
+					// The Final Steps of Faith (169)
 					short m = BitConverter.ToInt16(data, 12);
-					if (m == 82 && _new_packet.OpDuty != opcode)
+					if (m == 169 && _new_packet.OpDuty != opcode)
 					{
 						_new_packet.OpDuty = opcode;
 
@@ -1469,9 +1469,9 @@ namespace DutyContent.Tab
 				var rcode = data[2];
 				if (rcode == 0)
 				{
-					// The Steps of Fath (83)
+					// The Final Steps of Faith (169)
 					short m = BitConverter.ToInt16(data, 20);
-					if (m == 83 && _new_packet.OpMatch != opcode)
+					if (m == 169 && _new_packet.OpMatch != opcode)
 					{
 						_new_packet.OpMatch = opcode;
 
@@ -1489,10 +1489,10 @@ namespace DutyContent.Tab
 			// instance
 			if (_new_packet.OpInstance == 0 && data.Length >= 16)
 			{
-				// The Steps of Fath (83)
+				// The Final Steps of Faith (169)
 				short m = BitConverter.ToInt16(data, 0);
 				short u = BitConverter.ToInt16(data, 2);
-				if (m == 83 && u == 0 && _new_packet.OpInstance != opcode)
+				if (m == 169 && u == 0 && _new_packet.OpInstance != opcode)
 				{
 					_new_packet.OpInstance = opcode;
 

@@ -1,10 +1,11 @@
 ﻿None
-124.150.157.158 Elemental
-124.150.157.157 Gaia
-124.150.157.156 Mana
-204.2.229.9 Aether
-204.2.229.10 Primal
-204.2.229.11 Crystal
-195.82.50.9 Chaos
-195.82.50.10 Light
-183.111.189.3 Korea (Actoz)
+124.150.157.158 Elemental/JP
+124.150.157.157 Gaia/JP
+124.150.157.156 Mana/JP
+204.2.229.9 Aether/NA
+204.2.229.10 Primal/NA
+204.2.229.11 Crystal/NA
+195.82.50.9 Chaos/EU
+195.82.50.10 Light/EU
+153.254.80.103 Materia/OC
+183.111.189.3 Actoz/KR
