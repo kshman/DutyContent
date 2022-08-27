@@ -4,10 +4,8 @@
 * Duty finding codes from https://github.com/purutu/ACT.DFAssist
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
-# 6.2 changes
-* Duty packet removed and merged into the matching packet (probably)
-* For this reason, invalid duty queuing message appears
-* Trying to fix soon. Thank you
+# 6.2 support
+* Update your plugin to version 26
 
 ---
 
