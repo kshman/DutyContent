@@ -236,6 +236,9 @@
   <ItemGroup>
     <None Include="Resources\pix_rdrt_bline.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PacketTest.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if exist "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" copy $(TargetPath) "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" /y
