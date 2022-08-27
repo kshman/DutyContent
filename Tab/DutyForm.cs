@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define TESTPK
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -104,6 +105,9 @@ namespace DutyContent.Tab
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
 			//
+			chkPacketForLocal.Checked = DcConfig.Duty.PacketForLocal;
+
+			//
 			switch (DcConfig.Duty.ActiveFate)
 			{
 				case 0: rdoFatePreset1.Checked = true; break;
@@ -185,6 +189,8 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = Locale.Text(10007);
 			btnPacketApply.Text = Locale.Text(10009);
+
+			chkPacketForLocal.Text = Locale.Text(10027);
 
 			// content reset
 			lstContents.InitializeContentList(
@@ -278,63 +284,128 @@ namespace DutyContent.Tab
 			// Duty
 			else if (opcode == DcConfig.Packet.OpDuty)
 			{
-				var rcode = data[8];
+				if (DcConfig.Duty.PacketForLocal)
+				{
+					// for ACTOZ/Korea
+					var rcode = data[8];
 
-				if (rcode != 0)
-				{
-					var roulette = DcContent.GetRoulette(rcode);
-					TraceEntryRoulette(roulette);
-					_overlay.PlayQueue(roulette.Name);
-				}
-				else
-				{
-					// TODO: is this working?
-					var insts = new List<int>();
-					for (var i = 0; i < 5; i++)
+					if (rcode != 0)
 					{
-						var icode = BitConverter.ToUInt16(data, 12 + (i * 4));
-						if (icode == 0)
-							break;
+						var roulette = DcContent.GetRoulette(rcode);
+						TraceEntryRoulette(roulette);
+						_overlay.PlayQueue(roulette.Name);
+					}
+					else
+					{
+						var insts = new List<int>();
+						for (var i = 0; i < 5; i++)
+						{
+							var icode = BitConverter.ToUInt16(data, 12 + (i * 4));
+							if (icode == 0)
+								break;
+						}
+
+						if (insts.Any())
+						{
+							TraceEntryInstance(insts);
+							_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
+						}
 					}
 
-					if (insts.Any())
-					{
-						TraceEntryInstance(insts);
-						_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
-					}
+					DcContent.Missions.Clear();
 				}
+				else if (data[19] == 0)	// duty packet comes twice, index 19 is 0 and 1
+				{
+					// for global
+					var rcode = data[16];
 
-				DcContent.Missions.Clear();
+					if (rcode != 0)
+					{
+						var roulette = DcContent.GetRoulette(rcode);
+						TraceEntryRoulette(roulette);
+						_overlay.PlayQueue(roulette.Name);
+					}
+					else
+					{
+						var insts = new List<int>();
+						for (var i = 0; i < 5; i++)
+						{
+							var icode = BitConverter.ToUInt16(data, 20 + (i * 4));
+							if (icode == 0)
+								break;
+						}
+
+						if (insts.Any())
+						{
+							TraceEntryInstance(insts);
+							_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
+						}
+					}
+
+					DcContent.Missions.Clear();
+				}
 			}
 
 			// match
 			else if (opcode == DcConfig.Packet.OpMatch)
 			{
-				var rcode = BitConverter.ToUInt16(data, 2);
-				var icode = BitConverter.ToUInt16(data, 20);
-				string name;
+				string name = null;
 
-				if (icode == 0 && rcode != 0)
+				if (DcConfig.Duty.PacketForLocal)
 				{
-					var roulette = DcContent.GetRoulette(rcode);
-					TraceMatchRoulette(roulette);
-					name = roulette.Name;
-				}
-				else if (icode != 0)
-				{
-					var instance = DcContent.GetInstance(icode);
-					TraceMatchInstance(instance);
-					name = instance.Name;
+					// For ACTOZ/Korea
+					var rcode = BitConverter.ToUInt16(data, 2);
+					var icode = BitConverter.ToUInt16(data, 20);
+
+					if (icode == 0 && rcode != 0)
+					{
+						var roulette = DcContent.GetRoulette(rcode);
+						TraceMatchRoulette(roulette);
+						name = roulette.Name;
+					}
+					else if (icode != 0)
+					{
+						var instance = DcContent.GetInstance(icode);
+						TraceMatchInstance(instance);
+						name = instance.Name;
+					}
+					else
+					{
+						// ???
+						name = Locale.Text(10003, icode);
+					}
 				}
 				else
 				{
-					// ???
-					name = Locale.Text(10003, icode);
+					// For global
+					var rcode = BitConverter.ToUInt16(data, 2);
+					var icode = BitConverter.ToUInt16(data, 28);
+
+					if (icode == 0 && rcode != 0)
+					{
+						var roulette = DcContent.GetRoulette(rcode);
+						TraceMatchRoulette(roulette);
+						name = roulette.Name;
+					}
+					else if (icode != 0)
+					{
+						var instance = DcContent.GetInstance(icode);
+						TraceMatchInstance(instance);
+						name = instance.Name;
+					}
+					else
+					{
+						// ???
+						name = Locale.Text(10003, icode);
+					}
 				}
 
-				PlayEffecSoundInstance();
-				NotifyMatch(name);
-				_overlay.PlayMatch(name);
+				if (!string.IsNullOrEmpty(name))
+				{
+					PlayEffecSoundInstance();
+					NotifyMatch(name);
+					_overlay.PlayMatch(name);
+				}
 			}
 
 			// instance
@@ -1280,6 +1351,16 @@ namespace DutyContent.Tab
 			}
 		}
 
+		private void ChkPacketForLocal_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!DcConfig.PluginEnable)
+				return;
+
+			DcConfig.Duty.PacketForLocal = chkPacketForLocal.Checked;
+
+			SaveConfig();
+		}
+
 		private void LstPacketInfo_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (lstPacketInfo.SelectedIndices.Count != 1)
@@ -1414,11 +1495,93 @@ namespace DutyContent.Tab
 			return _fates_zadnor.Contains(code);
 		}
 
+#if TESTPK
+		private static string DataToByteString(byte[] be)
+		{
+			const string HexAlphabet = "0123456789ABCDEF";
+			StringBuilder sb = new StringBuilder();
+
+			foreach (var b in be)
+				sb.Append(HexAlphabet[(int)(b >> 4)]).Append(HexAlphabet[(int)(b & 0xF)]).Append(' ');
+
+			return sb.ToString();
+		}
+
+		private static string DataToUshortString(byte[] data, int index)
+		{
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = index; i < data.Length; i += 2)
+			{
+				sb.Append(BitConverter.ToInt16(data, i));
+				sb.Append(' ');
+			}
+
+			return sb.ToString();
+		}
+
+		private static int IndexOfData(byte[] data, int index, ushort value)
+		{
+			int len = data.Length;
+
+			for (int i = index; i < len; i++)
+			{
+				if (i + 1 >= len)
+					break;
+
+				ushort n = BitConverter.ToUInt16(data, i);
+				if (value == n)
+					return i;
+			}
+
+			return -1;
+		}
+
+		private static int IndexOfData(byte[] data, int index, ushort[] values)
+		{
+			int len = data.Length;
+
+			for (int i = index; i < len; i++)
+			{
+				if (i + 1 >= len)
+					break;
+
+				ushort n = BitConverter.ToUInt16(data, i);
+				for (int u = 0; u < values.Length; u++)
+				{
+					if (values[u] == n)
+						return i;
+				}
+			}
+
+			return -1;
+		}
+#endif
+
 		//
 		private void PacketFinderHandler(byte[] message)
 		{
 			var opcode = BitConverter.ToUInt16(message, 18);
 			var data = message.Skip(32).ToArray();
+
+#if TESTPK
+#if false
+			// 파이날 스텝으로 오는거 전부 얻기
+			var t = IndexOfData(data, 0, new ushort[] { 169, 134, 183, 223, 637 }); // final, P1, S1, Z1, Snake
+			if (t > 0)
+			{
+				var s = DataToByteString(data);
+				Logger.L("{0}({1},{2}) => {3}", opcode, data.Length, t, s);
+			}
+			else 
+#endif
+			// 매칭 관련
+			if (opcode == 183 || opcode == 371 || opcode == 754 || opcode == 372 || opcode == 322)
+			{
+				var s = DataToByteString(data);
+				Logger.L("{0}({1}) => {2}", opcode, data.Length, s);
+			}
+#endif
 
 			// fate
 			if (_new_packet.OpFate == 0 && data.Length > 4 && data[0] == 0x3E)
@@ -1440,48 +1603,105 @@ namespace DutyContent.Tab
 				}
 			}
 
-			// duty
-			if (_new_packet.OpDuty == 0 && data.Length > 12)
+			// duty & packet
+			if (chkPacketForLocal.Checked)
 			{
-				var rcode = data[8];
-				if (rcode == 0)
+				// for ACTOZ/Korean service
+
+				// duty
+				if (_new_packet.OpDuty == 0 && data.Length > 12)
 				{
-					// Urth's Found (82)
-					short m = BitConverter.ToInt16(data, 12);
-					if (m == 82 && _new_packet.OpDuty != opcode)
+					var rcode = data[8];
+					if (rcode == 0)
 					{
-						_new_packet.OpDuty = opcode;
-
-						WorkerAct.Invoker(() =>
+						// The Final Steps of Faith (169)
+						short m = BitConverter.ToInt16(data, 12);
+						if (m == 169 && _new_packet.OpDuty != opcode)
 						{
-							lstPacketInfo.Items[1].SubItems[2].Text = Locale.Text(10016);
-							lstPacketInfo.Items[1].SubItems[3].Text = _new_packet.OpDuty.ToString();
-						});
+							_new_packet.OpDuty = opcode;
 
-						return;
+							WorkerAct.Invoker(() =>
+							{
+								lstPacketInfo.Items[1].SubItems[2].Text = Locale.Text(10016);
+								lstPacketInfo.Items[1].SubItems[3].Text = _new_packet.OpDuty.ToString();
+							});
+
+							return;
+						}
+					}
+				}
+
+				// match
+				if (_new_packet.OpMatch == 0 && data.Length > 20)
+				{
+					var rcode = data[2];
+					if (rcode == 0)
+					{
+						// The Final Steps of Faith (169)
+						short m = BitConverter.ToInt16(data, 20);
+						if (m == 169 && _new_packet.OpMatch != opcode)
+						{
+							_new_packet.OpMatch = opcode;
+
+							WorkerAct.Invoker(() =>
+							{
+								lstPacketInfo.Items[2].SubItems[2].Text = Locale.Text(10016);
+								lstPacketInfo.Items[2].SubItems[3].Text = _new_packet.OpMatch.ToString();
+							});
+
+							return;
+						}
 					}
 				}
 			}
-
-			// match
-			if (_new_packet.OpMatch == 0 && data.Length > 20)
+			else
 			{
-				var rcode = data[2];
-				if (rcode == 0)
+				// for common
+
+				// duty
+				if (_new_packet.OpDuty == 0 && data.Length > 20)    // real size is 40
 				{
-					// The Steps of Fath (83)
-					short m = BitConverter.ToInt16(data, 20);
-					if (m == 83 && _new_packet.OpMatch != opcode)
+					var rcode = data[16];
+					var scode = data[19];
+					if (rcode == 0 && scode == 0)
 					{
-						_new_packet.OpMatch = opcode;
-
-						WorkerAct.Invoker(() =>
+						// The Final Steps of Faith (169)
+						short m = BitConverter.ToInt16(data, 20);
+						if (m == 169 && _new_packet.OpDuty != opcode)
 						{
-							lstPacketInfo.Items[2].SubItems[2].Text = Locale.Text(10016);
-							lstPacketInfo.Items[2].SubItems[3].Text = _new_packet.OpMatch.ToString();
-						});
+							_new_packet.OpDuty = opcode;
 
-						return;
+							WorkerAct.Invoker(() =>
+							{
+								lstPacketInfo.Items[1].SubItems[2].Text = Locale.Text(10016);
+								lstPacketInfo.Items[1].SubItems[3].Text = _new_packet.OpDuty.ToString();
+							});
+
+							return;
+						}
+					}
+				}
+
+				// match
+				if (_new_packet.OpMatch == 0 && data.Length > 20)   // real size is 40
+				{
+					var rcode = data[2];
+					if (rcode == 0)
+					{
+						// The Final Steps of Faith (169)
+						short m = BitConverter.ToInt16(data, 28);
+						if (m == 169 && _new_packet.OpMatch != opcode)
+						{
+							_new_packet.OpMatch = opcode;
+
+							WorkerAct.Invoker(() =>
+							{
+								lstPacketInfo.Items[2].SubItems[2].Text = Locale.Text(10016);
+								lstPacketInfo.Items[2].SubItems[3].Text = _new_packet.OpMatch.ToString();
+							});
+
+							return;
+						}
 					}
 				}
 			}
@@ -1489,10 +1709,10 @@ namespace DutyContent.Tab
 			// instance
 			if (_new_packet.OpInstance == 0 && data.Length >= 16)
 			{
-				// The Steps of Fath (83)
+				// The Final Steps of Faith (169)
 				short m = BitConverter.ToInt16(data, 0);
 				short u = BitConverter.ToInt16(data, 2);
-				if (m == 83 && u == 0 && _new_packet.OpInstance != opcode)
+				if (m == 169 && u == 0 && _new_packet.OpInstance != opcode)
 				{
 					_new_packet.OpInstance = opcode;
 

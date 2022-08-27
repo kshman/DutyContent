@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 24;
+		public static int PluginTag => 26;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -327,6 +327,8 @@ namespace DutyContent
 			public string PingDefAddr { get; set; }
 			public int PingGraphType { get; set; }
 
+			public bool PacketForLocal { get; set; }
+
 			//
 			public bool EnableNotify => UseNotifyLine || UseNotifyTelegram || UseNotifyDiscordWebhook;
 
@@ -384,6 +386,9 @@ namespace DutyContent
 				sw.WriteLine("DutyPingGraph={0}", PingGraph);
 				sw.WriteLine("DutyPingDefAddr={0}", PingDefAddr);
 				sw.WriteLine("DutyPingGraphType={0}", PingGraphType);
+
+				sw.WriteLine("PacketForLocal={0}", PacketForLocal);
+
 				sw.WriteLine();
 			}
 
@@ -432,6 +437,8 @@ namespace DutyContent
 				PingGraph = ThirdParty.Converter.ToBool(db["DutyPingGraph"]);
 				PingDefAddr = db.Get("DutyPingDefAddr", string.Empty);
 				PingGraphType = ThirdParty.Converter.ToInt(db["PingGraphType"]);
+
+				PacketForLocal = ThirdParty.Converter.ToBool(db["PacketForLocal"]);
 			}
 		}
 

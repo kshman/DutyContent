@@ -30,34 +30,34 @@ namespace DutyContent.Tab
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Drawing.StringFormat stringFormat2 = new System.Drawing.StringFormat();
+			System.Drawing.StringFormat stringFormat1 = new System.Drawing.StringFormat();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DutyForm));
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "FATE",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Duty",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Match",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Instance",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Zone",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "Bozja",
             "",
             "",
@@ -132,6 +132,7 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
+			this.chkPacketForLocal = new System.Windows.Forms.CheckBox();
 			this.tabContent.SuspendLayout();
 			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -278,11 +279,11 @@ namespace DutyContent.Tab
 			// lstContents
 			// 
 			this.lstContents.CategoryTextFont = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-			stringFormat2.Alignment = System.Drawing.StringAlignment.Center;
-			stringFormat2.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
-			stringFormat2.LineAlignment = System.Drawing.StringAlignment.Near;
-			stringFormat2.Trimming = System.Drawing.StringTrimming.Character;
-			this.lstContents.CategoryTextFormat = stringFormat2;
+			stringFormat1.Alignment = System.Drawing.StringAlignment.Center;
+			stringFormat1.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
+			stringFormat1.LineAlignment = System.Drawing.StringAlignment.Near;
+			stringFormat1.Trimming = System.Drawing.StringTrimming.Character;
+			this.lstContents.CategoryTextFormat = stringFormat1;
 			this.lstContents.CategoryTextRegion = ((System.Drawing.RectangleF)(resources.GetObject("lstContents.CategoryTextRegion")));
 			this.lstContents.ControlPadding = 4;
 			this.lstContents.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -506,6 +507,7 @@ namespace DutyContent.Tab
 			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel3.Controls.Add(this.chkPacketForLocal);
 			this.panel3.Controls.Add(this.btnResetContentList);
 			this.panel3.Controls.Add(this.cboPacketset);
 			this.panel3.Controls.Add(this.lblPacketSet);
@@ -520,9 +522,9 @@ namespace DutyContent.Tab
 			// 
 			// btnResetContentList
 			// 
-			this.btnResetContentList.Location = new System.Drawing.Point(624, 3);
+			this.btnResetContentList.Location = new System.Drawing.Point(708, 42);
 			this.btnResetContentList.Name = "btnResetContentList";
-			this.btnResetContentList.Size = new System.Drawing.Size(162, 69);
+			this.btnResetContentList.Size = new System.Drawing.Size(78, 30);
 			this.btnResetContentList.TabIndex = 14;
 			this.btnResetContentList.Text = "347";
 			this.btnResetContentList.UseVisualStyleBackColor = true;
@@ -844,7 +846,7 @@ namespace DutyContent.Tab
 			// lblPacketVersion
 			// 
 			this.lblPacketVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblPacketVersion.Location = new System.Drawing.Point(561, 58);
+			this.lblPacketVersion.Location = new System.Drawing.Point(559, 81);
 			this.lblPacketVersion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPacketVersion.Name = "lblPacketVersion";
 			this.lblPacketVersion.Size = new System.Drawing.Size(225, 21);
@@ -857,7 +859,7 @@ namespace DutyContent.Tab
 			this.txtPacketDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPacketDescription.Enabled = false;
-			this.txtPacketDescription.Location = new System.Drawing.Point(340, 80);
+			this.txtPacketDescription.Location = new System.Drawing.Point(341, 106);
 			this.txtPacketDescription.Margin = new System.Windows.Forms.Padding(4);
 			this.txtPacketDescription.Name = "txtPacketDescription";
 			this.txtPacketDescription.Size = new System.Drawing.Size(443, 24);
@@ -866,7 +868,7 @@ namespace DutyContent.Tab
 			// lblPacketDesc
 			// 
 			this.lblPacketDesc.AutoSize = true;
-			this.lblPacketDesc.Location = new System.Drawing.Point(340, 61);
+			this.lblPacketDesc.Location = new System.Drawing.Point(340, 81);
 			this.lblPacketDesc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPacketDesc.Name = "lblPacketDesc";
 			this.lblPacketDesc.Size = new System.Drawing.Size(32, 18);
@@ -913,11 +915,11 @@ namespace DutyContent.Tab
 			this.lstBozjaInfo.GridLines = true;
 			this.lstBozjaInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstBozjaInfo.HideSelection = false;
-			this.lstBozjaInfo.Location = new System.Drawing.Point(340, 148);
+			this.lstBozjaInfo.Location = new System.Drawing.Point(340, 164);
 			this.lstBozjaInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.lstBozjaInfo.MultiSelect = false;
 			this.lstBozjaInfo.Name = "lstBozjaInfo";
-			this.lstBozjaInfo.Size = new System.Drawing.Size(444, 203);
+			this.lstBozjaInfo.Size = new System.Drawing.Size(444, 188);
 			this.lstBozjaInfo.TabIndex = 4;
 			this.lstBozjaInfo.UseCompatibleStateImageBehavior = false;
 			this.lstBozjaInfo.View = System.Windows.Forms.View.Details;
@@ -947,7 +949,7 @@ namespace DutyContent.Tab
 			// lblPacketBozja
 			// 
 			this.lblPacketBozja.AutoSize = true;
-			this.lblPacketBozja.Location = new System.Drawing.Point(340, 126);
+			this.lblPacketBozja.Location = new System.Drawing.Point(340, 142);
 			this.lblPacketBozja.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPacketBozja.Name = "lblPacketBozja";
 			this.lblPacketBozja.Size = new System.Drawing.Size(32, 18);
@@ -980,12 +982,12 @@ namespace DutyContent.Tab
 			this.lstPacketInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstPacketInfo.HideSelection = false;
 			this.lstPacketInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
 			this.lstPacketInfo.Location = new System.Drawing.Point(4, 58);
 			this.lstPacketInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.lstPacketInfo.MultiSelect = false;
@@ -1036,6 +1038,17 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(1, "pix_tab_setting.png");
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
 			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
+			// 
+			// chkPacketForLocal
+			// 
+			this.chkPacketForLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkPacketForLocal.AutoSize = true;
+			this.chkPacketForLocal.Location = new System.Drawing.Point(718, 9);
+			this.chkPacketForLocal.Name = "chkPacketForLocal";
+			this.chkPacketForLocal.Size = new System.Drawing.Size(67, 22);
+			this.chkPacketForLocal.TabIndex = 15;
+			this.chkPacketForLocal.Text = "10027";
+			this.chkPacketForLocal.UseVisualStyleBackColor = true;
 			// 
 			// DutyForm
 			// 
@@ -1145,5 +1158,6 @@ namespace DutyContent.Tab
 		private Libre.ContentListView lstContents;
 		private System.Windows.Forms.Button btnResetContentList;
 		private System.Windows.Forms.CheckBox chkOverlayAutoHide;
+		private System.Windows.Forms.CheckBox chkPacketForLocal;
 	}
 }

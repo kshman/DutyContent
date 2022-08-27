@@ -152,3 +152,4 @@ LANG=English
 10024=Copied
 10025=Area: {0}
 10026=Enter "Middle La Noscea" or Teleport to "Summerford farms"
+10027=For localized service
