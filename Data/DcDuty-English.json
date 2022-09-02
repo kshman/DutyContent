@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202208270",
+  "version": "202209020",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -626,10 +626,14 @@
     "870": "Storm's Crown",
     "871": "Storm's Crown (Extreme)",
     "872": "Abyssos: The Fifth Circle",
+    "873": "Abyssos: The Fifth Circle (Savage)",
     "875": "Containment Bay S1T7 (Unreal)",
     "876": "Abyssos: The Seventh Circle",
+    "877": "Abyssos: The Seventh Circle (Savage)",
     "880": "Abyssos: The Sixth Circle",
-    "883": "Abyssos: The Eighth Circle"
+    "881": "Abyssos: The Sixth Circle (Savage)",
+    "883": "Abyssos: The Eighth Circle",
+    "884": "Abyssos: The Eighth Circle (Savage)"
   },
   "areas": {
     "134": {

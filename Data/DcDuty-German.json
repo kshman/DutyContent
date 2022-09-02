@@ -1,5 +1,5 @@
 {
-  "version": "202208270",
+  "version": "202209020",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -626,10 +626,14 @@
     "870": "Prophetie - Barbarizia",
     "871": "Eschatos - Barbarizia",
     "872": "Abyssos - Fünfter Kreis",
+    "873": "Abyssos - Fünfter Kreis (episch)",
     "875": "Traumprüfung - Sephirot",
     "876": "Abyssos - Siebter Kreis",
+    "877": "Abyssos - Siebter Kreis (episch)",
     "880": "Abyssos - Sechster Kreis",
-    "883": "Abyssos - Achter Kreis"
+    "881": "Abyssos - Sechster Kreis (episch)",
+    "883": "Abyssos - Achter Kreis",
+    "884": "Abyssos - Achter Kreis (episch)"
   },
   "areas": {
     "134": {
