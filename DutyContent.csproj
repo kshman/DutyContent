@@ -242,7 +242,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if exist "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" copy $(TargetPath) "%25APPDATA%25\Advanced Combat Tracker\Plugins\DutyContent" /y
-rem if exist "D:\FF14K\actk\Plugins\DutyContent" copy $(TargetPath) "D:\FF14K\actk\Plugins\DutyContent" /y
+if exist "D:\FF14K\actk\Plugins\DutyContent" copy $(TargetPath) "D:\FF14K\actk\Plugins\DutyContent" /y
 
 </PostBuildEvent>
   </PropertyGroup>

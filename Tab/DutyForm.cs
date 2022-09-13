@@ -1,4 +1,4 @@
-﻿//#define TESTPK
+﻿#define TESTPK
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -105,6 +105,7 @@ namespace DutyContent.Tab
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
 			//
+			chkPacketForLocal.Visible = false;
 			chkPacketForLocal.Checked = DcConfig.Duty.PacketForLocal;
 
 			//
@@ -284,7 +285,7 @@ namespace DutyContent.Tab
 			// Duty
 			else if (opcode == DcConfig.Packet.OpDuty)
 			{
-				if (DcConfig.Duty.PacketForLocal)
+				if (DcConfig.GameRegion == 1)
 				{
 					// for ACTOZ/Korea
 					var rcode = data[8];
@@ -314,7 +315,7 @@ namespace DutyContent.Tab
 
 					DcContent.Missions.Clear();
 				}
-				else if (data[19] == 0)	// duty packet comes twice, index 19 is 0 and 1
+				else if (data[19] == 0) // duty packet comes twice, index 19 is 0 and 1
 				{
 					// for global
 					var rcode = data[16];
@@ -351,7 +352,7 @@ namespace DutyContent.Tab
 			{
 				string name = null;
 
-				if (DcConfig.Duty.PacketForLocal)
+				if (DcConfig.GameRegion == 1)
 				{
 					// For ACTOZ/Korea
 					var rcode = BitConverter.ToUInt16(data, 2);
@@ -1565,7 +1566,7 @@ namespace DutyContent.Tab
 			var data = message.Skip(32).ToArray();
 
 #if TESTPK
-#if false
+#if true
 			// 파이날 스텝으로 오는거 전부 얻기
 			var t = IndexOfData(data, 0, new ushort[] { 169, 134, 183, 223, 637 }); // final, P1, S1, Z1, Snake
 			if (t > 0)
@@ -1604,7 +1605,7 @@ namespace DutyContent.Tab
 			}
 
 			// duty & packet
-			if (chkPacketForLocal.Checked)
+			if (DcConfig.GameRegion == 1)
 			{
 				// for ACTOZ/Korean service
 

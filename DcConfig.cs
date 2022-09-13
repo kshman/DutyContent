@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 26;
+		public static int PluginTag => 27;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -34,6 +34,9 @@ namespace DutyContent
 		public static string UiFontFamily { get; set; } = "Microsoft Sans Serif";
 		public static bool StatusBar { get; set; } = false;
 		public static bool DebugEnable { get; set; } = false;
+
+		//
+		public static int GameRegion { get; set; } = 0;	// 0=SQ, 1=ACTOZ
 
 		//
 		public static string BuildDataFileName(string header, string context, string ext)

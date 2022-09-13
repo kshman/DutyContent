@@ -40,6 +40,8 @@ LANG=English
 41=Delete
 42=Network detected: {0}
 43=Closed
+44=Game region check failed!
+45=Game region: {0} ({1})
 
 99=DutyContent Plugin {0}
 
