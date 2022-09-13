@@ -79,7 +79,10 @@ namespace DutyContent
 			DcConfig.PluginPath = pin?.pluginFile.DirectoryName;
 
 			DcConfig.DataPath = Path.Combine(DcConfig.PluginPath, "Data");
-			DcConfig.ConfigPath = Path.Combine(DcConfig.PluginPath, "DutyContent.config");
+			DcConfig.PluginConfigPath = Path.Combine(DcConfig.PluginPath, "DutyContent.config");
+
+			var actdata = ActGlobals.oFormActMain.AppDataFolder.FullName;
+			DcConfig.ActConfigPath = Path.Combine(actdata, "Config", "DutyContent.config");
 		}
 
 		//

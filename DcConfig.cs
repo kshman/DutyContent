@@ -18,7 +18,10 @@ namespace DutyContent
 		public static bool PluginEnable { get; set; }
 		public static string PluginPath { get; set; }
 		public static string DataPath { get; set; }
-		public static string ConfigPath { get; set; }
+
+		//
+		public static string ActConfigPath { get; set; }
+		public static string PluginConfigPath { get; set; }
 
 		//
 		public static PacketConfig Packet = new PacketConfig();
@@ -36,7 +39,7 @@ namespace DutyContent
 		public static bool DebugEnable { get; set; } = false;
 
 		//
-		public static int GameRegion { get; set; } = 0;	// 0=SQ, 1=ACTOZ
+		public static int GameRegion { get; set; } = 0; // 0=SQ, 1=ACTOZ
 
 		//
 		public static string BuildDataFileName(string header, string context, string ext)
@@ -66,7 +69,7 @@ namespace DutyContent
 		public static void SaveConfig(string filename = null)
 		{
 			if (filename == null)
-				filename = ConfigPath;
+				filename = ActConfigPath;
 
 			using (var sw = new StreamWriter(filename, false, Encoding.UTF8))
 			{
@@ -89,10 +92,22 @@ namespace DutyContent
 		//
 		public static void LoadConfig(string filename = null)
 		{
-			if (filename == null)
-				filename = ConfigPath;
-
-			if (!File.Exists(filename))
+			if (string.IsNullOrEmpty(filename))
+			{
+				if (File.Exists(ActConfigPath))
+					filename = ActConfigPath;
+				else
+				{
+					if (File.Exists(PluginConfigPath))
+						filename = PluginConfigPath;
+					else
+					{
+						filename = ActConfigPath;
+						SaveConfig(filename);
+					}
+				}
+			}
+			else if (!File.Exists(filename))
 				SaveConfig(filename);
 
 			var db = new ThirdParty.LineDb(filename, Encoding.UTF8, false);
@@ -300,7 +315,7 @@ namespace DutyContent
 			public Point OverlayLocation { get; set; } = new Point(0, 0);
 			public bool OverlayClickThru { get; set; }
 			public bool OverlayAutoHide { get; set; }
-			public int OverlayAutoElapse { get; set; } = 20000;	// 20x1000
+			public int OverlayAutoElapse { get; set; } = 20000; // 20x1000
 
 			public bool EnableSound { get; set; }
 			public string SoundInstanceFile { get; set; }
