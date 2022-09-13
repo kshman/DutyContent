@@ -132,7 +132,6 @@ namespace DutyContent.Tab
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblPacketFinder = new System.Windows.Forms.Label();
 			this.ilTabContent = new System.Windows.Forms.ImageList(this.components);
-			this.chkPacketForLocal = new System.Windows.Forms.CheckBox();
 			this.tabContent.SuspendLayout();
 			this.tabPageContent.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -507,7 +506,6 @@ namespace DutyContent.Tab
 			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panel3.Controls.Add(this.chkPacketForLocal);
 			this.panel3.Controls.Add(this.btnResetContentList);
 			this.panel3.Controls.Add(this.cboPacketset);
 			this.panel3.Controls.Add(this.lblPacketSet);
@@ -1039,17 +1037,6 @@ namespace DutyContent.Tab
 			this.ilTabContent.Images.SetKeyName(2, "pix_tab_tool.png");
 			this.ilTabContent.Images.SetKeyName(3, "pix_tab_ping.png");
 			// 
-			// chkPacketForLocal
-			// 
-			this.chkPacketForLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.chkPacketForLocal.AutoSize = true;
-			this.chkPacketForLocal.Location = new System.Drawing.Point(718, 9);
-			this.chkPacketForLocal.Name = "chkPacketForLocal";
-			this.chkPacketForLocal.Size = new System.Drawing.Size(67, 22);
-			this.chkPacketForLocal.TabIndex = 15;
-			this.chkPacketForLocal.Text = "10027";
-			this.chkPacketForLocal.UseVisualStyleBackColor = true;
-			// 
 			// DutyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -1158,6 +1145,5 @@ namespace DutyContent.Tab
 		private Libre.ContentListView lstContents;
 		private System.Windows.Forms.Button btnResetContentList;
 		private System.Windows.Forms.CheckBox chkOverlayAutoHide;
-		private System.Windows.Forms.CheckBox chkPacketForLocal;
 	}
 }

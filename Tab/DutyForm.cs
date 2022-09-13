@@ -105,9 +105,6 @@ namespace DutyContent.Tab
 			btnTestNotify.Enabled = DcConfig.Duty.EnableNotify;
 
 			//
-			chkPacketForLocal.Checked = DcConfig.Duty.PacketForLocal;
-
-			//
 			switch (DcConfig.Duty.ActiveFate)
 			{
 				case 0: rdoFatePreset1.Checked = true; break;
@@ -189,8 +186,6 @@ namespace DutyContent.Tab
 
 			btnPacketStart.Text = Locale.Text(10007);
 			btnPacketApply.Text = Locale.Text(10009);
-
-			chkPacketForLocal.Text = Locale.Text(10027);
 
 			// content reset
 			lstContents.InitializeContentList(
@@ -287,62 +282,68 @@ namespace DutyContent.Tab
 				if (DcConfig.Duty.PacketForLocal)
 				{
 					// for ACTOZ/Korea
-					var rcode = data[8];
+					if (data[11] == 0)
+					{
+						var rcode = data[8];
 
-					if (rcode != 0)
-					{
-						var roulette = DcContent.GetRoulette(rcode);
-						TraceEntryRoulette(roulette);
-						_overlay.PlayQueue(roulette.Name);
-					}
-					else
-					{
-						var insts = new List<int>();
-						for (var i = 0; i < 5; i++)
+						if (rcode != 0)
 						{
-							var icode = BitConverter.ToUInt16(data, 12 + (i * 4));
-							if (icode == 0)
-								break;
+							var roulette = DcContent.GetRoulette(rcode);
+							TraceEntryRoulette(roulette);
+							_overlay.PlayQueue(roulette.Name);
+						}
+						else
+						{
+							var insts = new List<int>();
+							for (var i = 0; i < 5; i++)
+							{
+								var icode = BitConverter.ToUInt16(data, 12 + (i * 4));
+								if (icode == 0)
+									break;
+							}
+
+							if (insts.Any())
+							{
+								TraceEntryInstance(insts);
+								_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
+							}
 						}
 
-						if (insts.Any())
-						{
-							TraceEntryInstance(insts);
-							_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
-						}
+						DcContent.Missions.Clear();
 					}
-
-					DcContent.Missions.Clear();
 				}
-				else if (data[19] == 0)	// duty packet comes twice, index 19 is 0 and 1
+				else
 				{
-					// for global
-					var rcode = data[16];
+					if (data[19] == 0) // duty packet comes twice, index 19 is 0 and 1
+					{
+						// for global
+						var rcode = data[16];
 
-					if (rcode != 0)
-					{
-						var roulette = DcContent.GetRoulette(rcode);
-						TraceEntryRoulette(roulette);
-						_overlay.PlayQueue(roulette.Name);
-					}
-					else
-					{
-						var insts = new List<int>();
-						for (var i = 0; i < 5; i++)
+						if (rcode != 0)
 						{
-							var icode = BitConverter.ToUInt16(data, 20 + (i * 4));
-							if (icode == 0)
-								break;
+							var roulette = DcContent.GetRoulette(rcode);
+							TraceEntryRoulette(roulette);
+							_overlay.PlayQueue(roulette.Name);
+						}
+						else
+						{
+							var insts = new List<int>();
+							for (var i = 0; i < 5; i++)
+							{
+								var icode = BitConverter.ToUInt16(data, 20 + (i * 4));
+								if (icode == 0)
+									break;
+							}
+
+							if (insts.Any())
+							{
+								TraceEntryInstance(insts);
+								_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
+							}
 						}
 
-						if (insts.Any())
-						{
-							TraceEntryInstance(insts);
-							_overlay.PlayQueue(Locale.Text(10006, $"#{insts.Count}"));
-						}
+						DcContent.Missions.Clear();
 					}
-
-					DcContent.Missions.Clear();
 				}
 			}
 
@@ -1351,16 +1352,6 @@ namespace DutyContent.Tab
 			}
 		}
 
-		private void ChkPacketForLocal_CheckedChanged(object sender, EventArgs e)
-		{
-			if (!DcConfig.PluginEnable)
-				return;
-
-			DcConfig.Duty.PacketForLocal = chkPacketForLocal.Checked;
-
-			SaveConfig();
-		}
-
 		private void LstPacketInfo_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (lstPacketInfo.SelectedIndices.Count != 1)
@@ -1565,7 +1556,7 @@ namespace DutyContent.Tab
 			var data = message.Skip(32).ToArray();
 
 #if TESTPK
-#if false
+#if true
 			// 파이날 스텝으로 오는거 전부 얻기
 			var t = IndexOfData(data, 0, new ushort[] { 169, 134, 183, 223, 637 }); // final, P1, S1, Z1, Snake
 			if (t > 0)
@@ -1604,7 +1595,7 @@ namespace DutyContent.Tab
 			}
 
 			// duty & packet
-			if (chkPacketForLocal.Checked)
+			if (DcConfig.Duty.PacketForLocal)
 			{
 				// for ACTOZ/Korean service
 

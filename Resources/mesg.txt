@@ -40,6 +40,8 @@ LANG=English
 41=Delete
 42=Network detected: {0}
 43=Closed
+44=Plugin region check has failed!
+45=Plugin region: {0} ({1})
 
 99=DutyContent Plugin {0}
 

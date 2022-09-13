@@ -79,7 +79,10 @@ namespace DutyContent
 			DcConfig.PluginPath = pin?.pluginFile.DirectoryName;
 
 			DcConfig.DataPath = Path.Combine(DcConfig.PluginPath, "Data");
-			DcConfig.ConfigPath = Path.Combine(DcConfig.PluginPath, "DutyContent.config");
+			DcConfig.PluginConfigPath = Path.Combine(DcConfig.PluginPath, "DutyContent.config");
+
+			var actdata = ActGlobals.oFormActMain.AppDataFolder.FullName;
+			DcConfig.ActConfigPath = Path.Combine(actdata, "Config", "DutyContent.config");
 		}
 
 		//
@@ -118,6 +121,36 @@ namespace DutyContent
 
 				Logger.I(6, System.Diagnostics.FileVersionInfo.GetVersionInfo(_ffxiv_plugin_data.pluginFile.FullName).FileVersion);
 			}
+
+			// begin region check - from cacbot "VersionChecker.cs"
+			try
+			{
+				var mach = System.Reflection.Assembly.Load("Machina.FFXIV");
+				var opcode_manager_type = mach.GetType("Machina.FFXIV.Headers.Opcodes.OpcodeManager");
+				var opcode_manager = opcode_manager_type.GetProperty("Instance").GetValue(null);
+				var machina_region = opcode_manager_type.GetProperty("GameRegion").GetValue(opcode_manager).ToString();
+				switch (machina_region)
+				{
+					//case "Chinese": // no chinese support now
+					case "Korean":
+						DcConfig.GameRegion = 1;
+						break;
+					default:
+						DcConfig.GameRegion = 0;
+						break;
+				}
+
+				Logger.I(45, machina_region, DcConfig.GameRegion);
+			}
+			catch (Exception ex)
+			{
+				Logger.Ex(ex, 44);
+				DcConfig.GameRegion = 0;
+			}
+
+			if (DcConfig.GameRegion != 0)
+				DcConfig.Duty.PacketForLocal = true;
+			// end region check
 
 			_save_timer = new System.Timers.Timer() { Interval = 5000 };
 			_save_timer.Elapsed += (sender, e) =>
