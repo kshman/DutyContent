@@ -147,6 +147,9 @@ namespace DutyContent
 				Logger.Ex(ex, 44);
 				DcConfig.GameRegion = 0;
 			}
+
+			if (DcConfig.GameRegion != 0)
+				DcConfig.Duty.PacketForLocal = true;
 			// end region check
 
 			_save_timer = new System.Timers.Timer() { Interval = 5000 };
