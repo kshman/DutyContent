@@ -120,6 +120,11 @@ namespace DutyContent.Tab
 				var p = _packet_list.ElementAt(cboPacketset.SelectedIndex);
 				RemotePacketUpdate(p.Key);
 			}
+
+			//
+#if TESTPK
+			Logger.Write(Color.Red, "[TEST PK MODE]");
+#endif
 		}
 
 		public void PluginDeinitialize()
@@ -1556,7 +1561,7 @@ namespace DutyContent.Tab
 			var data = message.Skip(32).ToArray();
 
 #if TESTPK
-#if true
+#if false
 			// 파이날 스텝으로 오는거 전부 얻기
 			var t = IndexOfData(data, 0, new ushort[] { 169, 134, 183, 223, 637 }); // final, P1, S1, Z1, Snake
 			if (t > 0)
@@ -1567,7 +1572,7 @@ namespace DutyContent.Tab
 			else 
 #endif
 			// 매칭 관련
-			if (opcode == 183 || opcode == 371 || opcode == 754 || opcode == 372 || opcode == 322)
+			if (opcode == 548 || opcode == 288 || opcode == 880 || opcode == 460)
 			{
 				var s = DataToByteString(data);
 				Logger.L("{0}({1}) => {2}", opcode, data.Length, s);
