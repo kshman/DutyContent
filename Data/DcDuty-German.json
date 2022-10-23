@@ -1,5 +1,5 @@
 {
-  "version": "202209020",
+  "version": "202210200",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -622,6 +622,7 @@
     "864": "Crystal Conflict",
     "865": "Crystal Conflict",
     "866": "Aglaia",
+    "868": "Die Unterstadt von Sil'dih",
     "869": "Der Schwarze Hof von Troia",
     "870": "Prophetie - Barbarizia",
     "871": "Eschatos - Barbarizia",
@@ -630,6 +631,7 @@
     "875": "Traumprüfung - Sephirot",
     "876": "Abyssos - Siebter Kreis",
     "877": "Abyssos - Siebter Kreis (episch)",
+    "878": "Die kuriose Unterstadt von Sil'dih",
     "880": "Abyssos - Sechster Kreis",
     "881": "Abyssos - Sechster Kreis (episch)",
     "883": "Abyssos - Achter Kreis",
