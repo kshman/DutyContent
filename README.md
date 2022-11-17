@@ -4,6 +4,9 @@
 * Duty finding codes from https://github.com/purutu/ACT.DFAssist
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
+## Bozja on 6.28
+It seems like packet structure has changed. Actually, very few peoples are in the Bozja instance. So hard to gather packet information. Please be patient until figure out structure 😭
+
 ---
 
 ## 한국말 사용 설명서
