@@ -4,8 +4,8 @@
 * Duty finding codes from https://github.com/purutu/ACT.DFAssist
 * Network analyzer codes from https://github.com/Noisyfox/ACT.FFXIVPing
 
-## Bozja on 6.28
-It seems like packet structure has changed. Actually, very few peoples are in the Bozja instance. So hard to gather packet information. Please be patient until figure out structure 😭
+## Not Working on 6.3
+Packet structure has changed. DutyContent doesn't work until fix this problem. Sorry!!! 😭
 
 ---
 
@@ -19,3 +19,4 @@ Revi 님께서 작성하신 Wiki가 있어 링크합니다. 정리가 잘되어 
 
 6.1에서 동작하는 것 확인했습니다. 패킷은 자동으로 업뎃됩니다
 
+※ 6.3에서 패킷이 변경되어 변경점을 찾을 때까지 6.3에서 동작하지 않아요;;;
