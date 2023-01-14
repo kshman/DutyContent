@@ -285,8 +285,8 @@ namespace DutyContent.Tab
                     {
                         // 52,49,66=begin / 55=probably npc contact point
                         // 60=progress
-                        // 65=end
-                        if (data[0] == 52)
+                        // 53=end
+                        if (data[0] == 49)
                         {
                             var fate = DcContent.GetFate(fcode);
                             TraceFate(fcode, true, fate, 0);
@@ -305,7 +305,10 @@ namespace DutyContent.Tab
                             var fate = DcContent.TryFate(fcode);
 
                             if (fate != null)
-                                TraceFate(fcode, false, fate, data[8]);
+                            {
+                                var rate = data[8] >= 100 ? -1 : data[8];
+                                TraceFate(fcode, false, fate, rate);
+                            }
                             else
                             {
                                 if (DcConfig.DebugEnable)
@@ -315,7 +318,7 @@ namespace DutyContent.Tab
                                 }
                             }
                         }
-                        else if (data[0] == 65)
+                        else if (data[0] == 53)
                         {
                             var fate = DcContent.TryFate(fcode);
 
