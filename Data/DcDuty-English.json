@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202210200",
+  "version": "202301150",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -638,6 +638,7 @@
     "883": "Abyssos: The Eighth Circle",
     "884": "Abyssos: The Eighth Circle (Savage)",
     "911": "Euphrosyne",
+    "924": "Mount Ordeals (Extreme)",
     "926": "Containment Bay P1T6 (Unreal)"
   },
   "areas": {
