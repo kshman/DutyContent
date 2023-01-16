@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202210200",
+  "version": "202301150",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -636,7 +636,12 @@
     "880": "Abyssos: The Sixth Circle",
     "881": "Abyssos: The Sixth Circle (Savage)",
     "883": "Abyssos: The Eighth Circle",
-    "884": "Abyssos: The Eighth Circle (Savage)"
+    "884": "Abyssos: The Eighth Circle (Savage)",
+    "886": "Mount Ordeals",
+    "896": "Lapis Manalis",
+    "911": "Euphrosyne",
+    "924": "Mount Ordeals (Extreme)",
+    "926": "Containment Bay P1T6 (Unreal)"
   },
   "areas": {
     "134": {

@@ -1,5 +1,5 @@
 {
-  "version": "202210200",
+  "version": "202301150",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -636,7 +636,12 @@
     "880": "Abyssos - Sechster Kreis",
     "881": "Abyssos - Sechster Kreis (episch)",
     "883": "Abyssos - Achter Kreis",
-    "884": "Abyssos - Achter Kreis (episch)"
+    "884": "Abyssos - Achter Kreis (episch)",
+    "886": "Prophetie - Rubicante",
+    "896": "Lapis Manalis",
+    "911": "Euphrosyne",
+    "924": "Eschatos - Rubicante",
+    "926": "Traumprüfung - Sophia"
   },
   "areas": {
     "134": {
