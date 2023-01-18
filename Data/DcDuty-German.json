@@ -1,5 +1,5 @@
 {
-  "version": "202301150",
+  "version": "202301190",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -641,7 +641,8 @@
     "896": "Lapis Manalis",
     "911": "Euphrosyne",
     "924": "Eschatos - Rubicante",
-    "926": "Traumprüfung - Sophia"
+    "926": "Traumprüfung - Sophia",
+    "927": "Kaktor-Kletterwand"
   },
   "areas": {
     "134": {
