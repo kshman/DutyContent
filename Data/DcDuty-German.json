@@ -1,5 +1,5 @@
 {
-  "version": "202301190",
+  "version": "202301250",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -639,6 +639,7 @@
     "884": "Abyssos - Achter Kreis (episch)",
     "886": "Prophetie - Rubicante",
     "896": "Lapis Manalis",
+    "908": "Omega (fatal)",
     "911": "Euphrosyne",
     "924": "Eschatos - Rubicante",
     "926": "Traumprüfung - Sophia",
