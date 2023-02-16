@@ -1,12 +1,16 @@
-﻿using Advanced_Combat_Tracker;
-using System;
-using System.Data;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
+using DutyContent.Properties;
+using DutyContent.Tab;
+using DutyContent.ThirdParty;
+using Timer = System.Timers.Timer;
 
 namespace DutyContent
 {
@@ -25,9 +29,9 @@ namespace DutyContent
 		private TabPage _act_tab;
 		private Label _act_label;
 
-		private System.Timers.Timer _save_timer;
-		private System.Timers.Timer _update_timer;
-		private ThirdParty.NativeMethods.ProcessHandle _game_process;
+		private Timer _save_timer;
+		private Timer _update_timer;
+		private NativeMethods.ProcessHandle _game_process;
 		private long _game_connection_tick = DateTime.Now.Ticks;
 		private bool _game_exist;
 		private bool _game_active;
@@ -59,16 +63,16 @@ namespace DutyContent
 			}
 
 			//
-			Tab.DutyForm dutyform = new Tab.DutyForm();
+			DutyForm dutyform = new DutyForm();
 			tabPageDuty.Controls.Add(dutyform.Controls[0]);
 
-			Tab.PingForm pingform = new Tab.PingForm();
+			PingForm pingform = new PingForm();
 			tabPagePing.Controls.Add(pingform.Controls[0]);
 
-			Tab.ConfigForm configform = new Tab.ConfigForm();
+			ConfigForm configform = new ConfigForm();
 			tabPageConfig.Controls.Add(configform.Controls[0]);
 
-			Tab.LogForm logform = new Tab.LogForm();
+			LogForm logform = new LogForm();
 			tabPageLog.Controls.Add(logform.Controls[0]);
 		}
 
@@ -96,7 +100,7 @@ namespace DutyContent
 			else
 				ActGlobals.oFormActMain.Shown += OFormActMain_Shown;
 
-			var actinfo = System.Reflection.Assembly.GetAssembly(typeof(ActGlobals));
+			var actinfo = Assembly.GetAssembly(typeof(ActGlobals));
 			Logger.I(5, actinfo.GetName().Version);
 
 			if (_ffxiv_plugin_data == null)
@@ -119,13 +123,13 @@ namespace DutyContent
 				ids.ZoneChanged -= FFXIVPlugin_ZoneChanged;
 				ids.ZoneChanged += FFXIVPlugin_ZoneChanged;
 
-				Logger.I(6, System.Diagnostics.FileVersionInfo.GetVersionInfo(_ffxiv_plugin_data.pluginFile.FullName).FileVersion);
+				Logger.I(6, FileVersionInfo.GetVersionInfo(_ffxiv_plugin_data.pluginFile.FullName).FileVersion);
 			}
 
 			// begin region check - from cacbot "VersionChecker.cs"
 			try
 			{
-				var mach = System.Reflection.Assembly.Load("Machina.FFXIV");
+				var mach = Assembly.Load("Machina.FFXIV");
 				var opcode_manager_type = mach.GetType("Machina.FFXIV.Headers.Opcodes.OpcodeManager");
 				var opcode_manager = opcode_manager_type.GetProperty("Instance").GetValue(null);
 				var machina_region = opcode_manager_type.GetProperty("GameRegion").GetValue(opcode_manager).ToString();
@@ -148,18 +152,20 @@ namespace DutyContent
 				DcConfig.GameRegion = 0;
 			}
 
+			/* No below 6.2 version [2022-2-16]
 			if (DcConfig.GameRegion != 0)
 				DcConfig.Duty.PacketForLocal = true;
+			*/
 			// end region check
 
-			_save_timer = new System.Timers.Timer() { Interval = 5000 };
+			_save_timer = new Timer { Interval = 5000 };
 			_save_timer.Elapsed += (sender, e) =>
 			  {
 				  DcConfig.SaveConfig();
 				  _save_timer.Enabled = false;
 			  };
 
-			_update_timer = new System.Timers.Timer() { Interval = IntervalGameExist };
+			_update_timer = new Timer { Interval = IntervalGameExist };
 			_update_timer.Elapsed += (sender, e) =>
 			  {
 				  UpdateAndCheckProc();
@@ -177,11 +183,11 @@ namespace DutyContent
 
 			DcConfig.PluginEnable = false;
 
-			Tab.UpdateNotifyForm.Self?.PluginDeinitialize();
-			Tab.PingForm.Self?.PluginDeinitialize();
-			Tab.DutyForm.Self?.PluginDeinitialize();
-			Tab.ConfigForm.Self?.PluginDeinitialize();
-			Tab.LogForm.Self?.PluginDeinitialize();
+			UpdateNotifyForm.Self?.PluginDeinitialize();
+			PingForm.Self?.PluginDeinitialize();
+			DutyForm.Self?.PluginDeinitialize();
+			ConfigForm.Self?.PluginDeinitialize();
+			LogForm.Self?.PluginDeinitialize();
 			DcConfig.SaveConfig();
 
 			_act_tab = null;
@@ -209,7 +215,7 @@ namespace DutyContent
 			_act_label.Text = "Starting...";
 
 			//
-			Locale.Initialize(Properties.Resources.DefaultMessage);
+			Locale.Initialize(Resources.DefaultMessage);
 
 			Logger.I(4, DcConfig.PluginVersion.ToString());
 
@@ -229,10 +235,10 @@ namespace DutyContent
 			_act_tab.Controls.Add(this);
 
 			//
-			Tab.LogForm.Self?.PluginInitialize();
-			Tab.ConfigForm.Self?.PluginInitialize();
-			Tab.DutyForm.Self?.PluginInitialize();
-			Tab.PingForm.Self?.PluginInitialize();
+			LogForm.Self?.PluginInitialize();
+			ConfigForm.Self?.PluginInitialize();
+			DutyForm.Self?.PluginInitialize();
+			PingForm.Self?.PluginInitialize();
 
 			tabMain.SelectedTab = tabPageDuty;
 
@@ -242,7 +248,7 @@ namespace DutyContent
 				var tag = Updater.CheckPluginUpdate(out string body);
 				if (tag > DcConfig.PluginTag)
 				{
-					Tab.UpdateNotifyForm frm = new Tab.UpdateNotifyForm(tag, body);
+					UpdateNotifyForm frm = new UpdateNotifyForm(tag, body);
 					frm.PluginInitialize();
 					frm.UpdateUiLocale();
 
@@ -283,8 +289,8 @@ namespace DutyContent
 			var g = e.Graphics;
 			TabPage p = tabMain.TabPages[e.Index];
 			Rectangle r = tabMain.GetTabRect(e.Index);
-			StringFormat s = new StringFormat()
-			{
+			StringFormat s = new StringFormat
+            {
 				Alignment = StringAlignment.Near,
 				LineAlignment = StringAlignment.Center,
 			};
@@ -332,7 +338,7 @@ namespace DutyContent
 				_game_active = false;
 
 				// will be update game status next time
-				var p = (from x in Process.GetProcessesByName("ffxiv_dx11") where !x.HasExited && x.MainModule != null && x.MainModule.ModuleName == "ffxiv_dx11.exe" select x).FirstOrDefault<Process>();
+				var p = (from x in Process.GetProcessesByName("ffxiv_dx11") where !x.HasExited && x.MainModule != null && x.MainModule.ModuleName == "ffxiv_dx11.exe" select x).FirstOrDefault();
 
 				if (p != null && p.HasExited)
 					p = null;
@@ -340,7 +346,7 @@ namespace DutyContent
 				if (((_game_process == null) != (p == null)) ||
 					(_game_process != null && p != null && _game_process.Process.Id != p.Id))
 				{
-					_game_process = p != null ? new ThirdParty.NativeMethods.ProcessHandle(p) : null;
+					_game_process = p != null ? new NativeMethods.ProcessHandle(p) : null;
 				}
 			}
 			else
@@ -348,8 +354,8 @@ namespace DutyContent
 				_game_exist = true;
 
 				//
-				var fgw = ThirdParty.NativeMethods.GetForegroundWindow();
-				ThirdParty.NativeMethods.GetWindowThreadProcessId(fgw, out int id);
+				var fgw = NativeMethods.GetForegroundWindow();
+				NativeMethods.GetWindowThreadProcessId(fgw, out int id);
 				_game_active = _game_process.Process.Id == id;
 
 				//
@@ -370,7 +376,7 @@ namespace DutyContent
 							Logger.I(42, Locale.Text(43));
 
 						_game_ipaddr = retaddr;
-						Tab.DutyForm.Self?.ResetContentItems();
+						DutyForm.Self?.ResetContentItems();
 					}
 				}
 			}
@@ -386,38 +392,38 @@ namespace DutyContent
 			if (message.Length < 32)
 				return;
 
-			Tab.DutyForm.Self?.PacketHandler(connection, message);
+			DutyForm.Self?.PacketHandler(connection, message);
 		}
 
 		//
-		private void FFXIVPlugin_ZoneChanged(uint zone_id, string zone_name)
+		private void FFXIVPlugin_ZoneChanged(uint zoneId, string zoneName)
 		{
-			Tab.DutyForm.Self?.ZoneChanged(zone_id, zone_name);
+			DutyForm.Self?.ZoneChanged(zoneId, zoneName);
 
-			lblStatusLeft.Text = Locale.Text(34, zone_name, zone_id);
+			lblStatusLeft.Text = Locale.Text(34, zoneName, zoneId);
 		}
 
 		//
 		public void UpdateUiLocale()
 		{
-			ThirdParty.FontUtilities.SimpleChangeFont(this, DcConfig.UiFontFamily, true);
+			FontUtilities.SimpleChangeFont(this, DcConfig.UiFontFamily, true);
 
 			_act_label.Text = Locale.Text(1);  // Duty ready
 			_act_tab.Text = Locale.Text(0);    // FFXIV dc
 
 			tabPageDuty.Text = Locale.Text(300);
-			Tab.DutyForm.Self?.UpdateUiLocale();
+			DutyForm.Self?.UpdateUiLocale();
 
 			tabPagePing.Text = Locale.Text(400);
-			Tab.PingForm.Self?.UpdateUiLocale();
+			PingForm.Self?.UpdateUiLocale();
 
 			tabPageConfig.Text = Locale.Text(200);
-			Tab.ConfigForm.Self?.UpdateUiLocale();
+			ConfigForm.Self?.UpdateUiLocale();
 
 			tabPageLog.Text = Locale.Text(500);
-			Tab.LogForm.Self?.UpdateUiLocale();
+			LogForm.Self?.UpdateUiLocale();
 
-			Tab.UpdateNotifyForm.Self?.UpdateUiLocale();
+			UpdateNotifyForm.Self?.UpdateUiLocale();
 		}
 
 		//

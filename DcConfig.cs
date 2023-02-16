@@ -12,7 +12,7 @@ namespace DutyContent
 {
 	class DcConfig
 	{
-		public static int PluginTag => 29;
+		public static int PluginTag => 30;
 		public static Version PluginVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool PluginEnable { get; set; }
@@ -123,11 +123,11 @@ namespace DutyContent
 		}
 
 		//
-		public static void ReadLanguage(bool is_in_init = false)
+		public static void ReadLanguage(bool isInInit = false)
 		{
 			if (string.IsNullOrWhiteSpace(Language))
 			{
-				if (!is_in_init)
+				if (!isInInit)
 					Locale.Initialize(Properties.Resources.DefaultMessage);
 			}
 			else
@@ -198,8 +198,8 @@ namespace DutyContent
 			// 5
 			// 6 - HotFix or packet version
 
-			public readonly static string DefaultSetNameCustom = "Custom";
-			public readonly static string DefaultSetNameGlobal = "Global";
+			public static readonly string DefaultSetNameCustom = "Custom";
+			public static readonly string DefaultSetNameGlobal = "Global";
 
 			public PacketConfig()
 			{
@@ -456,7 +456,7 @@ namespace DutyContent
 				PingDefAddr = db.Get("DutyPingDefAddr", string.Empty);
 				PingGraphType = ThirdParty.Converter.ToInt(db["PingGraphType"]);
 
-				PacketForLocal = ThirdParty.Converter.ToBool(db["PacketForLocal"]);
+				//PacketForLocal = ThirdParty.Converter.ToBool(db["PacketForLocal"]);
 			}
 		}
 
