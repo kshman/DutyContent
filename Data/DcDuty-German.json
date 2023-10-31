@@ -1,5 +1,5 @@
 {
-  "version": "202310040",
+  "version": "202310310",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -692,10 +692,26 @@
     "955": "Auf großer Fahrt",
     "956": "Auf großer Fahrt",
     "957": "Auf großer Fahrt",
+    "958": "Stolperville",
+    "961": "Aloalo",
     "962": "Thaleia",
     "963": "raumprüfung - Singularitäts-Reaktor",
     "964": "Prophetie - Zeromus",
-    "965": "Eschatos - Zeromus"
+    "965": "Eschatos - Zeromus",
+    "967": "Die Roten Sande",
+    "968": "Die Roten Sande",
+    "969": "Die Roten Sande",
+    "970": "Die Roten Sande",
+    "971": "Die Roten Sande",
+    "972": "Die Roten Sande",
+    "973": "Die Roten Sande",
+    "974": "Die Roten Sande",
+    "975": "Die Roten Sande",
+    "976": "Die Roten Sande",
+    "977": "Die Roten Sande",
+    "978": "Crystalline Conflict: Die Roten Sande (Schaukampf)",
+    "979": "Kurioses Aloalo",
+    "980": "Kurioses Aloalo (episch)"
   },
   "areas": {
     "134": {
