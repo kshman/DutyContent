@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202310040",
+  "version": "202310310",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -692,10 +692,26 @@
     "955": "Ocean Fishing",
     "956": "Ocean Fishing",
     "957": "Ocean Fishing",
+    "958": "Blunderville",
+    "961": "Aloalo Island",
     "962": "Thaleia",
     "963": "The Singularity Reactor (Unreal)",
     "964": "The Abyssal Fracture",
-    "965": "The Abyssal Fracture (Extreme)"
+    "965": "The Abyssal Fracture (Extreme)",
+    "967": "The Red Sands",
+    "968": "The Red Sands",
+    "969": "The Red Sands",
+    "970": "The Red Sands",
+    "971": "The Red Sands",
+    "972": "The Red Sands",
+    "973": "The Red Sands",
+    "974": "The Red Sands",
+    "975": "The Red Sands",
+    "976": "The Red Sands",
+    "977": "The Red Sands",
+    "978": "Crystalline Conflict (Custom Match - The Red Sands)",
+    "979": "Another Aloalo Island",
+    "980": "Another Aloalo Island (Savage)"
   },
   "areas": {
     "134": {
