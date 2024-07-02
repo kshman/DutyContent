@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202406290",
+  "version": "202407010",
   "language": "Korean",
   "displayLanguage": "한국말",
   "roulettes": {
@@ -563,7 +563,15 @@
     "821": "환 알테마 웨폰 파괴작전",
     "822": "햄 섬",
     "823": "달의 지하 계곡",
+    "824": "Worqor Zormor",
+    "825": "Origenics",
+    "826": "Ihuykatumu",
+    "827": "Alexandria",
+    "829": "The Skydeep Cenote",
     "830": "알테마 웨폰 파괴작전",
+    "831": "Vanguard",
+    "832": "Worqor Lar Dor",
+    "833": "Worqor Lar Dor (Extreme)",
     "835": "팔라이스트라",
     "836": "화산심장",
     "837": "절정의 구름",
@@ -689,7 +697,11 @@
     "977": "붉은 모래",
     "978": "붉은 모래: 친선 경기",
     "979": "파생 던전: 번외 아로아로섬",
-    "980": "파생 던전: 번외 아로아로섬(영웅)"
+    "980": "파생 던전: 번외 아로아로섬(영웅)",
+    "981": "The Strayborough Deadwalk",
+    "984": "The Interphos",
+    "995": "Everkeep",
+    "996": "Everkeep (Extreme)"
   },
   "areas": {
     "134": {
