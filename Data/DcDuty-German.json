@@ -1,5 +1,5 @@
 {
-  "version": "202407010",
+  "version": "202407170",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -595,6 +595,7 @@
     "831": "Der Außenposten",
     "832": "Zel Tajaal - Valigarmanda",
     "833": "Gok Tajaal - Valigarmanda",
+    "834": "Kaktorsenke",
     "835": "Die Palästra",
     "836": "Das Herz des Vulkans",
     "837": "Wolke Sieben",
@@ -723,6 +724,14 @@
     "980": "Kurioses Aloalo (episch)",
     "981": "Mahrlingen-Promenade",
     "984": "Zel Tajaal - Ewige Königin",
+    "985": "Arkadion - Halbschwergewicht R1",
+    "986": "---",
+    "987": "Arkadion - Halbschwergewicht R2",
+    "988": "---",
+    "989": "Arkadion - Halbschwergewicht R3",
+    "990": "---",
+    "991": "Arkadion - Halbschwergewicht R4",
+    "992": "---",
     "995": "Zel Tajaal - Zoraal Ja",
     "996": "Gok Tajaal - Zoraal Ja"
   },
