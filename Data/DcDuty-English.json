@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202407010",
+  "version": "202407170",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -595,6 +595,7 @@
     "831": "Vanguard",
     "832": "Worqor Lar Dor",
     "833": "Worqor Lar Dor (Extreme)",
+    "834": "Tender Valley",
     "835": "The Palaistra",
     "836": "The Volcanic Heart",
     "837": "Cloud Nine",
@@ -723,6 +724,14 @@
     "980": "Another Aloalo Island (Savage)",
     "981": "The Strayborough Deadwalk",
     "984": "The Interphos",
+    "985": "AAC Light-heavyweight M1",
+    "986": "AAC Light-heavyweight M1 (Savage)",
+    "987": "AAC Light-heavyweight M2",
+    "988": "AAC Light-heavyweight M2 (Savage)",
+    "989": "AAC Light-heavyweight M3",
+    "990": "AAC Light-heavyweight M3 (Savage)",
+    "991": "AAC Light-heavyweight M4",
+    "992": "AAC Light-heavyweight M4 (Savage)",
     "995": "Everkeep",
     "996": "Everkeep (Extreme)"
   },

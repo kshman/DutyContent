@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202407010",
+  "version": "202407170",
   "language": "Korean",
   "displayLanguage": "한국말",
   "roulettes": {
@@ -572,6 +572,7 @@
     "831": "Vanguard",
     "832": "Worqor Lar Dor",
     "833": "Worqor Lar Dor (Extreme)",
+    "834": "Tender Valley",
     "835": "팔라이스트라",
     "836": "화산심장",
     "837": "절정의 구름",
@@ -700,6 +701,14 @@
     "980": "파생 던전: 번외 아로아로섬(영웅)",
     "981": "The Strayborough Deadwalk",
     "984": "The Interphos",
+    "985": "AAC Light-heavyweight M1",
+    "986": "AAC Light-heavyweight M1 (Savage)",
+    "987": "AAC Light-heavyweight M2",
+    "988": "AAC Light-heavyweight M2 (Savage)",
+    "989": "AAC Light-heavyweight M3",
+    "990": "AAC Light-heavyweight M3 (Savage)",
+    "991": "AAC Light-heavyweight M4",
+    "992": "AAC Light-heavyweight M4 (Savage)",
     "995": "Everkeep",
     "996": "Everkeep (Extreme)"
   },
