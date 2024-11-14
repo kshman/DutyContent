@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202407170",
+  "version": "202411140",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -733,7 +733,11 @@
     "991": "AAC Light-heavyweight M4",
     "992": "AAC Light-heavyweight M4 (Savage)",
     "995": "Everkeep",
-    "996": "Everkeep (Extreme)"
+    "996": "Everkeep (Extreme)",
+    "1007": "The Jade Stoa (Unreal)",
+    "1008": "Yuweyawata Field Station",
+    "1015": "Jeuno: The First Walk",
+    "1017": "The Minstrel’s Ballad: Sphene's Burden"
   },
   "areas": {
     "700": {

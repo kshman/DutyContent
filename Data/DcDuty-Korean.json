@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202407170",
+  "version": "202411140",
   "language": "Korean",
   "displayLanguage": "한국말",
   "roulettes": {
@@ -710,7 +710,11 @@
     "991": "AAC Light-heavyweight M4",
     "992": "AAC Light-heavyweight M4 (Savage)",
     "995": "Everkeep",
-    "996": "Everkeep (Extreme)"
+    "996": "Everkeep (Extreme)",
+    "1007": "환 백호 토벌전",
+    "1008": "폐허 탐험 우웨야와타",
+    "1015": "쥬노: 더 퍼스트 워크",
+    "1017": "극 이터널 퀸 토벌전"
   },
   "areas": {
     "134": {
