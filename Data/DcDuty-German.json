@@ -1,5 +1,5 @@
 {
-  "version": "202407170",
+  "version": "202411140",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -733,7 +733,11 @@
     "991": "Arkadion - Halbschwergewicht R4",
     "992": "---",
     "995": "Zel Tajaal - Zoraal Ja",
-    "996": "Gok Tajaal - Zoraal Ja"
+    "996": "Gok Tajaal - Zoraal Ja",
+    "1007": "Traumprüfung - Byakko",
+    "1008": "Forschungsstation Yuweyawata",
+    "1015": "Jeuno: Die erste Etappe",
+    "1017": "Gok Tajaal - Ewige Königin"
   },
   "areas": {
     "700": {
