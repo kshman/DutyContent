@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202411240",
+  "version": "202411280",
   "language": "Korean",
   "displayLanguage": "한국말",
   "roulettes": {
@@ -711,6 +711,7 @@
     "992": "AAC Light-heavyweight M4 (Savage)",
     "995": "Everkeep",
     "996": "Everkeep (Extreme)",
+    "1006": "절 또 하나의 미래",
     "1007": "환 백호 토벌전",
     "1008": "폐허 탐험 우웨야와타",
     "1015": "쥬노: 더 퍼스트 워크",

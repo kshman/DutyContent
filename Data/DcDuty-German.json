@@ -1,5 +1,5 @@
 {
-  "version": "202411140",
+  "version": "202411280",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -734,6 +734,7 @@
     "992": "---",
     "995": "Zel Tajaal - Zoraal Ja",
     "996": "Gok Tajaal - Zoraal Ja",
+    "1006": "Eine zweite Zukunft (fatal)",
     "1007": "Traumprüfung - Byakko",
     "1008": "Forschungsstation Yuweyawata",
     "1015": "Jeuno: Die erste Etappe",
