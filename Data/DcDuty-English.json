@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202411140",
+  "version": "202411280",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -734,6 +734,7 @@
     "992": "AAC Light-heavyweight M4 (Savage)",
     "995": "Everkeep",
     "996": "Everkeep (Extreme)",
+    "1006": "Futures Rewritten (Ultimate)",
     "1007": "The Jade Stoa (Unreal)",
     "1008": "Yuweyawata Field Station",
     "1015": "Jeuno: The First Walk",
