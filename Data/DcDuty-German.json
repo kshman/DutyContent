@@ -1,5 +1,5 @@
 {
-  "version": "202411280",
+  "version": "202412240",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -737,6 +737,7 @@
     "1006": "Eine zweite Zukunft (fatal)",
     "1007": "Traumprüfung - Byakko",
     "1008": "Forschungsstation Yuweyawata",
+    "1010": "Die Wolke der Dunkelheit (chaotisch)",
     "1015": "Jeuno: Die erste Etappe",
     "1017": "Gok Tajaal - Ewige Königin"
   },

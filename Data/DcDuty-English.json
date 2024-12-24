@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202411280",
+  "version": "202412240",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -737,6 +737,7 @@
     "1006": "Futures Rewritten (Ultimate)",
     "1007": "The Jade Stoa (Unreal)",
     "1008": "Yuweyawata Field Station",
+    "1010": "The Cloud of Darkness (Chaotic)",
     "1015": "Jeuno: The First Walk",
     "1017": "The Minstrel’s Ballad: Sphene's Burden"
   },
