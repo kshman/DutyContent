@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202412240",
+  "version": "202503290",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -739,7 +739,19 @@
     "1008": "Yuweyawata Field Station",
     "1010": "The Cloud of Darkness (Chaotic)",
     "1015": "Jeuno: The First Walk",
-    "1017": "The Minstrel’s Ballad: Sphene's Burden"
+    "1017": "The Minstrel’s Ballad: Sphene's Burden",
+    "1019": "AAC Cruiserweight M1",
+    "1020": "AAC Cruiserweight M1 (Savage)",
+    "1021": "AAC Cruiserweight M2",
+    "1022": "AAC Cruiserweight M2 (Savage)",
+    "1023": "AAC Cruiserweight M3",
+    "1024": "AAC Cruiserweight M3 (Savage)",
+    "1025": "AAC Cruiserweight M4",
+    "1026": "AAC Cruiserweight M4 (Savage)",
+    "1027": "the Underkeep",
+    "1029": "Hells' Kier (Unreal)",
+    "1030": "Recollection",
+    "1031": "Recollection (Extreme)"
   },
   "areas": {
     "700": {

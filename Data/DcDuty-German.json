@@ -1,5 +1,5 @@
 {
-  "version": "202412240",
+  "version": "202503290",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -739,7 +739,19 @@
     "1008": "Forschungsstation Yuweyawata",
     "1010": "Die Wolke der Dunkelheit (chaotisch)",
     "1015": "Jeuno: Die erste Etappe",
-    "1017": "Gok Tajaal - Ewige Königin"
+    "1017": "Gok Tajaal - Ewige Königin",
+    "1019": "Arkadion - Schwergewicht R1",
+    "1020": "Arkadion - Schwergewicht R1 (episch)",
+    "1021": "Arkadion - Schwergewicht R2",
+    "1022": "Arkadion - Schwergewicht R2 (episch)",
+    "1023": "Arkadion - Schwergewicht R3",
+    "1024": "Arkadion - Schwergewicht R3 (episch)",
+    "1025": "Arkadion - Schwergewicht R4",
+    "1026": "Arkadion - Schwergewicht R4 (episch)",
+    "1027": "Unterfried-Ruinen",
+    "1029": "Traumprüfung - Suzaku",
+    "1030": "Zel Tajaal - Zelenia",
+    "1031": "Gok Tajaal - Zelenia"
   },
   "areas": {
     "700": {
