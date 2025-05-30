@@ -1,4 +1,6 @@
-﻿# pk0: ContentFinderCondition
+﻿# pk0: ContentFinderCondition (Content)
+# pk0: Fate (FATE)
+# pk0: DynamicEvent (CE)
 
 # final steps (169/A9)
 
