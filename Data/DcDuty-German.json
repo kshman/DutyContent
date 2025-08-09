@@ -1,5 +1,5 @@
 {
-  "version": "202505290",
+  "version": "202508090",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -750,9 +750,27 @@
     "1025": "Arkadion - Schwergewicht R4",
     "1026": "Arkadion - Schwergewicht R4 (episch)",
     "1027": "Unterfried-Ruinen",
+    "1028": "Das Meso-System",
     "1029": "Traumprüfung - Suzaku",
     "1030": "Zel Tajaal - Zelenia",
-    "1031": "Gok Tajaal - Zelenia"
+    "1031": "Gok Tajaal - Zelenia",
+    "1042": "Traumprüfung - Seiryu",
+    "1046": "Der Küstenkampf",
+    "1047": "Der Küstenkampf",
+    "1048": "Der Küstenkampf",
+    "1049": "Der Küstenkampf",
+    "1050": "Der Küstenkampf",
+    "1051": "Der Küstenkampf",
+    "1052": "Der Küstenkampf",
+    "1053": "Der Küstenkampf",
+    "1054": "Der Küstenkampf",
+    "1055": "Der Küstenkampf",
+    "1056": "Der Küstenkampf",
+    "1057": "Crystalline Conflict: Der Küstenkampf (Schaukampf)",
+    "1058": "San d'Oria: Die zweite Etappe",
+    "1060": "Tresor Oneiron",
+    "1061": "Zel Tajaal - Das Ewige Dunkel",
+    "1062": "Gok Tajaal - Das Ewige Dunkel"
   },
   "areas": {
     "700": {

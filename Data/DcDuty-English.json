@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202505290",
+  "version": "202508090",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -750,9 +750,27 @@
     "1025": "AAC Cruiserweight M4",
     "1026": "AAC Cruiserweight M4 (Savage)",
     "1027": "the Underkeep",
+    "1028": "the Meso Terminal",
     "1029": "Hells' Kier (Unreal)",
     "1030": "Recollection",
-    "1031": "Recollection (Extreme)"
+    "1031": "Recollection (Extreme)",
+    "1042": "the Wreath of Snakes (Unreal)",
+    "1046": "the Bayside Battleground",
+    "1047": "the Bayside Battleground",
+    "1048": "the Bayside Battleground",
+    "1049": "the Bayside Battleground",
+    "1050": "the Bayside Battleground",
+    "1051": "the Bayside Battleground",
+    "1052": "the Bayside Battleground",
+    "1053": "the Bayside Battleground",
+    "1054": "the Bayside Battleground",
+    "1055": "the Bayside Battleground",
+    "1056": "the Bayside Battleground",
+    "1057": "Crystalline Conflict (Custom Match - The Bayside Battleground)",
+    "1058": "San d'Oria: The Second Walk",
+    "1060": "Vault Oneiron",
+    "1061": "the Ageless Necropolis",
+    "1062": "the Minstrel's Ballad: Necron's Embrace"
   },
   "areas": {
     "700": {
