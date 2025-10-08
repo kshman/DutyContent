@@ -1,5 +1,5 @@
 {
-  "version": "202508090",
+  "version": "202510080",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -754,7 +754,19 @@
     "1029": "Traumprüfung - Suzaku",
     "1030": "Zel Tajaal - Zelenia",
     "1031": "Gok Tajaal - Zelenia",
+    "1032": "Pilgers Pfad (Ebenen 1-10)",
+    "1033": "Pilgers Pfad (Ebenen 11-20)",
+    "1034": "Pilgers Pfad (Ebenen 21-30)",
+    "1035": "Pilgers Pfad (Ebenen 31-40)",
+    "1036": "Pilgers Pfad (Ebenen 41-50)",
+    "1037": "Pilgers Pfad (Ebenen 51-60)",
+    "1038": "Pilgers Pfad (Ebenen 61-70)",
+    "1039": "Pilgers Pfad (Ebenen 71-80)",
+    "1040": "Pilgers Pfad (Ebenen 81-90)",
+    "1041": "Pilgers Pfad (Ebenen 91-100)",
     "1042": "Traumprüfung - Seiryu",
+    "1043": "Jagd auf Wächter-Arkveld",
+    "1044": "Jagd auf Wächter-Arkveld (schwer)",
     "1046": "Der Küstenkampf",
     "1047": "Der Küstenkampf",
     "1048": "Der Küstenkampf",
@@ -770,7 +782,9 @@
     "1058": "San d'Oria: Die zweite Etappe",
     "1060": "Tresor Oneiron",
     "1061": "Zel Tajaal - Das Ewige Dunkel",
-    "1062": "Gok Tajaal - Das Ewige Dunkel"
+    "1062": "Gok Tajaal - Das Ewige Dunkel",
+    "1063": "Eminente Trauer (variabel)",
+    "1065": "Eminente Trauer"
   },
   "areas": {
     "700": {
