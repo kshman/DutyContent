@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202508090",
+  "version": "202510080",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -754,7 +754,19 @@
     "1029": "Hells' Kier (Unreal)",
     "1030": "Recollection",
     "1031": "Recollection (Extreme)",
+    "1032": "Pilgrim's Traverse (Stones 1-10)",
+    "1033": "Pilgrim's Traverse (Stones 11-20)",
+    "1034": "Pilgrim's Traverse (Stones 21-30)",
+    "1035": "Pilgrim's Traverse (Stones 31-40)",
+    "1036": "Pilgrim's Traverse (Stones 41-50)",
+    "1037": "Pilgrim's Traverse (Stones 51-60)",
+    "1038": "Pilgrim's Traverse (Stones 61-70)",
+    "1039": "Pilgrim's Traverse (Stones 71-80)",
+    "1040": "Pilgrim's Traverse (Stones 81-90)",
+    "1041": "Pilgrim's Traverse (Stones 91-100)",
     "1042": "the Wreath of Snakes (Unreal)",
+    "1043": "the Windward Wilds",
+    "1044": "the Windward Wilds (Extreme)",
     "1046": "the Bayside Battleground",
     "1047": "the Bayside Battleground",
     "1048": "the Bayside Battleground",
@@ -770,7 +782,9 @@
     "1058": "San d'Oria: The Second Walk",
     "1060": "Vault Oneiron",
     "1061": "the Ageless Necropolis",
-    "1062": "the Minstrel's Ballad: Necron's Embrace"
+    "1062": "the Minstrel's Ballad: Necron's Embrace",
+    "1063": "the Final Verse (Quantum)",
+    "1065": "the Final Verse"
   },
   "areas": {
     "700": {
