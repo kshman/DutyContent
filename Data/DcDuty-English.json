@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202510080",
+  "version": "202512170",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -767,6 +767,7 @@
     "1042": "the Wreath of Snakes (Unreal)",
     "1043": "the Windward Wilds",
     "1044": "the Windward Wilds (Extreme)",
+    "1045": "the Pâtisserie",
     "1046": "the Bayside Battleground",
     "1047": "the Bayside Battleground",
     "1048": "the Bayside Battleground",
@@ -784,7 +785,24 @@
     "1061": "the Ageless Necropolis",
     "1062": "the Minstrel's Ballad: Necron's Embrace",
     "1063": "the Final Verse (Quantum)",
-    "1065": "the Final Verse"
+    "1064": "Mistwake",
+    "1065": "the Final Verse",
+    "1067": "Tsukuyomi's Pain (Unreal)",
+    "1068": "AAC Heavyweight M1",
+    "1069": "AAC Heavyweight M1 (Savage)",
+    "1070": "AAC Heavyweight M2",
+    "1071": "AAC Heavyweight M2 (Savage)",
+    "1072": "AAC Heavyweight M3",
+    "1073": "AAC Heavyweight M3 (Savage)",
+    "1074": "AAC Heavyweight M4",
+    "1075": "AAC Heavyweight M4 (Savage)",
+    "1076": "Hell on Rails",
+    "1077": "Hell on Rails (Extreme)",
+    "1080": "Worqor Chirteh (Triumph)",
+    "1081": "Air Force One",
+    "1082": "Air Force One",
+    "1083": "Air Force One",
+    "1085": "Where We Call Home"
   },
   "areas": {
     "700": {
