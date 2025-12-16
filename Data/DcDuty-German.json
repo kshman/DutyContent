@@ -1,5 +1,5 @@
 {
-  "version": "202510080",
+  "version": "202512170",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -767,6 +767,7 @@
     "1042": "Traumprüfung - Seiryu",
     "1043": "Jagd auf Wächter-Arkveld",
     "1044": "Jagd auf Wächter-Arkveld (schwer)",
+    "1045": "Die Pâtisserie",
     "1046": "Der Küstenkampf",
     "1047": "Der Küstenkampf",
     "1048": "Der Küstenkampf",
@@ -784,7 +785,24 @@
     "1061": "Zel Tajaal - Das Ewige Dunkel",
     "1062": "Gok Tajaal - Das Ewige Dunkel",
     "1063": "Eminente Trauer (variabel)",
-    "1065": "Eminente Trauer"
+    "1064": "Die Nebeltrift",
+    "1065": "Eminente Trauer",
+    "1067": "Traumprüfung - Tsukuyomi",
+    "1068": "Arkadion - Superschwergewicht R1",
+    "1069": "Arkadion - Superschwergewicht R1 (episch)",
+    "1070": "Arkadion - Superschwergewicht R2",
+    "1071": "Arkadion - Superschwergewicht R2 (episch)",
+    "1072": "Arkadion - Superschwergewicht R3",
+    "1073": "Arkadion - Superschwergewicht R3 (episch)",
+    "1074": "Arkadion - Superschwergewicht R4",
+    "1075": "Arkadion - Superschwergewicht R4 (episch)",
+    "1076": "Zel Tajaal - Doomtrain",
+    "1077": "Gok Tajaal - Doomtrain",
+    "1080": "Worqor Chirteh (Triumph)",
+    "1081": "Luftwaffe, Feuer frei!",
+    "1082": "Luftwaffe, Feuer frei!",
+    "1083": "Luftwaffe, Feuer frei!",
+    "1085": "Die Hüterin Trenos"
   },
   "areas": {
     "700": {
