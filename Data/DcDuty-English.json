@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202512170",
+  "version": "202603060",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -787,6 +787,7 @@
     "1063": "the Final Verse (Quantum)",
     "1064": "Mistwake",
     "1065": "the Final Verse",
+    "1066": "The Merchant's Tale",
     "1067": "Tsukuyomi's Pain (Unreal)",
     "1068": "AAC Heavyweight M1",
     "1069": "AAC Heavyweight M1 (Savage)",
@@ -798,10 +799,12 @@
     "1075": "AAC Heavyweight M4 (Savage)",
     "1076": "Hell on Rails",
     "1077": "Hell on Rails (Extreme)",
+    "1079": "Another Merchant's Tale",
     "1080": "Worqor Chirteh (Triumph)",
     "1081": "Air Force One",
     "1082": "Air Force One",
     "1083": "Air Force One",
+    "1084": "The Merchant's Tale (Advanced)",
     "1085": "Where We Call Home"
   },
   "areas": {

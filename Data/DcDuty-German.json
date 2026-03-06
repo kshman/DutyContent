@@ -1,5 +1,5 @@
 {
-  "version": "202512170",
+  "version": "202603060",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -787,6 +787,7 @@
     "1063": "Eminente Trauer (variabel)",
     "1064": "Die Nebeltrift",
     "1065": "Eminente Trauer",
+    "1066": "Des Händlers Liebesmüh",
     "1067": "Traumprüfung - Tsukuyomi",
     "1068": "Arkadion - Superschwergewicht R1",
     "1069": "Arkadion - Superschwergewicht R1 (episch)",
@@ -798,10 +799,12 @@
     "1075": "Arkadion - Superschwergewicht R4 (episch)",
     "1076": "Zel Tajaal - Doomtrain",
     "1077": "Gok Tajaal - Doomtrain",
+    "1079": "Des Händlers kuriose Liebesmüh",
     "1080": "Worqor Chirteh (Triumph)",
     "1081": "Luftwaffe, Feuer frei!",
     "1082": "Luftwaffe, Feuer frei!",
     "1083": "Luftwaffe, Feuer frei!",
+    "1084": "Des Händlers Liebesmüh (fortgeschritten)",
     "1085": "Die Hüterin Trenos"
   },
   "areas": {
