@@ -1,5 +1,5 @@
 {
-  "version": "202603060",
+  "version": "202604300",
   "language": "German",
   "displayLanguage": "Deutsch",
   "roulettes": {
@@ -738,6 +738,7 @@
     "1007": "Traumprüfung - Byakko",
     "1008": "Forschungsstation Yuweyawata",
     "1010": "Die Wolke der Dunkelheit (chaotisch)",
+    "1011": "Das Klyteum",
     "1015": "Jeuno: Die erste Etappe",
     "1017": "Gok Tajaal - Ewige Königin",
     "1018": "Occult Crescent: South Horn",
@@ -805,7 +806,26 @@
     "1082": "Luftwaffe, Feuer frei!",
     "1083": "Luftwaffe, Feuer frei!",
     "1084": "Des Händlers Liebesmüh (fortgeschritten)",
-    "1085": "Die Hüterin Trenos"
+    "1085": "Die Hüterin Trenos",
+    "1098": "Auf großer Fahrt",
+    "1099": "Auf großer Fahrt",
+    "1100": "Auf großer Fahrt",
+    "1102": "Archeia Harmonias",
+    "1103": "Archeia Harmonias",
+    "1104": "Archeia Harmonias",
+    "1105": "Archeia Harmonias",
+    "1106": "Archeia Harmonias",
+    "1107": "Archeia Harmonias",
+    "1108": "Archeia Harmonias",
+    "1109": "Archeia Harmonias",
+    "1110": "Archeia Harmonias",
+    "1111": "Archeia Harmonias",
+    "1112": "Archeia Harmonias",
+    "1113": "Crystalline Conflict: Archeia Harmonias (Schaukampf)",
+    "1115": "Zel Tajaal - Enuo",
+    "1116": "Gok Tajaal - Enuo",
+    "1117": "Windurst: Die dritte Etappe",
+    "1118": "Traumprüfung - Heldenlied von Shinryu"
   },
   "areas": {
     "700": {

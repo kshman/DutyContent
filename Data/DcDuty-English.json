@@ -1,5 +1,5 @@
 ﻿{
-  "version": "202603060",
+  "version": "202604300",
   "language": "English",
   "displayLanguage": "English",
   "roulettes": {
@@ -738,6 +738,7 @@
     "1007": "The Jade Stoa (Unreal)",
     "1008": "Yuweyawata Field Station",
     "1010": "The Cloud of Darkness (Chaotic)",
+    "1011": "the Clyteum",
     "1015": "Jeuno: The First Walk",
     "1017": "The Minstrel’s Ballad: Sphene's Burden",
     "1018": "Occult Crescent: South Horn",
@@ -805,7 +806,26 @@
     "1082": "Air Force One",
     "1083": "Air Force One",
     "1084": "The Merchant's Tale (Advanced)",
-    "1085": "Where We Call Home"
+    "1085": "Where We Call Home",
+    "1098": "Ocean Fishing",
+    "1099": "Ocean Fishing",
+    "1100": "Ocean Fishing",
+    "1102": "Archeia Harmonias",
+    "1103": "Archeia Harmonias",
+    "1104": "Archeia Harmonias",
+    "1105": "Archeia Harmonias",
+    "1106": "Archeia Harmonias",
+    "1107": "Archeia Harmonias",
+    "1108": "Archeia Harmonias",
+    "1109": "Archeia Harmonias",
+    "1110": "Archeia Harmonias",
+    "1111": "Archeia Harmonias",
+    "1112": "Archeia Harmonias",
+    "1113": "Crystalline Conflict (Custom Match - Archeia Harmonias)",
+    "1115": "the Unmaking",
+    "1116": "the Unmaking (Extreme)",
+    "1117": "Windurst: The Third Walk",
+    "1118": "Shinryu's Domain (Unreal)"
   },
   "areas": {
     "700": {
